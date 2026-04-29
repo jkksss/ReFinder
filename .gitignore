@@ -1,0 +1,8 @@
+target/
+*.db
+*.class
+.DS_Store
+nbactions.xml
+nb-configuration.xml
+*.iml
+.idea/ 
