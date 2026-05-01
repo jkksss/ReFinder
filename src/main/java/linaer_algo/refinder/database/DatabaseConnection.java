@@ -94,9 +94,9 @@ public class DatabaseConnection {
             stmt.execute(cookingLog);
             stmt.execute(favorites);
             stmt.execute(shoppingList);
-            System.out.println(" Database initialized successfully!");
+            System.out.println("Database initialized successfully!");
         } catch (SQLException e) {
-            System.out.println(" Database error: " + e.getMessage());
+            System.out.println("Database error: " + e.getMessage());
         }
     }
 
@@ -105,10 +105,10 @@ public class DatabaseConnection {
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
-                System.out.println("✅ Database connection closed.");
+                System.out.println("Database connection closed.");
             }
         } catch (SQLException e) {
-            System.out.println("❌ Error closing connection: " + e.getMessage());
+            System.out.println("Error closing connection: " + e.getMessage());
         }
     }
 
