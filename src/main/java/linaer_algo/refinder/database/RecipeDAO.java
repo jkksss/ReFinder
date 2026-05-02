@@ -42,6 +42,7 @@ public class RecipeDAO {
         return recipes;
     }
     
+    //Gets recipe based on different cuisines available
     public static List<Recipe> getRecipesByCuisine(String cuisine){
         List<Recipe> recipes = new ArrayList<>();
         String sql = "SELECT * FROM recipes WHERE LOWER(cuisine) = LOWER(?)";
