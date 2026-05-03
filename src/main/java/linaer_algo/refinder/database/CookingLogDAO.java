@@ -1,24 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package linaer_algo.refinder.database;
 
 import linaer_algo.refinder.model.CookingLog;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-/**
- *
- * @author Joko1
- */
+
 public class CookingLogDAO {
     
     //Adds a new entry in the cooking logs
     public static void addCookingLog(CookingLog log){
         String sql = "INSERT INTO cooking_log (recipe_id, date_cooked, servings) VALUES (?, ?, ?)";
         
-         try (PreparedStatement pstmt = DatabaseConnection.getConnection().prepareStatement(sql)) {
+        // Wrapped Connection in the try block
+         try (Connection conn = DatabaseConnection.getConnection();
+              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, log.getRecipeId());
             pstmt.setString(2, log.getDateCooked());
             pstmt.setInt(3, log.getServings());
@@ -36,8 +31,9 @@ public class CookingLogDAO {
                     "INNER JOIN recipes r ON cl.recipe_id = r.id " +
                     "ORDER BY cl.id DESC";
         
-         try (Statement stmt = DatabaseConnection.getConnection().createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+         try (Connection conn = DatabaseConnection.getConnection();
+              Statement stmt = conn.createStatement();
+              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 CookingLog log = new CookingLog(
@@ -60,7 +56,8 @@ public class CookingLogDAO {
     public static void deleteCookingLog(int id){
         String sql = "DELETE FROM cooking_log WHERE id = ?";
         
-        try (PreparedStatement pstmt = DatabaseConnection.getConnection().prepareStatement(sql)) {
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
             System.out.println("Cooking log deleted!");
@@ -76,19 +73,23 @@ public class CookingLogDAO {
                      "INNER JOIN recipes r ON cl.recipe_id = r.id " +
                      "WHERE cl.recipe_id = ? ORDER BY cl.id DESC";
 
-        try (PreparedStatement pstmt = DatabaseConnection.getConnection().prepareStatement(sql)) {
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
             pstmt.setInt(1, recipeId);
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                CookingLog log = new CookingLog(
-                    rs.getInt("id"),
-                    rs.getInt("recipe_id"),
-                    rs.getString("recipe_name"),
-                    rs.getString("date_cooked"),
-                    rs.getInt("servings")
-                );
-                logs.add(log);
+            
+            // Wrapped ResultSet in its own try block to prevent memory leak
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    CookingLog log = new CookingLog(
+                        rs.getInt("id"),
+                        rs.getInt("recipe_id"),
+                        rs.getString("recipe_name"),
+                        rs.getString("date_cooked"),
+                        rs.getInt("servings")
+                    );
+                    logs.add(log);
+                }
             }
         } catch (SQLException e) {
             System.out.println("Error getting logs by recipe: " + e.getMessage());

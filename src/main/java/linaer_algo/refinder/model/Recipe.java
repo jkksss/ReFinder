@@ -108,6 +108,6 @@ public class Recipe {
      
      @Override
      public String toString(){
-         return name + "("+ cuisine +") -" +cookTime + " mins";
+         return name + " ("+ cuisine +") - " +cookTime + " mins";
      }
 }
