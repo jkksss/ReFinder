@@ -18,6 +18,18 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.53.0.0</version>
         </dependency>
+        
+        <!-- FlatLaf Modern UI Theme -->
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+            <version>3.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>RELEASE280</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -36,5 +48,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
