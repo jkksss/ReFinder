@@ -19,7 +19,17 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        
+        loadButtonIcon(btnDashboard, "/home.png", 25);
+        loadButtonIcon(btnRecipes, "/cookbook.png", 25);
+        loadButtonIcon(btnInventory, "/fridge.png", 25);
+        loadButtonIcon(btnFavorites, "/star.png", 25);
+        loadButtonIcon(btnLog, "/history.png", 25);
+        
+        setActiveButton(btnDashboard);
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,34 +43,201 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        btnDashboard = new javax.swing.JButton();
+        btnInventory = new javax.swing.JButton();
+        btnFavorites = new javax.swing.JButton();
+        btnLog = new javax.swing.JButton();
+        btnRecipes = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        pnlContent = new javax.swing.JPanel();
+        pnlDashboard = new javax.swing.JPanel();
+        pnlRecipes = new javax.swing.JPanel();
+        pnlInventory = new javax.swing.JPanel();
+        pnlFavorites = new javax.swing.JPanel();
+        pnlLog = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 248, 222));
+        setPreferredSize(new java.awt.Dimension(1000, 700));
 
         jPanel2.setBackground(new java.awt.Color(255, 248, 222));
 
         jPanel1.setBackground(new java.awt.Color(160, 58, 19));
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 4, new java.awt.Color(93, 52, 21)));
-        jPanel1.setPreferredSize(new java.awt.Dimension(260, 0));
+        jPanel1.setPreferredSize(new java.awt.Dimension(220, 0));
 
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 248, 222));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/copy.png"))); // NOI18N
+        jLabel1.setText("ReFinder");
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setIconTextGap(-30);
+
+        btnDashboard.setBackground(new java.awt.Color(255, 248, 222));
+        btnDashboard.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        btnDashboard.setForeground(new java.awt.Color(93, 39, 14));
+        btnDashboard.setText("   Dashboard");
+        btnDashboard.setFocusPainted(false);
+        btnDashboard.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnDashboard.setIconTextGap(15);
+        btnDashboard.setMargin(new java.awt.Insets(2, 20, 3, 14));
+        btnDashboard.addActionListener(this::btnDashboardActionPerformed);
+
+        btnInventory.setBackground(new java.awt.Color(255, 248, 222));
+        btnInventory.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        btnInventory.setForeground(new java.awt.Color(93, 39, 14));
+        btnInventory.setText(" Inventory");
+        btnInventory.setFocusPainted(false);
+        btnInventory.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnInventory.setIconTextGap(15);
+        btnInventory.setMargin(new java.awt.Insets(2, 20, 3, 14));
+        btnInventory.addActionListener(this::btnInventoryActionPerformed);
+
+        btnFavorites.setBackground(new java.awt.Color(255, 248, 222));
+        btnFavorites.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        btnFavorites.setForeground(new java.awt.Color(93, 39, 14));
+        btnFavorites.setText(" Favorites");
+        btnFavorites.setFocusPainted(false);
+        btnFavorites.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnFavorites.setIconTextGap(15);
+        btnFavorites.setMargin(new java.awt.Insets(2, 20, 3, 14));
+        btnFavorites.addActionListener(this::btnFavoritesActionPerformed);
+
+        btnLog.setBackground(new java.awt.Color(255, 248, 222));
+        btnLog.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        btnLog.setForeground(new java.awt.Color(93, 39, 14));
+        btnLog.setText(" Cooking Log");
+        btnLog.setFocusPainted(false);
+        btnLog.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnLog.setIconTextGap(15);
+        btnLog.setMargin(new java.awt.Insets(2, 20, 3, 14));
+        btnLog.addActionListener(this::btnLogActionPerformed);
+
+        btnRecipes.setBackground(new java.awt.Color(255, 248, 222));
+        btnRecipes.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        btnRecipes.setForeground(new java.awt.Color(93, 39, 14));
+        btnRecipes.setText("  Recipes");
+        btnRecipes.setFocusPainted(false);
+        btnRecipes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnRecipes.setIconTextGap(15);
+        btnRecipes.setMargin(new java.awt.Insets(2, 20, 3, 14));
+        btnRecipes.addActionListener(this::btnRecipesActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(85, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnLog, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnFavorites, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnInventory, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRecipes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 52, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addComponent(jSeparator1)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 643, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRecipes, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnFavorites, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLog, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        pnlContent.setLayout(new java.awt.CardLayout());
+
+        pnlDashboard.setBackground(new java.awt.Color(204, 204, 255));
+
+        javax.swing.GroupLayout pnlDashboardLayout = new javax.swing.GroupLayout(pnlDashboard);
+        pnlDashboard.setLayout(pnlDashboardLayout);
+        pnlDashboardLayout.setHorizontalGroup(
+            pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        pnlDashboardLayout.setVerticalGroup(
+            pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 760, Short.MAX_VALUE)
+        );
+
+        pnlContent.add(pnlDashboard, "card2");
+
+        pnlRecipes.setBackground(new java.awt.Color(255, 204, 204));
+
+        javax.swing.GroupLayout pnlRecipesLayout = new javax.swing.GroupLayout(pnlRecipes);
+        pnlRecipes.setLayout(pnlRecipesLayout);
+        pnlRecipesLayout.setHorizontalGroup(
+            pnlRecipesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        pnlRecipesLayout.setVerticalGroup(
+            pnlRecipesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 760, Short.MAX_VALUE)
+        );
+
+        pnlContent.add(pnlRecipes, "card3");
+
+        pnlInventory.setBackground(new java.awt.Color(255, 255, 204));
+
+        javax.swing.GroupLayout pnlInventoryLayout = new javax.swing.GroupLayout(pnlInventory);
+        pnlInventory.setLayout(pnlInventoryLayout);
+        pnlInventoryLayout.setHorizontalGroup(
+            pnlInventoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        pnlInventoryLayout.setVerticalGroup(
+            pnlInventoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 760, Short.MAX_VALUE)
+        );
+
+        pnlContent.add(pnlInventory, "card4");
+
+        pnlFavorites.setBackground(new java.awt.Color(204, 255, 204));
+
+        javax.swing.GroupLayout pnlFavoritesLayout = new javax.swing.GroupLayout(pnlFavorites);
+        pnlFavorites.setLayout(pnlFavoritesLayout);
+        pnlFavoritesLayout.setHorizontalGroup(
+            pnlFavoritesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        pnlFavoritesLayout.setVerticalGroup(
+            pnlFavoritesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 760, Short.MAX_VALUE)
+        );
+
+        pnlContent.add(pnlFavorites, "card5");
+
+        pnlLog.setBackground(new java.awt.Color(255, 102, 255));
+
+        javax.swing.GroupLayout pnlLogLayout = new javax.swing.GroupLayout(pnlLog);
+        pnlLog.setLayout(pnlLogLayout);
+        pnlLogLayout.setHorizontalGroup(
+            pnlLogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        pnlLogLayout.setVerticalGroup(
+            pnlLogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 760, Short.MAX_VALUE)
+        );
+
+        pnlContent.add(pnlLog, "card6");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -68,17 +245,71 @@ public class MainFrame extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 734, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
+            .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnFavoritesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritesActionPerformed
+        // TODO add your handling code here:
+        setActiveButton(btnFavorites);
+        
+        pnlContent.removeAll();
+        pnlContent.add(pnlFavorites);
+        pnlContent.repaint();
+        pnlContent.revalidate();
+    }//GEN-LAST:event_btnFavoritesActionPerformed
+
+    private void btnRecipesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecipesActionPerformed
+        // TODO add your handling code here:
+        setActiveButton(btnRecipes);
+        
+        pnlContent.removeAll();
+        pnlContent.add(pnlRecipes);
+        pnlContent.repaint();
+        pnlContent.revalidate();
+    }//GEN-LAST:event_btnRecipesActionPerformed
+
+    private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
+        // TODO add your handling code here:
+        setActiveButton(btnDashboard); // Highlight the button
+        
+        // Tell the CardLayout to show the Dashboard panel
+        pnlContent.removeAll();
+        pnlContent.add(pnlDashboard);
+        pnlContent.repaint();
+        pnlContent.revalidate();
+    }//GEN-LAST:event_btnDashboardActionPerformed
+
+    private void btnInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryActionPerformed
+        // TODO add your handling code here:
+        setActiveButton(btnInventory);
+        
+        pnlContent.removeAll();
+        pnlContent.add(pnlInventory);
+        pnlContent.repaint();
+        pnlContent.revalidate();
+    }//GEN-LAST:event_btnInventoryActionPerformed
+
+    private void btnLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogActionPerformed
+        // TODO add your handling code here:
+        setActiveButton(btnLog);
+        
+        pnlContent.removeAll();
+        pnlContent.add(pnlLog);
+        pnlContent.repaint();
+        pnlContent.revalidate();
+    }//GEN-LAST:event_btnLogActionPerformed
     
     /**
      * @param args the command line arguments
@@ -100,8 +331,53 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDashboard;
+    private javax.swing.JButton btnFavorites;
+    private javax.swing.JButton btnInventory;
+    private javax.swing.JButton btnLog;
+    private javax.swing.JButton btnRecipes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPanel pnlContent;
+    private javax.swing.JPanel pnlDashboard;
+    private javax.swing.JPanel pnlFavorites;
+    private javax.swing.JPanel pnlInventory;
+    private javax.swing.JPanel pnlLog;
+    private javax.swing.JPanel pnlRecipes;
     // End of variables declaration//GEN-END:variables
+
+    public void loadButtonIcon(javax.swing.JButton button, String imagePath, int width) {
+    try {
+        java.net.URL imgURL = getClass().getResource(imagePath);
+        if (imgURL != null) {
+            javax.swing.ImageIcon icon = new javax.swing.ImageIcon(imgURL);
+            // Scales the icon cleanly
+            java.awt.Image scaled = icon.getImage().getScaledInstance(width, -1, java.awt.Image.SCALE_SMOOTH);
+            button.setIcon(new javax.swing.ImageIcon(scaled));
+        } else {
+            System.out.println("Image missing: " + imagePath);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+    public void setActiveButton(javax.swing.JButton activeButton) {
+        // The default cream color
+        java.awt.Color defaultColor = new java.awt.Color(255, 248, 222);
+        // A slightly darker tan/cream to show it is selected
+        java.awt.Color activeColor = new java.awt.Color(235, 218, 185); 
+
+        // 1. Reset all buttons to default
+        btnDashboard.setBackground(defaultColor);
+        btnRecipes.setBackground(defaultColor);
+        btnInventory.setBackground(defaultColor);
+        btnFavorites.setBackground(defaultColor);
+        btnLog.setBackground(defaultColor);
+
+        // 2. Highlight the one that was just clicked
+        activeButton.setBackground(activeColor);
+    }
 }
