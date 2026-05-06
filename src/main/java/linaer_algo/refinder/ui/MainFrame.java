@@ -6,6 +6,13 @@ package linaer_algo.refinder.ui;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
+import linaer_algo.refinder.database.IngredientDAO;
+import linaer_algo.refinder.database.RecipeDAO;
+import linaer_algo.refinder.model.Recipe;
+import linaer_algo.refinder.model.Ingredient;
+import linaer_algo.refinder.algorithm.RabinKarp;
 /**
  *
  * @author Joko1
@@ -27,6 +34,36 @@ public class MainFrame extends javax.swing.JFrame {
         loadButtonIcon(btnLog, "/history.png", 25);
         
         setActiveButton(btnDashboard);
+        
+        // --- CUSTOM TABLE STYLING ---
+        // Change the header background to your dark orange
+        tblResults.getTableHeader().setBackground(new java.awt.Color(160, 58, 19)); 
+        // Change the header text color to white
+        tblResults.getTableHeader().setForeground(new java.awt.Color(255, 255, 255)); 
+        // Change the font to match your theme (Bold, Size 14)
+        tblResults.getTableHeader().setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 14));
+        tblResults.getTableHeader().setOpaque(true);
+        
+        // Bonus: Make the rows a little taller so the text isn't squished!
+        tblResults.setRowHeight(30);
+        
+        // --- CUSTOM TABLE ROW STYLING ---
+        tblResults.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 13));
+        tblResults.setForeground(new java.awt.Color(93, 39, 14)); 
+        tblResults.setSelectionBackground(new java.awt.Color(160, 58, 19)); 
+        tblResults.setSelectionForeground(new java.awt.Color(255, 255, 255)); 
+
+        // --- ALIGN THE PERCENTAGE TO THE RIGHT ---
+        javax.swing.table.DefaultTableCellRenderer rightRenderer = new javax.swing.table.DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        tblResults.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
+        
+        if (!linaer_algo.refinder.database.IngredientDAO.ingredientExists("chicken")) {
+            linaer_algo.refinder.database.IngredientDAO.addIngredient(new linaer_algo.refinder.model.Ingredient(0, "chicken", 1.0, "kg"));
+            linaer_algo.refinder.database.IngredientDAO.addIngredient(new linaer_algo.refinder.model.Ingredient(0, "garlic", 3.0, "cloves"));
+            linaer_algo.refinder.database.IngredientDAO.addIngredient(new linaer_algo.refinder.model.Ingredient(0, "soy sauce", 1.0, "bottle"));
+            System.out.println("Test ingredients added successfully!");
+        }
     }
     
     
@@ -51,6 +88,17 @@ public class MainFrame extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         pnlContent = new javax.swing.JPanel();
         pnlDashboard = new javax.swing.JPanel();
+        lblGreeting = new javax.swing.JLabel();
+        lblSubtitle = new javax.swing.JLabel();
+        btnAutoMatch = new javax.swing.JButton();
+        txtSearch = new javax.swing.JTextField();
+        btnSearch = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblResults = new javax.swing.JTable();
+        lblInventoryCount = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
         pnlRecipes = new javax.swing.JPanel();
         pnlInventory = new javax.swing.JPanel();
         pnlFavorites = new javax.swing.JPanel();
@@ -138,7 +186,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(btnDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 52, Short.MAX_VALUE)))
+                        .addGap(0, 63, Short.MAX_VALUE)))
                 .addContainerGap())
             .addComponent(jSeparator1)
         );
@@ -164,17 +212,119 @@ public class MainFrame extends javax.swing.JFrame {
 
         pnlContent.setLayout(new java.awt.CardLayout());
 
-        pnlDashboard.setBackground(new java.awt.Color(204, 204, 255));
+        pnlDashboard.setBackground(new java.awt.Color(255, 248, 222));
+        pnlDashboard.setPreferredSize(new java.awt.Dimension(3000, 760));
+
+        lblGreeting.setFont(new java.awt.Font("Century Gothic", 1, 48)); // NOI18N
+        lblGreeting.setForeground(new java.awt.Color(160, 58, 19));
+        lblGreeting.setText("Good Morning!");
+
+        lblSubtitle.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        lblSubtitle.setForeground(new java.awt.Color(93, 39, 14));
+        lblSubtitle.setText("What do you wanna cook today?");
+
+        btnAutoMatch.setBackground(new java.awt.Color(160, 58, 19));
+        btnAutoMatch.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        btnAutoMatch.setForeground(new java.awt.Color(255, 248, 222));
+        btnAutoMatch.setText("What can I cook?");
+        btnAutoMatch.addActionListener(this::btnAutoMatchActionPerformed);
+
+        txtSearch.setBackground(new java.awt.Color(160, 58, 19));
+        txtSearch.setForeground(new java.awt.Color(255, 248, 222));
+
+        btnSearch.setBackground(new java.awt.Color(160, 58, 19));
+        btnSearch.setForeground(new java.awt.Color(255, 248, 222));
+        btnSearch.setText("Search");
+
+        tblResults.setBackground(new java.awt.Color(242, 230, 185));
+        tblResults.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Recipe name", "Cuisine", "Missing Ingredients", "Match Percentage %"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblResults);
+
+        lblInventoryCount.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        lblInventoryCount.setForeground(new java.awt.Color(160, 58, 19));
+        lblInventoryCount.setText("Items in Inventory: ");
+
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(160, 58, 19));
+        jLabel3.setText("Total  Recipes: 60");
+        jLabel3.setMaximumSize(new java.awt.Dimension(118, 19));
+        jLabel3.setVerifyInputWhenFocusTarget(false);
+
+        jSeparator2.setBackground(new java.awt.Color(160, 58, 19));
+
+        jLabel2.setBackground(new java.awt.Color(160, 58, 19));
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(160, 58, 19));
+        jLabel2.setText("Manual Search:");
 
         javax.swing.GroupLayout pnlDashboardLayout = new javax.swing.GroupLayout(pnlDashboard);
         pnlDashboard.setLayout(pnlDashboardLayout);
         pnlDashboardLayout.setHorizontalGroup(
             pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(pnlDashboardLayout.createSequentialGroup()
+                .addGroup(pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAutoMatch, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 1867, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlDashboardLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlDashboardLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(9, 9, 9)
+                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblSubtitle, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblGreeting)))
+                    .addGroup(pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(pnlDashboardLayout.createSequentialGroup()
+                            .addComponent(lblInventoryCount)
+                            .addGap(1423, 1423, 1423)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1666, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlDashboardLayout.setVerticalGroup(
             pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 760, Short.MAX_VALUE)
+            .addGroup(pnlDashboardLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(lblGreeting)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSubtitle)
+                .addGap(41, 41, 41)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(btnAutoMatch, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+                .addGap(52, 52, 52)
+                .addGroup(pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblInventoryCount, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
         );
 
         pnlContent.add(pnlDashboard, "card2");
@@ -185,11 +335,11 @@ public class MainFrame extends javax.swing.JFrame {
         pnlRecipes.setLayout(pnlRecipesLayout);
         pnlRecipesLayout.setHorizontalGroup(
             pnlRecipesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 1782, Short.MAX_VALUE)
         );
         pnlRecipesLayout.setVerticalGroup(
             pnlRecipesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 760, Short.MAX_VALUE)
+            .addGap(0, 939, Short.MAX_VALUE)
         );
 
         pnlContent.add(pnlRecipes, "card3");
@@ -200,11 +350,11 @@ public class MainFrame extends javax.swing.JFrame {
         pnlInventory.setLayout(pnlInventoryLayout);
         pnlInventoryLayout.setHorizontalGroup(
             pnlInventoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 1782, Short.MAX_VALUE)
         );
         pnlInventoryLayout.setVerticalGroup(
             pnlInventoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 760, Short.MAX_VALUE)
+            .addGap(0, 939, Short.MAX_VALUE)
         );
 
         pnlContent.add(pnlInventory, "card4");
@@ -215,11 +365,11 @@ public class MainFrame extends javax.swing.JFrame {
         pnlFavorites.setLayout(pnlFavoritesLayout);
         pnlFavoritesLayout.setHorizontalGroup(
             pnlFavoritesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 1782, Short.MAX_VALUE)
         );
         pnlFavoritesLayout.setVerticalGroup(
             pnlFavoritesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 760, Short.MAX_VALUE)
+            .addGap(0, 939, Short.MAX_VALUE)
         );
 
         pnlContent.add(pnlFavorites, "card5");
@@ -230,11 +380,11 @@ public class MainFrame extends javax.swing.JFrame {
         pnlLog.setLayout(pnlLogLayout);
         pnlLogLayout.setHorizontalGroup(
             pnlLogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 1782, Short.MAX_VALUE)
         );
         pnlLogLayout.setVerticalGroup(
             pnlLogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 760, Short.MAX_VALUE)
+            .addGap(0, 939, Short.MAX_VALUE)
         );
 
         pnlContent.add(pnlLog, "card6");
@@ -244,14 +394,14 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(pnlContent, javax.swing.GroupLayout.PREFERRED_SIZE, 1782, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 939, Short.MAX_VALUE)
             .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -310,6 +460,58 @@ public class MainFrame extends javax.swing.JFrame {
         pnlContent.repaint();
         pnlContent.revalidate();
     }//GEN-LAST:event_btnLogActionPerformed
+
+    private void btnAutoMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoMatchActionPerformed
+        // TODO add your handling code here:
+        // 1. Get the table model and clear old results
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tblResults.getModel();
+        model.setRowCount(0);
+
+        // 2. Fetch User Inventory from SQLite
+        java.util.List<String> myInventory = linaer_algo.refinder.database.IngredientDAO.getIngredientNames();
+
+        // 3. Fetch All Recipes from SQLite
+        java.util.List<linaer_algo.refinder.model.Recipe> allRecipes = linaer_algo.refinder.database.RecipeDAO.getAllRecipes();
+
+        // --- NEW: The "Waiting Room" for our results ---
+        java.util.List<Object[]> matchResults = new java.util.ArrayList<>();
+
+        // 4. Run the True Rolling Hash for each recipe
+        for (linaer_algo.refinder.model.Recipe recipe : allRecipes) {
+            
+            java.util.List<String> requiredIngredients = linaer_algo.refinder.database.RecipeDAO.getRecipeIngredientsNames(recipe.getId());
+            
+            double matchScore = linaer_algo.refinder.algorithm.RabinKarp.calculateMatchPercentage(requiredIngredients, myInventory);
+            java.util.List<String> missing = linaer_algo.refinder.algorithm.RabinKarp.getMissingIngredients(requiredIngredients, myInventory);
+            
+            String missingItems = String.join(", ", missing);
+            if (missingItems.isEmpty()) {
+                missingItems = "None! Ready to cook! 🍳";
+            }
+            
+            String formattedScore = String.format("%.1f%%", matchScore);
+
+            // Instead of adding straight to the table, we add to our waiting room.
+            // TRICK: We sneak the raw 'matchScore' double in at the very end (index 4) so we can sort by it!
+            matchResults.add(new Object[]{
+                recipe.getName(), 
+                recipe.getCuisine(), 
+                missingItems, 
+                formattedScore,
+                matchScore 
+            });
+        }
+
+        // --- NEW: Sort the list from Highest Match (100%) to Lowest (0%) ---
+        matchResults.sort((rowA, rowB) -> Double.compare((Double) rowB[4], (Double) rowA[4]));
+
+        // 5. Push the sorted results into the Dashboard UI Table!
+        for (Object[] rowData : matchResults) {
+            // We only push the first 4 columns to the UI (Name, Cuisine, Missing, Score)
+            // We leave out index 4 (the raw double) because the user doesn't need to see it.
+            model.addRow(new Object[]{rowData[0], rowData[1], rowData[2], rowData[3]});
+        }
+    }//GEN-LAST:event_btnAutoMatchActionPerformed
     
     /**
      * @param args the command line arguments
@@ -331,21 +533,32 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAutoMatch;
     private javax.swing.JButton btnDashboard;
     private javax.swing.JButton btnFavorites;
     private javax.swing.JButton btnInventory;
     private javax.swing.JButton btnLog;
     private javax.swing.JButton btnRecipes;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel lblGreeting;
+    private javax.swing.JLabel lblInventoryCount;
+    private javax.swing.JLabel lblSubtitle;
     private javax.swing.JPanel pnlContent;
     private javax.swing.JPanel pnlDashboard;
     private javax.swing.JPanel pnlFavorites;
     private javax.swing.JPanel pnlInventory;
     private javax.swing.JPanel pnlLog;
     private javax.swing.JPanel pnlRecipes;
+    private javax.swing.JTable tblResults;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 
     public void loadButtonIcon(javax.swing.JButton button, String imagePath, int width) {
