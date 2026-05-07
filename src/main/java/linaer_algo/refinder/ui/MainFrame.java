@@ -103,6 +103,16 @@ public class MainFrame extends javax.swing.JFrame {
         pnlInventory = new javax.swing.JPanel();
         pnlFavorites = new javax.swing.JPanel();
         pnlLog = new javax.swing.JPanel();
+        pnlRecipeDetails = new javax.swing.JPanel();
+        lblRecipeImage = new javax.swing.JLabel();
+        lblRecipeTitle = new javax.swing.JLabel();
+        lblRecipeCuisine = new javax.swing.JLabel();
+        lblRecipeTime = new javax.swing.JLabel();
+        btnBack = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtRecipeIngredients = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtRecipeInstructions = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 248, 222));
@@ -265,7 +275,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(160, 58, 19));
         jLabel3.setText("Total  Recipes: 60");
-        jLabel3.setMaximumSize(new java.awt.Dimension(118, 19));
         jLabel3.setVerifyInputWhenFocusTarget(false);
 
         jSeparator2.setBackground(new java.awt.Color(160, 58, 19));
@@ -298,7 +307,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGroup(pnlDashboardLayout.createSequentialGroup()
                             .addComponent(lblInventoryCount)
                             .addGap(1423, 1423, 1423)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel3))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1666, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -323,7 +332,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(52, 52, 52)
                 .addGroup(pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblInventoryCount, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3))
                 .addGap(20, 20, 20))
         );
 
@@ -389,6 +398,93 @@ public class MainFrame extends javax.swing.JFrame {
 
         pnlContent.add(pnlLog, "card6");
 
+        pnlRecipeDetails.setBackground(new java.awt.Color(255, 248, 222));
+
+        lblRecipeImage.setText("jLabel4");
+        lblRecipeImage.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(160, 58, 19)));
+
+        lblRecipeTitle.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        lblRecipeTitle.setForeground(new java.awt.Color(160, 58, 19));
+        lblRecipeTitle.setText("jLabel4");
+
+        lblRecipeCuisine.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        lblRecipeCuisine.setForeground(new java.awt.Color(160, 58, 19));
+        lblRecipeCuisine.setText("jLabel4");
+
+        lblRecipeTime.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        lblRecipeTime.setForeground(new java.awt.Color(160, 58, 19));
+        lblRecipeTime.setText("jLabel5");
+
+        btnBack.setBackground(new java.awt.Color(160, 58, 19));
+        btnBack.setText("jButton1");
+
+        txtRecipeIngredients.setBackground(new java.awt.Color(242, 230, 185));
+        txtRecipeIngredients.setColumns(20);
+        txtRecipeIngredients.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        txtRecipeIngredients.setForeground(new java.awt.Color(160, 58, 19));
+        txtRecipeIngredients.setLineWrap(true);
+        txtRecipeIngredients.setRows(5);
+        txtRecipeIngredients.setWrapStyleWord(true);
+        jScrollPane2.setViewportView(txtRecipeIngredients);
+
+        txtRecipeInstructions.setBackground(new java.awt.Color(242, 230, 185));
+        txtRecipeInstructions.setColumns(20);
+        txtRecipeInstructions.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        txtRecipeInstructions.setForeground(new java.awt.Color(160, 58, 19));
+        txtRecipeInstructions.setLineWrap(true);
+        txtRecipeInstructions.setRows(5);
+        txtRecipeInstructions.setWrapStyleWord(true);
+        jScrollPane3.setViewportView(txtRecipeInstructions);
+
+        javax.swing.GroupLayout pnlRecipeDetailsLayout = new javax.swing.GroupLayout(pnlRecipeDetails);
+        pnlRecipeDetails.setLayout(pnlRecipeDetailsLayout);
+        pnlRecipeDetailsLayout.setHorizontalGroup(
+            pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 656, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3))
+                    .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
+                        .addComponent(lblRecipeImage, javax.swing.GroupLayout.PREFERRED_SIZE, 577, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
+                                .addComponent(lblRecipeTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(95, 95, 95)
+                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblRecipeCuisine, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblRecipeTime, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(444, Short.MAX_VALUE))
+        );
+        pnlRecipeDetailsLayout.setVerticalGroup(
+            pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblRecipeImage, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
+                        .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblRecipeTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlRecipeDetailsLayout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblRecipeCuisine, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblRecipeTime, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)))
+                .addGap(51, 51, 51)
+                .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3))
+                .addContainerGap(44, Short.MAX_VALUE))
+        );
+
+        pnlContent.add(pnlRecipeDetails, "card7");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -401,7 +497,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 939, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 888, Short.MAX_VALUE)
             .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -534,6 +630,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAutoMatch;
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDashboard;
     private javax.swing.JButton btnFavorites;
     private javax.swing.JButton btnInventory;
@@ -546,18 +643,27 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblGreeting;
     private javax.swing.JLabel lblInventoryCount;
+    private javax.swing.JLabel lblRecipeCuisine;
+    private javax.swing.JLabel lblRecipeImage;
+    private javax.swing.JLabel lblRecipeTime;
+    private javax.swing.JLabel lblRecipeTitle;
     private javax.swing.JLabel lblSubtitle;
     private javax.swing.JPanel pnlContent;
     private javax.swing.JPanel pnlDashboard;
     private javax.swing.JPanel pnlFavorites;
     private javax.swing.JPanel pnlInventory;
     private javax.swing.JPanel pnlLog;
+    private javax.swing.JPanel pnlRecipeDetails;
     private javax.swing.JPanel pnlRecipes;
     private javax.swing.JTable tblResults;
+    private javax.swing.JTextArea txtRecipeIngredients;
+    private javax.swing.JTextArea txtRecipeInstructions;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 
