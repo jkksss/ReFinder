@@ -138,4 +138,56 @@ public class RabinKarp {
         
         return missing;
     }
+    
+    // =====================
+    // Quantity-Aware Match Calculator
+    // =====================
+    public static double calculateQuantityMatch(
+            List<linaer_algo.refinder.model.Ingredient> recipeReqs,
+            List<linaer_algo.refinder.model.Ingredient> inventory) {
+        
+        if (recipeReqs == null || recipeReqs.isEmpty()) return 0.0;
+        int matchCount = 0;
+
+        for (linaer_algo.refinder.model.Ingredient req : recipeReqs) {
+            for (linaer_algo.refinder.model.Ingredient inv : inventory) {
+                // Use your existing Rabin-Karp method to match the names!
+                if (search(req.getName(), inv.getName()) || search(inv.getName(), req.getName())) {
+                    // Names match! Now check if they have ENOUGH of it.
+                    if (inv.getQuantity() >= req.getQuantity()) {
+                        matchCount++;
+                    }
+                    break; // Found the item, stop checking inventory for this ingredient
+                }
+            }
+        }
+        return ((double) matchCount / recipeReqs.size()) * 100.0;
+    }
+
+    // =====================
+    // Quantity-Aware Missing Ingredients
+    // =====================
+    public static List<String> getMissingQuantityIngredients(
+            List<linaer_algo.refinder.model.Ingredient> recipeReqs,
+            List<linaer_algo.refinder.model.Ingredient> inventory) {
+          
+        List<String> missing = new ArrayList<>();
+        
+        for (linaer_algo.refinder.model.Ingredient req : recipeReqs) {
+            boolean hasEnough = false;
+            for (linaer_algo.refinder.model.Ingredient inv : inventory) {
+                if (search(req.getName(), inv.getName()) || search(inv.getName(), req.getName())) {
+                    if (inv.getQuantity() >= req.getQuantity()) {
+                        hasEnough = true;
+                    }
+                    break;
+                }
+            }
+            if (!hasEnough) {
+                // Format nicely so the user knows exactly how much they are missing
+                missing.add(req.getName() + " (need " + req.getQuantity() + " " + req.getUnit() + ")");
+            }  
+        }
+        return missing;
+    }
 }

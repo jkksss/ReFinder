@@ -191,4 +191,29 @@ public class RecipeDAO {
 
         return false;
     }
+    
+    // Grabs a single specific recipe by its exact name
+    public static Recipe getRecipeByName(String name) {
+        String sql = "SELECT * FROM recipes WHERE name = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, name);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Recipe(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("cuisine"),
+                        rs.getInt("cook_time"),
+                        rs.getString("instructions"),
+                        rs.getString("photo_path")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting recipe by name: " + e.getMessage());
+        }
+        return null;
+    }
 }
