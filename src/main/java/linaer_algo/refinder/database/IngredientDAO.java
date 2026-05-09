@@ -23,6 +23,46 @@ public class IngredientDAO {
             System.out.println("Error adding ingredient: " + e.getMessage());
         }
     }
+    
+    // Smart Add: Updates quantity if it exists, creates a new row if it doesn't!
+    public static void addOrUpdateIngredient(String name, double amountToAdd, String unit) {
+        String checkSql = "SELECT quantity FROM ingredients WHERE LOWER(name) = LOWER(?)";
+        String updateSql = "UPDATE ingredients SET quantity = quantity + ? WHERE LOWER(name) = LOWER(?)";
+        String insertSql = "INSERT INTO ingredients (name, quantity, unit) VALUES (?, ?, ?)";
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            
+            // 1. Check if the ingredient already exists (ignoring upper/lower case)
+            try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+                checkStmt.setString(1, name); 
+                try (ResultSet rs = checkStmt.executeQuery()) {
+                    
+                    if (rs.next()) {
+                        // It exists! Just update the quantity.
+                        try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                            updateStmt.setDouble(1, amountToAdd);
+                            updateStmt.setString(2, name);
+                            updateStmt.executeUpdate();
+                            System.out.println("Updated existing ingredient: " + name);
+                        }
+                    } else {
+                        // It's brand new! Insert a new row.
+                        try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                            // Capitalize the first letter before saving
+                            String cleanName = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+                            insertStmt.setString(1, cleanName);
+                            insertStmt.setDouble(2, amountToAdd);
+                            insertStmt.setString(3, unit);
+                            insertStmt.executeUpdate();
+                            System.out.println("Added new ingredient: " + cleanName);
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error adding ingredient: " + e.getMessage());
+        }
+    }
          
     //Shows ingredients when user opens their inventory
     public static List<Ingredient> getAllIngredients() {

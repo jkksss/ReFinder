@@ -27,6 +27,7 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        loadInventoryTable();
         
         loadButtonIcon(btnDashboard, "/home.png", 25);
         loadButtonIcon(btnRecipes, "/cookbook.png", 25);
@@ -65,6 +66,14 @@ public class MainFrame extends javax.swing.JFrame {
             linaer_algo.refinder.database.IngredientDAO.addIngredient(new linaer_algo.refinder.model.Ingredient(0, "soy sauce", 1.0, "bottle"));
             System.out.println("Test ingredients added successfully!");
         }
+        
+        // --- NEW: Style the Table Headers! ---
+        javax.swing.table.JTableHeader header = tblInventory.getTableHeader();
+        // Set to your rust/brown theme color (Adjust these RGB numbers if needed!)
+        header.setBackground(new java.awt.Color(164, 61, 23)); 
+        header.setForeground(java.awt.Color.WHITE); // White text so it pops
+        header.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12)); // Make it bold
+        header.setOpaque(false); // Forces Java to apply the background color
     }
     
     
@@ -102,6 +111,18 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         pnlRecipes = new javax.swing.JPanel();
         pnlInventory = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        txtIngName = new javax.swing.JTextField();
+        txtIngQty = new javax.swing.JTextField();
+        cmbIngUnit = new javax.swing.JComboBox<>();
+        btnAdding = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblInventory = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
+        lblTotalItems = new javax.swing.JLabel();
+        lblLowStock = new javax.swing.JLabel();
+        lblRecentAdd = new javax.swing.JLabel();
         pnlFavorites = new javax.swing.JPanel();
         pnlLog = new javax.swing.JPanel();
         pnlRecipeDetails = new javax.swing.JPanel();
@@ -357,22 +378,167 @@ public class MainFrame extends javax.swing.JFrame {
         );
         pnlRecipesLayout.setVerticalGroup(
             pnlRecipesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 939, Short.MAX_VALUE)
+            .addGap(0, 1025, Short.MAX_VALUE)
         );
 
         pnlContent.add(pnlRecipes, "pnlRecipes");
 
         pnlInventory.setBackground(new java.awt.Color(255, 255, 204));
 
+        jPanel3.setBackground(new java.awt.Color(160, 58, 19));
+        jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(160, 58, 19), 3, true));
+
+        txtIngName.setBackground(new java.awt.Color(255, 248, 222));
+        txtIngName.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        txtIngName.setForeground(new java.awt.Color(160, 58, 19));
+
+        txtIngQty.setBackground(new java.awt.Color(255, 248, 222));
+        txtIngQty.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        txtIngQty.setForeground(new java.awt.Color(160, 58, 19));
+
+        cmbIngUnit.setBackground(new java.awt.Color(255, 248, 222));
+        cmbIngUnit.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        cmbIngUnit.setForeground(new java.awt.Color(160, 58, 19));
+        cmbIngUnit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "cloves", "g", "kg", "piece" }));
+
+        btnAdding.setBackground(new java.awt.Color(255, 248, 222));
+        btnAdding.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        btnAdding.setForeground(new java.awt.Color(160, 58, 19));
+        btnAdding.setText("Add");
+        btnAdding.addActionListener(this::btnAddingActionPerformed);
+
+        jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 248, 222));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/copy.png"))); // NOI18N
+        jLabel5.setText("ReFinder");
+        jLabel5.setIconTextGap(-30);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(txtIngQty, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbIngUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(txtIngName, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(312, Short.MAX_VALUE))))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnAdding, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtIngName, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtIngQty, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbIngUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAdding, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(9, Short.MAX_VALUE))
+        );
+
+        jScrollPane4.setBackground(new java.awt.Color(242, 230, 185));
+
+        tblInventory.setBackground(new java.awt.Color(242, 230, 185));
+        tblInventory.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        tblInventory.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Ingredients Name", "Quantity", "Unit"
+            }
+        ));
+        jScrollPane4.setViewportView(tblInventory);
+        if (tblInventory.getColumnModel().getColumnCount() > 0) {
+            tblInventory.getColumnModel().getColumn(1).setResizable(false);
+            tblInventory.getColumnModel().getColumn(2).setResizable(false);
+        }
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 4, true));
+
+        lblTotalItems.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        lblTotalItems.setForeground(new java.awt.Color(160, 58, 19));
+        lblTotalItems.setText("Total Unique Ingredients: 0");
+
+        lblLowStock.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        lblLowStock.setForeground(new java.awt.Color(160, 58, 19));
+        lblLowStock.setText("Low Stock Items : 0");
+
+        lblRecentAdd.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        lblRecentAdd.setForeground(new java.awt.Color(160, 58, 19));
+        lblRecentAdd.setText("Last Added: None");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblLowStock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTotalItems, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
+                    .addComponent(lblRecentAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(lblTotalItems, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblLowStock, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblRecentAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout pnlInventoryLayout = new javax.swing.GroupLayout(pnlInventory);
         pnlInventory.setLayout(pnlInventoryLayout);
         pnlInventoryLayout.setHorizontalGroup(
             pnlInventoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1782, Short.MAX_VALUE)
+            .addGroup(pnlInventoryLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(pnlInventoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 1543, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlInventoryLayout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(348, 348, 348)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(210, Short.MAX_VALUE))
         );
         pnlInventoryLayout.setVerticalGroup(
             pnlInventoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 939, Short.MAX_VALUE)
+            .addGroup(pnlInventoryLayout.createSequentialGroup()
+                .addGroup(pnlInventoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlInventoryLayout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlInventoryLayout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
         );
 
         pnlContent.add(pnlInventory, "pnlInventory");
@@ -387,7 +553,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
         pnlFavoritesLayout.setVerticalGroup(
             pnlFavoritesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 939, Short.MAX_VALUE)
+            .addGap(0, 1025, Short.MAX_VALUE)
         );
 
         pnlContent.add(pnlFavorites, "pnlFavorites");
@@ -402,7 +568,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
         pnlLogLayout.setVerticalGroup(
             pnlLogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 939, Short.MAX_VALUE)
+            .addGap(0, 1025, Short.MAX_VALUE)
         );
 
         pnlContent.add(pnlLog, "pnlLog");
@@ -517,7 +683,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCooked, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(181, Short.MAX_VALUE))
         );
 
         pnlContent.add(pnlRecipeDetails, "pnlRecipeDetails");
@@ -534,7 +700,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 888, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1025, Short.MAX_VALUE)
             .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -766,6 +932,46 @@ public class MainFrame extends javax.swing.JFrame {
             btnAutoMatch.doClick(); 
         }
     }//GEN-LAST:event_btnCookedActionPerformed
+
+    private void btnAddingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddingActionPerformed
+        // TODO add your handling code here:
+        try {
+            // 1. Grab the data from the UI
+            String name = txtIngName.getText().trim();
+            String qtyText = txtIngQty.getText().trim();
+            String unit = cmbIngUnit.getSelectedItem().toString();
+
+            // Safety check so they don't add blank stuff
+            if (name.isEmpty() || qtyText.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Please enter both a name and a quantity!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // 2. Convert text to a number (this is where we check if they typed letters by accident)
+            double qty = Double.parseDouble(qtyText);
+
+            // 3. Send it to the database! 
+            linaer_algo.refinder.database.IngredientDAO.addOrUpdateIngredient(name, qty, unit);
+
+            // 4. Clear the text boxes so they can add the next thing easily
+            txtIngName.setText("");
+            txtIngQty.setText("");
+            txtIngName.requestFocus(); // Puts the typing cursor back in the name box!
+
+            // 5. Update the "Last Added" stat on your floating card
+            lblRecentAdd.setText("Last Added: " + name.substring(0, 1).toUpperCase() + name.substring(1));
+
+            // 6. Refresh the table and the rest of the stats instantly!
+            loadInventoryTable(); 
+            
+            // Optional: Little success pop-up
+            javax.swing.JOptionPane.showMessageDialog(this, "Added to Inventory! 🥦");
+
+        } catch (NumberFormatException e) {
+            // Catches them if they type "five" instead of "5"
+            javax.swing.JOptionPane.showMessageDialog(this, "Quantity must be a number!", "Input Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAddingActionPerformed
     
     /**
      * @param args the command line arguments
@@ -787,6 +993,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdding;
     private javax.swing.JButton btnAutoMatch;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCooked;
@@ -796,25 +1003,33 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnLog;
     private javax.swing.JButton btnRecipes;
     private javax.swing.JButton btnSearch;
+    private javax.swing.JComboBox<String> cmbIngUnit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblGreeting;
     private javax.swing.JLabel lblInventoryCount;
+    private javax.swing.JLabel lblLowStock;
     private javax.swing.JLabel lblMatchScore;
     private javax.swing.JLabel lblMissingItems;
+    private javax.swing.JLabel lblRecentAdd;
     private javax.swing.JLabel lblRecipeCuisine;
     private javax.swing.JLabel lblRecipeImage;
     private javax.swing.JLabel lblRecipeTime;
     private javax.swing.JLabel lblRecipeTitle;
     private javax.swing.JLabel lblSubtitle;
+    private javax.swing.JLabel lblTotalItems;
     private javax.swing.JPanel pnlContent;
     private javax.swing.JPanel pnlDashboard;
     private javax.swing.JPanel pnlFavorites;
@@ -822,7 +1037,10 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel pnlLog;
     private javax.swing.JPanel pnlRecipeDetails;
     private javax.swing.JPanel pnlRecipes;
+    private javax.swing.JTable tblInventory;
     private javax.swing.JTable tblResults;
+    private javax.swing.JTextField txtIngName;
+    private javax.swing.JTextField txtIngQty;
     private javax.swing.JTextArea txtRecipeIngredients;
     private javax.swing.JTextArea txtRecipeInstructions;
     private javax.swing.JTextField txtSearch;
@@ -861,5 +1079,54 @@ public class MainFrame extends javax.swing.JFrame {
         activeButton.setBackground(activeColor);
         
         
+    }
+    
+    public void loadInventoryTable() {
+        // 1. Get the table model and wipe it clean before loading fresh data
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tblInventory.getModel();
+        model.setRowCount(0); 
+
+        int totalItems = 0;
+        int lowStockCount = 0;
+
+        // 2. Fetch data from SQLite, sorted alphabetically!
+        String sql = "SELECT name, quantity, unit FROM ingredients ORDER BY name ASC";
+        
+        try (java.sql.Connection conn = linaer_algo.refinder.database.DatabaseConnection.getConnection();
+             java.sql.Statement stmt = conn.createStatement();
+             java.sql.ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                String rawName = rs.getString("name");
+                double qty = rs.getDouble("quantity");
+                String unit = rs.getString("unit");
+
+                // Capitalize the first letter so it looks professional in the table
+                String capName = rawName.substring(0, 1).toUpperCase() + rawName.substring(1);
+
+                // Add the row to the table!
+                model.addRow(new Object[]{capName, qty, unit});
+
+                // 3. Do the Math for our Stats Board!
+                totalItems++;
+                if (qty < 2.0) {
+                    lowStockCount++;
+                }
+            }
+
+            // 4. Update the UI Labels
+            lblTotalItems.setText("Total Unique Ingredients: " + totalItems);
+            lblLowStock.setText("Low Stock Items (< 2 units): " + lowStockCount);
+
+            // 5. Apply the Dynamic Red Warning Text!
+            if (lowStockCount > 0) {
+                lblLowStock.setForeground(java.awt.Color.RED);
+            } else {
+                lblLowStock.setForeground(new java.awt.Color(50, 50, 50)); // Dark gray
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error loading inventory: " + e.getMessage());
+        }
     }
 }
