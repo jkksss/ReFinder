@@ -115,20 +115,35 @@ public class RecipeDAO {
         return names;
     }
     
-    //This is for adding any recipes to favorites
+    // Upgraded: Adds to favorites, but blocks duplicates!
     public static void addToFavorites(int recipeId){
-        String sql = "INSERT INTO favorites (recipe_id) VALUES (?)";
+        String checkSql = "SELECT COUNT(*) FROM favorites WHERE recipe_id = ?";
+        String insertSql = "INSERT INTO favorites (recipe_id) VALUES (?)";
         
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, recipeId);
-            pstmt.executeUpdate();
-            System.out.println("Recipe added to favorites!");
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            
+            // 1. Check if it's already favorited
+            try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+                checkStmt.setInt(1, recipeId);
+                try (ResultSet rs = checkStmt.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) > 0) {
+                        System.out.println("Recipe is already in favorites!");
+                        return; // Stop here, don't insert a duplicate!
+                    }
+                }
+            }
+            
+            // 2. If we made it here, it's not a duplicate. Save it!
+            try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                insertStmt.setInt(1, recipeId);
+                insertStmt.executeUpdate();
+                System.out.println("Recipe added to favorites!");
+            }
+            
         } catch (SQLException e) {
             System.out.println("Error adding to favorites: " + e.getMessage());
         }
     }
-    
     //Removes recipe from favorites
     public static void removeFromFavorites(int recipeId){
         String sql = "DELETE FROM favorites WHERE recipe_id = ?";

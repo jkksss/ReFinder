@@ -28,6 +28,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         loadInventoryTable();
+        loadRecipeCards("");
         
         loadButtonIcon(btnDashboard, "/home.png", 25);
         loadButtonIcon(btnRecipes, "/cookbook.png", 25);
@@ -37,28 +38,6 @@ public class MainFrame extends javax.swing.JFrame {
         
         setActiveButton(btnDashboard);
         
-        // --- CUSTOM TABLE STYLING ---
-        // Change the header background to your dark orange
-        tblResults.getTableHeader().setBackground(new java.awt.Color(160, 58, 19)); 
-        // Change the header text color to white
-        tblResults.getTableHeader().setForeground(new java.awt.Color(255, 255, 255)); 
-        // Change the font to match your theme (Bold, Size 14)
-        tblResults.getTableHeader().setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 14));
-        tblResults.getTableHeader().setOpaque(true);
-        
-        // Bonus: Make the rows a little taller so the text isn't squished!
-        tblResults.setRowHeight(30);
-        
-        // --- CUSTOM TABLE ROW STYLING ---
-        tblResults.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 13));
-        tblResults.setForeground(new java.awt.Color(93, 39, 14)); 
-        tblResults.setSelectionBackground(new java.awt.Color(160, 58, 19)); 
-        tblResults.setSelectionForeground(new java.awt.Color(255, 255, 255)); 
-
-        // --- ALIGN THE PERCENTAGE TO THE RIGHT ---
-        javax.swing.table.DefaultTableCellRenderer rightRenderer = new javax.swing.table.DefaultTableCellRenderer();
-        rightRenderer.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        tblResults.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
         
         if (!linaer_algo.refinder.database.IngredientDAO.ingredientExists("chicken")) {
             linaer_algo.refinder.database.IngredientDAO.addIngredient(new linaer_algo.refinder.model.Ingredient(0, "chicken", 1.0, "kg"));
@@ -103,13 +82,15 @@ public class MainFrame extends javax.swing.JFrame {
         btnAutoMatch = new javax.swing.JButton();
         txtSearch = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblResults = new javax.swing.JTable();
         lblInventoryCount = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        pnlDashboardCards = new javax.swing.JPanel();
         pnlRecipes = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        pnlRecipeCards = new javax.swing.JPanel();
         pnlInventory = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         txtIngName = new javax.swing.JTextField();
@@ -138,6 +119,7 @@ public class MainFrame extends javax.swing.JFrame {
         btnCooked = new javax.swing.JButton();
         lblMatchScore = new javax.swing.JLabel();
         lblMissingItems = new javax.swing.JLabel();
+        btnFavorite = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 248, 222));
@@ -271,33 +253,6 @@ public class MainFrame extends javax.swing.JFrame {
         btnSearch.setForeground(new java.awt.Color(255, 248, 222));
         btnSearch.setText("Search");
 
-        tblResults.setBackground(new java.awt.Color(242, 230, 185));
-        tblResults.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Recipe name", "Cuisine", "Missing Ingredients", "Match Percentage %"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblResults.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblResultsMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tblResults);
-
         lblInventoryCount.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         lblInventoryCount.setForeground(new java.awt.Color(160, 58, 19));
         lblInventoryCount.setText("Items in Inventory: ");
@@ -314,6 +269,9 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(160, 58, 19));
         jLabel2.setText("Manual Search:");
 
+        pnlDashboardCards.setBackground(new java.awt.Color(255, 248, 222));
+        jScrollPane5.setViewportView(pnlDashboardCards);
+
         javax.swing.GroupLayout pnlDashboardLayout = new javax.swing.GroupLayout(pnlDashboard);
         pnlDashboard.setLayout(pnlDashboardLayout);
         pnlDashboardLayout.setHorizontalGroup(
@@ -325,21 +283,21 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(pnlDashboardLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDashboardLayout.createSequentialGroup()
+                                    .addComponent(lblInventoryCount)
+                                    .addGap(1423, 1423, 1423)
+                                    .addComponent(jLabel3)))
+                            .addComponent(lblSubtitle, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblGreeting)
                             .addGroup(pnlDashboardLayout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(9, 9, 9)
                                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblSubtitle, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblGreeting)))
-                    .addGroup(pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(pnlDashboardLayout.createSequentialGroup()
-                            .addComponent(lblInventoryCount)
-                            .addGap(1423, 1423, 1423)
-                            .addComponent(jLabel3))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1666, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(1133, Short.MAX_VALUE))
         );
         pnlDashboardLayout.setVerticalGroup(
             pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,28 +315,47 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
-                .addGap(52, 52, 52)
-                .addGroup(pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblInventoryCount, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(20, 20, 20))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(lblInventoryCount, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16))
         );
 
         pnlContent.add(pnlDashboard, "pnlDashboard");
 
         pnlRecipes.setBackground(new java.awt.Color(255, 204, 204));
 
+        javax.swing.GroupLayout pnlRecipeCardsLayout = new javax.swing.GroupLayout(pnlRecipeCards);
+        pnlRecipeCards.setLayout(pnlRecipeCardsLayout);
+        pnlRecipeCardsLayout.setHorizontalGroup(
+            pnlRecipeCardsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1553, Short.MAX_VALUE)
+        );
+        pnlRecipeCardsLayout.setVerticalGroup(
+            pnlRecipeCardsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 899, Short.MAX_VALUE)
+        );
+
+        jScrollPane1.setViewportView(pnlRecipeCards);
+
         javax.swing.GroupLayout pnlRecipesLayout = new javax.swing.GroupLayout(pnlRecipes);
         pnlRecipes.setLayout(pnlRecipesLayout);
         pnlRecipesLayout.setHorizontalGroup(
             pnlRecipesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1782, Short.MAX_VALUE)
+            .addGroup(pnlRecipesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1559, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(217, Short.MAX_VALUE))
         );
         pnlRecipesLayout.setVerticalGroup(
             pnlRecipesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1025, Short.MAX_VALUE)
+            .addGroup(pnlRecipesLayout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 905, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         pnlContent.add(pnlRecipes, "pnlRecipes");
@@ -420,14 +397,12 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(txtIngQty, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbIngUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(txtIngName, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(312, Short.MAX_VALUE))))
+                        .addComponent(cmbIngUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtIngName, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(312, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -626,6 +601,11 @@ public class MainFrame extends javax.swing.JFrame {
         lblMissingItems.setFont(new java.awt.Font("Century Gothic", 1, 10)); // NOI18N
         lblMissingItems.setText("jLabel5");
 
+        btnFavorite.setBackground(new java.awt.Color(160, 58, 19));
+        btnFavorite.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        btnFavorite.setText("Bookmark");
+        btnFavorite.addActionListener(this::btnFavoriteActionPerformed);
+
         javax.swing.GroupLayout pnlRecipeDetailsLayout = new javax.swing.GroupLayout(pnlRecipeDetails);
         pnlRecipeDetails.setLayout(pnlRecipeDetailsLayout);
         pnlRecipeDetailsLayout.setHorizontalGroup(
@@ -637,22 +617,26 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(lblRecipeImage, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblRecipeTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblRecipeCuisine, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblRecipeTime, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblMatchScore, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblMissingItems, javax.swing.GroupLayout.PREFERRED_SIZE, 845, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblMissingItems, javax.swing.GroupLayout.PREFERRED_SIZE, 845, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblRecipeTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE))
                     .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 656, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane3)
-                        .addGap(39, 39, 39)))
+                        .addGap(15, 15, 15)))
+                .addGap(32, 32, 32)
                 .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnCooked, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(139, Short.MAX_VALUE))
+                    .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
+                        .addComponent(btnFavorite, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         pnlRecipeDetailsLayout.setVerticalGroup(
             pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -676,11 +660,13 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addComponent(lblRecipeImage, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3)))
-                    .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlRecipeDetailsLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnBack, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                            .addComponent(btnFavorite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCooked, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(181, Short.MAX_VALUE))
@@ -761,12 +747,10 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLogActionPerformed
 
     private void btnAutoMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoMatchActionPerformed
-        // TODO add your handling code here:
-        // 1. Get the table model and clear old results
-        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tblResults.getModel();
-        model.setRowCount(0);
+      // 1. Clear the card container from any previous searches
+        pnlDashboardCards.removeAll();
 
-        // 2. Fetch User Inventory (NOW AS INGREDIENT OBJECTS)
+        // 2. Fetch User Inventory
         java.util.List<linaer_algo.refinder.model.Ingredient> myInventory = linaer_algo.refinder.database.IngredientDAO.getAllIngredients();
 
         // 3. Fetch All Recipes
@@ -775,131 +759,112 @@ public class MainFrame extends javax.swing.JFrame {
 
         // 4. Run the True Rolling Hash + Quantity Check
         for (linaer_algo.refinder.model.Recipe recipe : allRecipes) {
-            
-            // Get the required ingredients WITH their quantities
             java.util.List<linaer_algo.refinder.model.Ingredient> requiredIngredients = linaer_algo.refinder.database.RecipeDAO.getRecipeIngredients(recipe.getId());
             
-            // Use the new upgraded methods!
             double matchScore = linaer_algo.refinder.algorithm.RabinKarp.calculateQuantityMatch(requiredIngredients, myInventory);
             java.util.List<String> missing = linaer_algo.refinder.algorithm.RabinKarp.getMissingQuantityIngredients(requiredIngredients, myInventory);
             
             String missingItems = String.join(", ", missing);
             if (missingItems.isEmpty()) {
-                missingItems = "None! Ready to cook! 🍳";
+                missingItems = "Ready to cook! 🍳";
             }
             
-            String formattedScore = String.format("%.1f%%", matchScore);
-
-            matchResults.add(new Object[]{
-                recipe.getName(), 
-                recipe.getCuisine(), 
-                missingItems, 
-                formattedScore,
-                matchScore 
-            });
+            matchResults.add(new Object[]{recipe, matchScore, missingItems});
         }
 
-        // --- NEW: Sort the list from Highest Match (100%) to Lowest (0%) ---
-        matchResults.sort((rowA, rowB) -> Double.compare((Double) rowB[4], (Double) rowA[4]));
+        // 5. Sort from Highest Match (100%) to Lowest (0%)
+        matchResults.sort((rowA, rowB) -> Double.compare((Double) rowB[1], (Double) rowA[1]));
 
-        // 5. Push the sorted results into the Dashboard UI Table!
+        // --- 6. BUILD THE CARDS DYNAMICALLY ---
         for (Object[] rowData : matchResults) {
-            // We only push the first 4 columns to the UI (Name, Cuisine, Missing, Score)
-            // We leave out index 4 (the raw double) because the user doesn't need to see it.
-            model.addRow(new Object[]{rowData[0], rowData[1], rowData[2], rowData[3]});
-        }
-    }//GEN-LAST:event_btnAutoMatchActionPerformed
+            linaer_algo.refinder.model.Recipe recipe = (linaer_algo.refinder.model.Recipe) rowData[0];
+            double score = (Double) rowData[1];
+            String missingItems = (String) rowData[2];
 
-    private void tblResultsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblResultsMouseClicked
-       // Only trigger if they DOUBLE CLICK the row
-        if (evt.getClickCount() == 2) {
-            
-            // 1. Find out which row they clicked and get the Recipe Name
-            int row = tblResults.getSelectedRow();
-            String recipeName = tblResults.getValueAt(row, 0).toString();
-            
-            // --- NEW: Grab the Score and Missing Items from the Table! ---
-            String missingItemsText = tblResults.getValueAt(row, 2).toString();
-            String matchScoreText = tblResults.getValueAt(row, 3).toString();
-            
-            linaer_algo.refinder.model.Recipe recipe = linaer_algo.refinder.database.RecipeDAO.getRecipeByName(recipeName);
-            
-            if (recipe != null) {
-                currentActiveRecipeId = recipe.getId(); 
-                
-                lblRecipeTitle.setText(recipe.getName());
-                lblRecipeCuisine.setText("Cuisine: " + recipe.getCuisine());
-                lblRecipeTime.setText("Cook Time: " + recipe.getCookTime() + " mins");
-                
-                // --- NEW: Set the UI Labels and Conditional Colors ---
-                lblMatchScore.setText("Match: " + matchScoreText);
-                
-                try {
-                    // Strip the '%' sign and convert it back to a decimal number
-                    double scoreValue = Double.parseDouble(matchScoreText.replace("%", ""));
-                    
-                    // Apply the Conditional Colors!
-                    if (scoreValue >= 50.0) {
-                        // Custom darker green for readability
-                        lblMatchScore.setForeground(new java.awt.Color(0, 153, 0)); 
-                    } else {
-                        // Standard red for anything below 50%
-                        lblMatchScore.setForeground(java.awt.Color.RED); 
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("Could not parse match score for colors.");
-                }
-                
-                lblMissingItems.setText("Missing: " + missingItemsText);
-                
-                txtRecipeInstructions.setText(recipe.getInstructions());
-                
-                // 4. Fetch and Format the Ingredients List WITH Quantities and Capitalization
-                java.util.List<linaer_algo.refinder.model.Ingredient> fullIngredients = linaer_algo.refinder.database.RecipeDAO.getRecipeIngredients(recipe.getId());
-                StringBuilder formattedList = new StringBuilder();
-                
-                for (linaer_algo.refinder.model.Ingredient ing : fullIngredients) {
-                    // Capitalize the first letter of the ingredient name
-                    String rawName = ing.getName();
-                    String capName = rawName.substring(0, 1).toUpperCase() + rawName.substring(1);
-                    
-                    // Clean up the decimal (so "1.0" looks like "1", but "1.5" stays "1.5")
-                    String qty = String.valueOf(ing.getQuantity());
-                    if (qty.endsWith(".0")) {
-                        qty = qty.substring(0, qty.length() - 2);
-                    }
-                    
-                    // Build the final string: "- 2 cups Jasmine rice"
-                    formattedList.append("- ")
-                                 .append(qty).append(" ")
-                                 .append(ing.getUnit()).append(" ")
-                                 .append(capName).append("\n");
-                }
-                
-                txtRecipeIngredients.setText(formattedList.toString());
-                
-                // 5. Handle the Recipe Photo
-                try {
-                    java.net.URL imgURL = getClass().getResource(recipe.getPhotoPath());
-                    if(imgURL != null) {
-                        javax.swing.ImageIcon icon = new javax.swing.ImageIcon(imgURL);
-                        java.awt.Image img = icon.getImage().getScaledInstance(lblRecipeImage.getWidth(), lblRecipeImage.getHeight(), java.awt.Image.SCALE_SMOOTH);
-                        lblRecipeImage.setIcon(new javax.swing.ImageIcon(img));
-                        lblRecipeImage.setText(""); 
-                    } else {
-                        lblRecipeImage.setIcon(null);
-                        lblRecipeImage.setText("No Image Available");
-                    }
-                } catch (Exception e) {
-                    System.out.println("No image loaded.");
-                }
+            // Create the main Card Panel
+            javax.swing.JPanel card = new javax.swing.JPanel();
+            card.setPreferredSize(new java.awt.Dimension(220, 280)); 
+            card.setBackground(new java.awt.Color(255, 240, 230));
+            card.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 248, 222), 2, true)); // Cream Border
+            card.setLayout(new java.awt.BorderLayout());
 
-                // 6. Flip the CardLayout to show the Recipe Details Screen!
-                java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
-                layout.show(pnlContent, "pnlRecipeDetails");
+            // Image Section
+            javax.swing.JLabel lblImg = new javax.swing.JLabel();
+            lblImg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            try {
+                java.net.URL imgURL = getClass().getResource(recipe.getPhotoPath());
+                if (imgURL != null) {
+                    javax.swing.ImageIcon icon = new javax.swing.ImageIcon(imgURL);
+                    java.awt.Image img = icon.getImage().getScaledInstance(200, 150, java.awt.Image.SCALE_SMOOTH);
+                    lblImg.setIcon(new javax.swing.ImageIcon(img));
+                } else {
+                    lblImg.setText("No Image");
+                }
+            } catch (Exception e) {}
+
+            // Text Section (Title, Score, Missing Items)
+            javax.swing.JPanel pnlText = new javax.swing.JPanel(new java.awt.GridLayout(3, 1));
+            pnlText.setBackground(new java.awt.Color(255, 240, 230)); // Dark Orange!
+            pnlText.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)); 
+            
+            // Recipe Name
+            javax.swing.JLabel lblTitle = new javax.swing.JLabel(recipe.getName(), javax.swing.SwingConstants.CENTER);
+            lblTitle.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+            lblTitle.setForeground(new java.awt.Color(160, 58, 19)); 
+            
+            // Match Percentage (Color coded!)
+            String formattedScore = String.format("%.1f%% Match", score);
+            javax.swing.JLabel lblScore = new javax.swing.JLabel(formattedScore, javax.swing.SwingConstants.CENTER);
+            lblScore.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
+            
+            if (score >= 50.0) {
+                lblScore.setForeground(new java.awt.Color(0, 153, 0)); // Green if 50% or higher
+            } else {
+                lblScore.setForeground(java.awt.Color.RED); // Pure Red if below 50%
             }
+            
+            // Missing Items
+            javax.swing.JLabel lblMiss = new javax.swing.JLabel(missingItems, javax.swing.SwingConstants.CENTER);
+            lblMiss.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 11));
+            lblMiss.setForeground(new java.awt.Color(220, 220, 220));
+
+            pnlText.add(lblTitle);
+            pnlText.add(lblScore);
+            pnlText.add(lblMiss);
+
+            card.add(lblImg, java.awt.BorderLayout.CENTER);
+            card.add(pnlText, java.awt.BorderLayout.SOUTH);
+
+            // Add Click Event to open the Recipe Details
+            final int finalId = recipe.getId();
+            final double finalScore = score;
+            final String finalMissing = missingItems;
+            
+            card.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    openRecipeDetailsFromDashboard(finalId, finalScore, finalMissing);
+                }
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    card.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(160, 58, 19), 2, true)); // Hover effect
+                }
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    card.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 1, true));
+                }
+            });
+
+            // Drop it into the UI
+            pnlDashboardCards.add(card);
         }
-    }//GEN-LAST:event_tblResultsMouseClicked
+
+        // --- NEW FIX: Force Vertical Scrolling (OUTSIDE the loop!) ---
+        pnlDashboardCards.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING, 8, 8));
+        int totalCards = matchResults.size();
+        int estimatedRows = (int) Math.ceil(totalCards / 6.0); 
+        pnlDashboardCards.setPreferredSize(new java.awt.Dimension(1400, (estimatedRows * 310) + 100));
+
+        pnlDashboardCards.revalidate();
+        pnlDashboardCards.repaint();
+    }//GEN-LAST:event_btnAutoMatchActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
@@ -972,6 +937,24 @@ public class MainFrame extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Quantity must be a number!", "Input Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAddingActionPerformed
+
+    private void btnFavoriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoriteActionPerformed
+        // TODO add your handling code here:
+        if (currentActiveRecipeId != -1) {
+            
+            // 1. Check if it is already favorited using YOUR custom method!
+            boolean alreadySaved = linaer_algo.refinder.database.RecipeDAO.isFavorite(currentActiveRecipeId);
+            
+            if (alreadySaved) {
+                // Let them know they already saved it
+                javax.swing.JOptionPane.showMessageDialog(this, "This recipe is already in your Favorites! ❤️", "Info", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                // 2. Not saved yet? Add it using YOUR custom method!
+                linaer_algo.refinder.database.RecipeDAO.addToFavorites(currentActiveRecipeId);
+                javax.swing.JOptionPane.showMessageDialog(this, "Recipe successfully saved to your Favorites! ❤️");
+            }
+        }
+    }//GEN-LAST:event_btnFavoriteActionPerformed
     
     /**
      * @param args the command line arguments
@@ -998,6 +981,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCooked;
     private javax.swing.JButton btnDashboard;
+    private javax.swing.JButton btnFavorite;
     private javax.swing.JButton btnFavorites;
     private javax.swing.JButton btnInventory;
     private javax.swing.JButton btnLog;
@@ -1016,6 +1000,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblGreeting;
@@ -1032,13 +1017,14 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblTotalItems;
     private javax.swing.JPanel pnlContent;
     private javax.swing.JPanel pnlDashboard;
+    private javax.swing.JPanel pnlDashboardCards;
     private javax.swing.JPanel pnlFavorites;
     private javax.swing.JPanel pnlInventory;
     private javax.swing.JPanel pnlLog;
+    private javax.swing.JPanel pnlRecipeCards;
     private javax.swing.JPanel pnlRecipeDetails;
     private javax.swing.JPanel pnlRecipes;
     private javax.swing.JTable tblInventory;
-    private javax.swing.JTable tblResults;
     private javax.swing.JTextField txtIngName;
     private javax.swing.JTextField txtIngQty;
     private javax.swing.JTextArea txtRecipeIngredients;
@@ -1127,6 +1113,190 @@ public class MainFrame extends javax.swing.JFrame {
 
         } catch (Exception e) {
             System.out.println("Error loading inventory: " + e.getMessage());
+        }
+    }
+    
+   public void loadRecipeCards(String searchQuery) {
+        // 1. Clear the container so we don't stack duplicates
+        pnlRecipeCards.removeAll(); 
+        
+        String sql = "SELECT id, name, cook_time, photo_path FROM recipes";
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            sql += " WHERE LOWER(name) LIKE '%" + searchQuery.toLowerCase() + "%'";
+        }
+        sql += " ORDER BY name ASC";
+
+        try (java.sql.Connection conn = linaer_algo.refinder.database.DatabaseConnection.getConnection();
+             java.sql.Statement stmt = conn.createStatement();
+             java.sql.ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                final int recipeId = rs.getInt("id"); 
+                String name = rs.getString("name");
+                int time = rs.getInt("cook_time");
+                String photoPath = rs.getString("photo_path");
+
+                // --- 2. BUILD THE CARD ---
+                javax.swing.JPanel card = new javax.swing.JPanel();
+                card.setPreferredSize(new java.awt.Dimension(200, 240)); 
+                card.setBackground(new java.awt.Color(255, 240, 230));
+                card.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 248, 222), 2, true)); // Cream Border
+                card.setLayout(new java.awt.BorderLayout());
+
+                // --- 3. ADD THE IMAGE ---
+                javax.swing.JLabel lblImg = new javax.swing.JLabel();
+                lblImg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                try {
+                    java.net.URL imgURL = getClass().getResource(photoPath);
+                    if (imgURL != null) {
+                        javax.swing.ImageIcon icon = new javax.swing.ImageIcon(imgURL);
+                        java.awt.Image img = icon.getImage().getScaledInstance(180, 160, java.awt.Image.SCALE_SMOOTH);
+                        lblImg.setIcon(new javax.swing.ImageIcon(img));
+                    } else {
+                        lblImg.setText("No Image");
+                    }
+                } catch (Exception e) {}
+
+                // --- 4. ADD THE TEXT ---
+                javax.swing.JPanel pnlText = new javax.swing.JPanel(new java.awt.GridLayout(2, 1));
+                pnlText.setBackground(new java.awt.Color(255, 248, 222)); // Changed to Cream!
+                pnlText.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)); 
+                
+                javax.swing.JLabel lblTitle = new javax.swing.JLabel(name, javax.swing.SwingConstants.CENTER);
+                lblTitle.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
+                
+                javax.swing.JLabel lblTime = new javax.swing.JLabel("🕒 " + time + " mins", javax.swing.SwingConstants.CENTER);
+                lblTime.setForeground(new java.awt.Color(100, 100, 100)); 
+
+                pnlText.add(lblTitle);
+                pnlText.add(lblTime);
+
+                // --- 5. ASSEMBLE THE CARD ---
+                card.add(lblImg, java.awt.BorderLayout.CENTER);
+                card.add(pnlText, java.awt.BorderLayout.SOUTH);
+
+                // --- 6. ADD CLICK EVENT ---
+                card.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        openRecipeDetailsFromCard(recipeId); 
+                    }
+                    public void mouseEntered(java.awt.event.MouseEvent evt) {
+                        card.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(164, 61, 23), 2, true));
+                    }
+                    public void mouseExited(java.awt.event.MouseEvent evt) {
+                        card.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 1, true)); 
+                    }
+                });
+
+                // --- 7. DROP CARD INTO THE RECIPES GRID ---
+                pnlRecipeCards.add(card);
+            }
+
+            // --- NEW FIX: Force Vertical Scrolling (OUTSIDE the while loop!) ---
+            pnlRecipeCards.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING, 20, 20));
+            int totalCards = pnlRecipeCards.getComponentCount();
+            int estimatedRows = (int) Math.ceil(totalCards / 6.0); 
+            pnlRecipeCards.setPreferredSize(new java.awt.Dimension(1400, (estimatedRows * 310) + 100));
+
+            pnlRecipeCards.revalidate();
+            pnlRecipeCards.repaint();
+
+        } catch (Exception e) {
+            System.out.println("Error loading recipe cards: " + e.getMessage());
+        }
+    }
+    
+    public void openRecipeDetailsFromCard(int id) {
+        // Fetch it from the database using the ID!
+        linaer_algo.refinder.model.Recipe recipe = null;
+        for(linaer_algo.refinder.model.Recipe r : linaer_algo.refinder.database.RecipeDAO.getAllRecipes()) {
+             if(r.getId() == id) { recipe = r; break; }
+        }
+        
+        if (recipe != null) {
+            currentActiveRecipeId = recipe.getId(); 
+            
+            lblRecipeTitle.setText(recipe.getName());
+            lblRecipeCuisine.setText("Cuisine: " + recipe.getCuisine());
+            lblRecipeTime.setText("Cook Time: " + recipe.getCookTime() + " mins");
+            txtRecipeInstructions.setText(recipe.getInstructions());
+            lblMatchScore.setText(""); 
+            lblMissingItems.setText("Viewing from Recipe Directory"); 
+            
+            // Load Ingredients
+            java.util.List<linaer_algo.refinder.model.Ingredient> fullIngredients = linaer_algo.refinder.database.RecipeDAO.getRecipeIngredients(recipe.getId());
+            StringBuilder formattedList = new StringBuilder();
+            for (linaer_algo.refinder.model.Ingredient ing : fullIngredients) {
+                String capName = ing.getName().substring(0, 1).toUpperCase() + ing.getName().substring(1);
+                String qty = String.valueOf(ing.getQuantity());
+                if (qty.endsWith(".0")) qty = qty.substring(0, qty.length() - 2);
+                formattedList.append("- ").append(qty).append(" ").append(ing.getUnit()).append(" ").append(capName).append("\n");
+            }
+            txtRecipeIngredients.setText(formattedList.toString());
+            
+            // Load Photo
+            try {
+                java.net.URL imgURL = getClass().getResource(recipe.getPhotoPath());
+                if(imgURL != null) {
+                    javax.swing.ImageIcon icon = new javax.swing.ImageIcon(imgURL);
+                    java.awt.Image img = icon.getImage().getScaledInstance(lblRecipeImage.getWidth(), lblRecipeImage.getHeight(), java.awt.Image.SCALE_SMOOTH);
+                    lblRecipeImage.setIcon(new javax.swing.ImageIcon(img));
+                }
+            } catch (Exception e) {}
+
+            // Flip screen
+            java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
+            layout.show(pnlContent, "pnlRecipeDetails");
+        }
+    }
+    
+    public void openRecipeDetailsFromDashboard(int id, double matchScore, String missingItems) {
+        linaer_algo.refinder.model.Recipe recipe = linaer_algo.refinder.database.RecipeDAO.getRecipeByName(
+            linaer_algo.refinder.database.RecipeDAO.getAllRecipes().stream().filter(r -> r.getId() == id).findFirst().get().getName()
+        );
+        
+        if (recipe != null) {
+            currentActiveRecipeId = recipe.getId(); 
+            
+            // Load text
+            lblRecipeTitle.setText(recipe.getName());
+            lblRecipeCuisine.setText("Cuisine: " + recipe.getCuisine());
+            lblRecipeTime.setText("Cook Time: " + recipe.getCookTime() + " mins");
+            txtRecipeInstructions.setText(recipe.getInstructions());
+            
+            // Load Algorithm Stats!
+            lblMatchScore.setText(String.format("Match Score: %.1f%%", matchScore));
+            if (matchScore >= 80.0) {
+                lblMatchScore.setForeground(new java.awt.Color(0, 153, 0));
+            } else {
+                lblMatchScore.setForeground(java.awt.Color.RED);
+            }
+            lblMissingItems.setText("Missing: " + missingItems); 
+            
+            // Load Ingredients List
+            java.util.List<linaer_algo.refinder.model.Ingredient> fullIngredients = linaer_algo.refinder.database.RecipeDAO.getRecipeIngredients(recipe.getId());
+            StringBuilder formattedList = new StringBuilder();
+            for (linaer_algo.refinder.model.Ingredient ing : fullIngredients) {
+                String capName = ing.getName().substring(0, 1).toUpperCase() + ing.getName().substring(1);
+                String qty = String.valueOf(ing.getQuantity());
+                if (qty.endsWith(".0")) qty = qty.substring(0, qty.length() - 2);
+                formattedList.append("- ").append(qty).append(" ").append(ing.getUnit()).append(" ").append(capName).append("\n");
+            }
+            txtRecipeIngredients.setText(formattedList.toString());
+            
+            // Load Photo
+            try {
+                java.net.URL imgURL = getClass().getResource(recipe.getPhotoPath());
+                if(imgURL != null) {
+                    javax.swing.ImageIcon icon = new javax.swing.ImageIcon(imgURL);
+                    java.awt.Image img = icon.getImage().getScaledInstance(lblRecipeImage.getWidth(), lblRecipeImage.getHeight(), java.awt.Image.SCALE_SMOOTH);
+                    lblRecipeImage.setIcon(new javax.swing.ImageIcon(img));
+                }
+            } catch (Exception e) {}
+
+            // Flip screen
+            java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
+            layout.show(pnlContent, "pnlRecipeDetails");
         }
     }
 }
