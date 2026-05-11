@@ -21,6 +21,7 @@ public class MainFrame extends javax.swing.JFrame {
     
     private int currentActiveRecipeId = -1;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
+    private String lastScreen = "pnlDashboard";
 
     /**
      * Creates new form MainFrame
@@ -29,6 +30,7 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         loadInventoryTable();
         loadRecipeCards("");
+        loadFavoritesCards();
         
         loadButtonIcon(btnDashboard, "/home.png", 25);
         loadButtonIcon(btnRecipes, "/cookbook.png", 25);
@@ -91,6 +93,7 @@ public class MainFrame extends javax.swing.JFrame {
         pnlRecipes = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pnlRecipeCards = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
         pnlInventory = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         txtIngName = new javax.swing.JTextField();
@@ -105,6 +108,9 @@ public class MainFrame extends javax.swing.JFrame {
         lblLowStock = new javax.swing.JLabel();
         lblRecentAdd = new javax.swing.JLabel();
         pnlFavorites = new javax.swing.JPanel();
+        scrlFavorites = new javax.swing.JScrollPane();
+        pnlFavoritesCards = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
         pnlLog = new javax.swing.JPanel();
         pnlRecipeDetails = new javax.swing.JPanel();
         lblRecipeImage = new javax.swing.JLabel();
@@ -269,6 +275,8 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(160, 58, 19));
         jLabel2.setText("Manual Search:");
 
+        jScrollPane5.setBorder(null);
+
         pnlDashboardCards.setBackground(new java.awt.Color(255, 248, 222));
         jScrollPane5.setViewportView(pnlDashboardCards);
 
@@ -297,7 +305,7 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(1133, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlDashboardLayout.setVerticalGroup(
             pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,20 +334,28 @@ public class MainFrame extends javax.swing.JFrame {
 
         pnlContent.add(pnlDashboard, "pnlDashboard");
 
-        pnlRecipes.setBackground(new java.awt.Color(255, 204, 204));
+        pnlRecipes.setBackground(new java.awt.Color(255, 248, 222));
+
+        jScrollPane1.setBorder(null);
+
+        pnlRecipeCards.setBackground(new java.awt.Color(255, 248, 222));
 
         javax.swing.GroupLayout pnlRecipeCardsLayout = new javax.swing.GroupLayout(pnlRecipeCards);
         pnlRecipeCards.setLayout(pnlRecipeCardsLayout);
         pnlRecipeCardsLayout.setHorizontalGroup(
             pnlRecipeCardsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1553, Short.MAX_VALUE)
+            .addGap(0, 1627, Short.MAX_VALUE)
         );
         pnlRecipeCardsLayout.setVerticalGroup(
             pnlRecipeCardsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 899, Short.MAX_VALUE)
+            .addGap(0, 951, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(pnlRecipeCards);
+
+        jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 48)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(160, 58, 19));
+        jLabel4.setText("All Recipes");
 
         javax.swing.GroupLayout pnlRecipesLayout = new javax.swing.GroupLayout(pnlRecipes);
         pnlRecipes.setLayout(pnlRecipesLayout);
@@ -347,15 +363,19 @@ public class MainFrame extends javax.swing.JFrame {
             pnlRecipesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRecipesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1559, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(217, Short.MAX_VALUE))
+                .addGroup(pnlRecipesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1639, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
         pnlRecipesLayout.setVerticalGroup(
             pnlRecipesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlRecipesLayout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 905, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRecipesLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 832, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(81, 81, 81))
         );
 
         pnlContent.add(pnlRecipes, "pnlRecipes");
@@ -518,17 +538,35 @@ public class MainFrame extends javax.swing.JFrame {
 
         pnlContent.add(pnlInventory, "pnlInventory");
 
-        pnlFavorites.setBackground(new java.awt.Color(204, 255, 204));
+        pnlFavorites.setBackground(new java.awt.Color(255, 248, 222));
+
+        pnlFavoritesCards.setBackground(new java.awt.Color(255, 248, 222));
+        scrlFavorites.setViewportView(pnlFavoritesCards);
+
+        jLabel6.setBackground(new java.awt.Color(160, 58, 19));
+        jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 48)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(160, 58, 19));
+        jLabel6.setText("My Cookbook");
 
         javax.swing.GroupLayout pnlFavoritesLayout = new javax.swing.GroupLayout(pnlFavorites);
         pnlFavorites.setLayout(pnlFavoritesLayout);
         pnlFavoritesLayout.setHorizontalGroup(
             pnlFavoritesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1782, Short.MAX_VALUE)
+            .addGroup(pnlFavoritesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlFavoritesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrlFavorites, javax.swing.GroupLayout.PREFERRED_SIZE, 1541, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(235, Short.MAX_VALUE))
         );
         pnlFavoritesLayout.setVerticalGroup(
             pnlFavoritesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1025, Short.MAX_VALUE)
+            .addGroup(pnlFavoritesLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrlFavorites, javax.swing.GroupLayout.PREFERRED_SIZE, 749, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(191, Short.MAX_VALUE))
         );
 
         pnlContent.add(pnlFavorites, "pnlFavorites");
@@ -543,7 +581,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
         pnlLogLayout.setVerticalGroup(
             pnlLogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1025, Short.MAX_VALUE)
+            .addGap(0, 1040, Short.MAX_VALUE)
         );
 
         pnlContent.add(pnlLog, "pnlLog");
@@ -611,37 +649,43 @@ public class MainFrame extends javax.swing.JFrame {
         pnlRecipeDetailsLayout.setHorizontalGroup(
             pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
-                .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(lblRecipeImage, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblRecipeCuisine, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblRecipeTime, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblMatchScore, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblMissingItems, javax.swing.GroupLayout.PREFERRED_SIZE, 845, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblRecipeTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE))
-                    .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 656, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane3)
-                        .addGap(15, 15, 15)))
-                .addGap(32, 32, 32)
                 .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnCooked, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
-                        .addComponent(btnFavorite, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnCooked, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
+                        .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addComponent(lblRecipeImage, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
+                                        .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblRecipeCuisine, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblRecipeTime, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblMatchScore, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblMissingItems, javax.swing.GroupLayout.PREFERRED_SIZE, 845, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE))
+                                    .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
+                                        .addComponent(lblRecipeTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnFavorite, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(2, 2, 2))))
+                            .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 656, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 772, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(41, 41, 41)
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(163, Short.MAX_VALUE))
         );
         pnlRecipeDetailsLayout.setVerticalGroup(
             pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
-                .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
                         .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
@@ -659,17 +703,17 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addGap(20, 20, 20)
                                 .addComponent(lblRecipeImage, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2)))
+                        .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane3)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlRecipeDetailsLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnBack, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-                            .addComponent(btnFavorite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCooked, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(181, Short.MAX_VALUE))
+                        .addGap(30, 30, 30)
+                        .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnFavorite, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCooked, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68))
         );
 
         pnlContent.add(pnlRecipeDetails, "pnlRecipeDetails");
@@ -686,7 +730,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1025, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1040, Short.MAX_VALUE)
             .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -698,169 +742,183 @@ public class MainFrame extends javax.swing.JFrame {
     private void btnFavoritesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritesActionPerformed
         // TODO add your handling code here:
         setActiveButton(btnFavorites);
-        
-        pnlContent.removeAll();
-        pnlContent.add(pnlFavorites);
-        pnlContent.repaint();
-        pnlContent.revalidate();
+        java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
+        layout.show(pnlContent, "pnlFavorites");
     }//GEN-LAST:event_btnFavoritesActionPerformed
 
     private void btnRecipesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecipesActionPerformed
         // TODO add your handling code here:
         setActiveButton(btnRecipes);
-        
-        pnlContent.removeAll();
-        pnlContent.add(pnlRecipes);
-        pnlContent.repaint();
-        pnlContent.revalidate();
+        java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
+        layout.show(pnlContent, "pnlRecipes");
     }//GEN-LAST:event_btnRecipesActionPerformed
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
         // TODO add your handling code here:
-        setActiveButton(btnDashboard); // Highlight the button
-        
-        // Tell the CardLayout to show the Dashboard panel
-        pnlContent.removeAll();
-        pnlContent.add(pnlDashboard);
-        pnlContent.repaint();
-        pnlContent.revalidate();
+        setActiveButton(btnDashboard); 
+        java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
+        layout.show(pnlContent, "pnlDashboard");    
     }//GEN-LAST:event_btnDashboardActionPerformed
 
     private void btnInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryActionPerformed
         // TODO add your handling code here:
         setActiveButton(btnInventory);
-        
-        pnlContent.removeAll();
-        pnlContent.add(pnlInventory);
-        pnlContent.repaint();
-        pnlContent.revalidate();
+        java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
+        layout.show(pnlContent, "pnlInventory");
     }//GEN-LAST:event_btnInventoryActionPerformed
 
     private void btnLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogActionPerformed
         // TODO add your handling code here:
-        setActiveButton(btnLog);
-        
-        pnlContent.removeAll();
-        pnlContent.add(pnlLog);
-        pnlContent.repaint();
-        pnlContent.revalidate();
+       setActiveButton(btnLog);
+        java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
+        layout.show(pnlContent, "pnlLog");
     }//GEN-LAST:event_btnLogActionPerformed
 
     private void btnAutoMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoMatchActionPerformed
-      // 1. Clear the card container from any previous searches
-        pnlDashboardCards.removeAll();
+     pnlDashboardCards.removeAll();
 
-        // 2. Fetch User Inventory
         java.util.List<linaer_algo.refinder.model.Ingredient> myInventory = linaer_algo.refinder.database.IngredientDAO.getAllIngredients();
-
-        // 3. Fetch All Recipes
         java.util.List<linaer_algo.refinder.model.Recipe> allRecipes = linaer_algo.refinder.database.RecipeDAO.getAllRecipes();
         java.util.List<Object[]> matchResults = new java.util.ArrayList<>();
 
-        // 4. Run the True Rolling Hash + Quantity Check
         for (linaer_algo.refinder.model.Recipe recipe : allRecipes) {
             java.util.List<linaer_algo.refinder.model.Ingredient> requiredIngredients = linaer_algo.refinder.database.RecipeDAO.getRecipeIngredients(recipe.getId());
-            
             double matchScore = linaer_algo.refinder.algorithm.RabinKarp.calculateQuantityMatch(requiredIngredients, myInventory);
             java.util.List<String> missing = linaer_algo.refinder.algorithm.RabinKarp.getMissingQuantityIngredients(requiredIngredients, myInventory);
             
             String missingItems = String.join(", ", missing);
-            if (missingItems.isEmpty()) {
-                missingItems = "Ready to cook! 🍳";
-            }
-            
+            if (missingItems.isEmpty()) missingItems = "Ready to cook! 🍳";
             matchResults.add(new Object[]{recipe, matchScore, missingItems});
         }
 
-        // 5. Sort from Highest Match (100%) to Lowest (0%)
         matchResults.sort((rowA, rowB) -> Double.compare((Double) rowB[1], (Double) rowA[1]));
 
-        // --- 6. BUILD THE CARDS DYNAMICALLY ---
+        // --- DYNAMIC DASHBOARD CARDS ---
         for (Object[] rowData : matchResults) {
             linaer_algo.refinder.model.Recipe recipe = (linaer_algo.refinder.model.Recipe) rowData[0];
-            double score = (Double) rowData[1];
+            final double score = (Double) rowData[1];
             String missingItems = (String) rowData[2];
+            
+            // Limit missing items text so it doesn't break the card
+            if(missingItems.length() > 35) missingItems = missingItems.substring(0, 32) + "...";
 
-            // Create the main Card Panel
-            javax.swing.JPanel card = new javax.swing.JPanel();
-            card.setPreferredSize(new java.awt.Dimension(220, 280)); 
-            card.setBackground(new java.awt.Color(255, 240, 230));
-            card.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 248, 222), 2, true)); // Cream Border
-            card.setLayout(new java.awt.BorderLayout());
-
-            // Image Section
-            javax.swing.JLabel lblImg = new javax.swing.JLabel();
-            lblImg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            java.awt.Image tempImg = null;
             try {
                 java.net.URL imgURL = getClass().getResource(recipe.getPhotoPath());
-                if (imgURL != null) {
-                    javax.swing.ImageIcon icon = new javax.swing.ImageIcon(imgURL);
-                    java.awt.Image img = icon.getImage().getScaledInstance(200, 150, java.awt.Image.SCALE_SMOOTH);
-                    lblImg.setIcon(new javax.swing.ImageIcon(img));
-                } else {
-                    lblImg.setText("No Image");
-                }
+                if (imgURL != null) tempImg = new javax.swing.ImageIcon(imgURL).getImage();
             } catch (Exception e) {}
+            final java.awt.Image finalImg = tempImg;
 
-            // Text Section (Title, Score, Missing Items)
-            javax.swing.JPanel pnlText = new javax.swing.JPanel(new java.awt.GridLayout(3, 1));
-            pnlText.setBackground(new java.awt.Color(255, 240, 230)); // Dark Orange!
-            pnlText.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)); 
-            
-            // Recipe Name
-            javax.swing.JLabel lblTitle = new javax.swing.JLabel(recipe.getName(), javax.swing.SwingConstants.CENTER);
-            lblTitle.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
-            lblTitle.setForeground(new java.awt.Color(160, 58, 19)); 
-            
-            // Match Percentage (Color coded!)
-            String formattedScore = String.format("%.1f%% Match", score);
-            javax.swing.JLabel lblScore = new javax.swing.JLabel(formattedScore, javax.swing.SwingConstants.CENTER);
-            lblScore.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
-            
-            if (score >= 50.0) {
-                lblScore.setForeground(new java.awt.Color(0, 153, 0)); // Green if 50% or higher
-            } else {
-                lblScore.setForeground(java.awt.Color.RED); // Pure Red if below 50%
-            }
-            
-            // Missing Items
-            javax.swing.JLabel lblMiss = new javax.swing.JLabel(missingItems, javax.swing.SwingConstants.CENTER);
+            // --- 1. ROUNDED CARD ---
+            javax.swing.JPanel card = new javax.swing.JPanel() {
+                @Override
+                protected void paintComponent(java.awt.Graphics g) {
+                    java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                    g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                    g2.setColor(java.awt.Color.WHITE); 
+                    g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 30, 30); 
+                    g2.setColor(new java.awt.Color(220, 220, 220)); 
+                    g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 30, 30);
+                    g2.dispose();
+                }
+            };
+            card.setOpaque(false); 
+            card.setPreferredSize(new java.awt.Dimension(240, 310)); 
+            card.setLayout(new java.awt.BorderLayout());
+            card.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)); 
+
+            // --- 2. IMAGE AREA WITH DYNAMIC SCORE BADGE ---
+            javax.swing.JPanel pnlImage = new javax.swing.JPanel() {
+                @Override
+                protected void paintComponent(java.awt.Graphics g) {
+                    java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                    g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                    
+                    java.awt.geom.Path2D.Float path = new java.awt.geom.Path2D.Float();
+                    path.moveTo(0, getHeight()); path.lineTo(0, 15); path.quadTo(0, 0, 15, 0);
+                    path.lineTo(getWidth() - 15, 0); path.quadTo(getWidth(), 0, getWidth(), 15);
+                    path.lineTo(getWidth(), getHeight()); path.closePath();
+                    g2.clip(path);
+
+                    if (finalImg != null) g2.drawImage(finalImg, 0, 0, getWidth(), getHeight(), this);
+                    else { g2.setColor(new java.awt.Color(240, 240, 240)); g2.fillRect(0, 0, getWidth(), getHeight()); }
+
+                    // DYNAMIC BADGE LOGIC
+                    g2.setClip(null); 
+                    if (score >= 50.0) g2.setColor(new java.awt.Color(0, 153, 0, 220)); // Green Badge
+                    else g2.setColor(new java.awt.Color(204, 0, 0, 220)); // Red Badge
+                    
+                    g2.fillRoundRect(10, 10, 95, 28, 15, 15); 
+                    g2.setColor(java.awt.Color.WHITE);
+                    g2.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+                    g2.drawString(String.format("%.1f%% Match", score), 20, 29);
+
+                    g2.dispose();
+                }
+            };
+            pnlImage.setPreferredSize(new java.awt.Dimension(240, 150));
+            pnlImage.setOpaque(false);
+
+            // --- 3. TEXT AREA ---
+            javax.swing.JPanel pnlText = new javax.swing.JPanel();
+            pnlText.setOpaque(false);
+            pnlText.setLayout(new javax.swing.BoxLayout(pnlText, javax.swing.BoxLayout.Y_AXIS));
+            pnlText.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15)); 
+
+            javax.swing.JLabel lblTitle = new javax.swing.JLabel(recipe.getName());
+            lblTitle.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 16));
+            lblTitle.setForeground(new java.awt.Color(40, 40, 40)); 
+
+            javax.swing.JLabel lblMiss = new javax.swing.JLabel("Missing: " + missingItems);
             lblMiss.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 11));
-            lblMiss.setForeground(new java.awt.Color(220, 220, 220));
+            lblMiss.setForeground(new java.awt.Color(160, 58, 19)); 
+
+            // --- 4. PILL BUTTON ---
+            javax.swing.JLabel btnView = new javax.swing.JLabel("View Recipe", javax.swing.SwingConstants.CENTER) {
+                @Override
+                protected void paintComponent(java.awt.Graphics g) {
+                    java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                    g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                    g2.setColor(new java.awt.Color(160, 58, 19)); 
+                    g2.fillRoundRect(0, 0, getWidth(), getHeight(), 25, 25); 
+                    super.paintComponent(g);
+                    g2.dispose();
+                }
+            };
+            btnView.setForeground(java.awt.Color.WHITE);
+            btnView.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+            btnView.setOpaque(false);
+            btnView.setMaximumSize(new java.awt.Dimension(210, 35)); 
 
             pnlText.add(lblTitle);
-            pnlText.add(lblScore);
+            pnlText.add(javax.swing.Box.createVerticalStrut(5));
             pnlText.add(lblMiss);
+            pnlText.add(javax.swing.Box.createVerticalGlue()); 
+            pnlText.add(btnView);
 
-            card.add(lblImg, java.awt.BorderLayout.CENTER);
-            card.add(pnlText, java.awt.BorderLayout.SOUTH);
+            card.add(pnlImage, java.awt.BorderLayout.NORTH);
+            card.add(pnlText, java.awt.BorderLayout.CENTER);
 
-            // Add Click Event to open the Recipe Details
+            // --- 5. INTERACTIVITY ---
             final int finalId = recipe.getId();
-            final double finalScore = score;
             final String finalMissing = missingItems;
-            
             card.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    openRecipeDetailsFromDashboard(finalId, finalScore, finalMissing);
+                    lastScreen = "pnlDashboard";
+                    openRecipeDetailsFromDashboard(finalId, score, finalMissing);
                 }
-                public void mouseEntered(java.awt.event.MouseEvent evt) {
-                    card.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(160, 58, 19), 2, true)); // Hover effect
-                }
-                public void mouseExited(java.awt.event.MouseEvent evt) {
-                    card.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 1, true));
-                }
+                public void mouseEntered(java.awt.event.MouseEvent evt) { card.setLocation(card.getX(), card.getY() - 4); }
+                public void mouseExited(java.awt.event.MouseEvent evt) { card.setLocation(card.getX(), card.getY() + 4); }
             });
 
-            // Drop it into the UI
             pnlDashboardCards.add(card);
         }
 
-        // --- NEW FIX: Force Vertical Scrolling (OUTSIDE the loop!) ---
-        pnlDashboardCards.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING, 8, 8));
+        // --- 6. SCROLL HACK ---
+        pnlDashboardCards.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING, 25, 25));
         int totalCards = matchResults.size();
-        int estimatedRows = (int) Math.ceil(totalCards / 6.0); 
-        pnlDashboardCards.setPreferredSize(new java.awt.Dimension(1400, (estimatedRows * 310) + 100));
+        int estimatedRows = (int) Math.ceil(totalCards / 5.0); 
+        pnlDashboardCards.setPreferredSize(new java.awt.Dimension(1400, (estimatedRows * 360) + 100));
 
         pnlDashboardCards.revalidate();
         pnlDashboardCards.repaint();
@@ -952,6 +1010,8 @@ public class MainFrame extends javax.swing.JFrame {
                 // 2. Not saved yet? Add it using YOUR custom method!
                 linaer_algo.refinder.database.RecipeDAO.addToFavorites(currentActiveRecipeId);
                 javax.swing.JOptionPane.showMessageDialog(this, "Recipe successfully saved to your Favorites! ❤️");
+                
+                loadFavoritesCards();
             }
         }
     }//GEN-LAST:event_btnFavoriteActionPerformed
@@ -991,7 +1051,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1019,11 +1081,13 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel pnlDashboard;
     private javax.swing.JPanel pnlDashboardCards;
     private javax.swing.JPanel pnlFavorites;
+    private javax.swing.JPanel pnlFavoritesCards;
     private javax.swing.JPanel pnlInventory;
     private javax.swing.JPanel pnlLog;
     private javax.swing.JPanel pnlRecipeCards;
     private javax.swing.JPanel pnlRecipeDetails;
     private javax.swing.JPanel pnlRecipes;
+    private javax.swing.JScrollPane scrlFavorites;
     private javax.swing.JTable tblInventory;
     private javax.swing.JTextField txtIngName;
     private javax.swing.JTextField txtIngQty;
@@ -1117,10 +1181,10 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
    public void loadRecipeCards(String searchQuery) {
-        // 1. Clear the container so we don't stack duplicates
+        // 1. Clear the container
         pnlRecipeCards.removeAll(); 
         
-        String sql = "SELECT id, name, cook_time, photo_path FROM recipes";
+        String sql = "SELECT id, name, cook_time, photo_path, cuisine FROM recipes";
         if (searchQuery != null && !searchQuery.trim().isEmpty()) {
             sql += " WHERE LOWER(name) LIKE '%" + searchQuery.toLowerCase() + "%'";
         }
@@ -1135,68 +1199,113 @@ public class MainFrame extends javax.swing.JFrame {
                 String name = rs.getString("name");
                 int time = rs.getInt("cook_time");
                 String photoPath = rs.getString("photo_path");
+                String cuisine = rs.getString("cuisine");
+                if(cuisine == null) cuisine = "Mixed";
 
-                // --- 2. BUILD THE CARD ---
-                javax.swing.JPanel card = new javax.swing.JPanel();
-                card.setPreferredSize(new java.awt.Dimension(200, 240)); 
-                card.setBackground(new java.awt.Color(255, 240, 230));
-                card.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 248, 222), 2, true)); // Cream Border
-                card.setLayout(new java.awt.BorderLayout());
-
-                // --- 3. ADD THE IMAGE ---
-                javax.swing.JLabel lblImg = new javax.swing.JLabel();
-                lblImg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                java.awt.Image tempImg = null;
                 try {
                     java.net.URL imgURL = getClass().getResource(photoPath);
-                    if (imgURL != null) {
-                        javax.swing.ImageIcon icon = new javax.swing.ImageIcon(imgURL);
-                        java.awt.Image img = icon.getImage().getScaledInstance(180, 160, java.awt.Image.SCALE_SMOOTH);
-                        lblImg.setIcon(new javax.swing.ImageIcon(img));
-                    } else {
-                        lblImg.setText("No Image");
-                    }
+                    if (imgURL != null) tempImg = new javax.swing.ImageIcon(imgURL).getImage();
                 } catch (Exception e) {}
+                final java.awt.Image finalImg = tempImg;
 
-                // --- 4. ADD THE TEXT ---
-                javax.swing.JPanel pnlText = new javax.swing.JPanel(new java.awt.GridLayout(2, 1));
-                pnlText.setBackground(new java.awt.Color(255, 248, 222)); // Changed to Cream!
-                pnlText.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)); 
-                
-                javax.swing.JLabel lblTitle = new javax.swing.JLabel(name, javax.swing.SwingConstants.CENTER);
-                lblTitle.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
-                
-                javax.swing.JLabel lblTime = new javax.swing.JLabel("🕒 " + time + " mins", javax.swing.SwingConstants.CENTER);
-                lblTime.setForeground(new java.awt.Color(100, 100, 100)); 
+                // --- 1. ROUNDED CARD ---
+                javax.swing.JPanel card = new javax.swing.JPanel() {
+                    @Override
+                    protected void paintComponent(java.awt.Graphics g) {
+                        java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                        g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                        g2.setColor(java.awt.Color.WHITE); 
+                        g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 30, 30); 
+                        g2.setColor(new java.awt.Color(220, 220, 220)); 
+                        g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 30, 30);
+                        g2.dispose();
+                    }
+                };
+                card.setOpaque(false); 
+                card.setPreferredSize(new java.awt.Dimension(240, 310)); 
+                card.setLayout(new java.awt.BorderLayout());
+                card.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)); 
+
+                // --- 2. CLIPPED IMAGE AREA (No Badge for Directory) ---
+                javax.swing.JPanel pnlImage = new javax.swing.JPanel() {
+                    @Override
+                    protected void paintComponent(java.awt.Graphics g) {
+                        java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                        g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                        
+                        java.awt.geom.Path2D.Float path = new java.awt.geom.Path2D.Float();
+                        path.moveTo(0, getHeight()); path.lineTo(0, 15); path.quadTo(0, 0, 15, 0);
+                        path.lineTo(getWidth() - 15, 0); path.quadTo(getWidth(), 0, getWidth(), 15);
+                        path.lineTo(getWidth(), getHeight()); path.closePath();
+                        g2.clip(path);
+
+                        if (finalImg != null) g2.drawImage(finalImg, 0, 0, getWidth(), getHeight(), this);
+                        else { g2.setColor(new java.awt.Color(240, 240, 240)); g2.fillRect(0, 0, getWidth(), getHeight()); }
+                        g2.dispose();
+                    }
+                };
+                pnlImage.setPreferredSize(new java.awt.Dimension(240, 150));
+                pnlImage.setOpaque(false);
+
+                // --- 3. TEXT AREA ---
+                javax.swing.JPanel pnlText = new javax.swing.JPanel();
+                pnlText.setOpaque(false);
+                pnlText.setLayout(new javax.swing.BoxLayout(pnlText, javax.swing.BoxLayout.Y_AXIS));
+                pnlText.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15)); 
+
+                javax.swing.JLabel lblTitle = new javax.swing.JLabel(name);
+                lblTitle.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 16));
+                lblTitle.setForeground(new java.awt.Color(40, 40, 40)); 
+
+                javax.swing.JLabel lblTime = new javax.swing.JLabel("🕒 " + time + " mins  •  " + cuisine);
+                lblTime.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12));
+                lblTime.setForeground(new java.awt.Color(120, 120, 120)); 
+
+                // --- 4. PILL BUTTON ---
+                javax.swing.JLabel btnView = new javax.swing.JLabel("View Recipe", javax.swing.SwingConstants.CENTER) {
+                    @Override
+                    protected void paintComponent(java.awt.Graphics g) {
+                        java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                        g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                        g2.setColor(new java.awt.Color(160, 58, 19)); 
+                        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 25, 25); 
+                        super.paintComponent(g);
+                        g2.dispose();
+                    }
+                };
+                btnView.setForeground(java.awt.Color.WHITE);
+                btnView.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+                btnView.setOpaque(false);
+                btnView.setMaximumSize(new java.awt.Dimension(210, 35)); 
 
                 pnlText.add(lblTitle);
+                pnlText.add(javax.swing.Box.createVerticalStrut(5));
                 pnlText.add(lblTime);
+                pnlText.add(javax.swing.Box.createVerticalGlue()); 
+                pnlText.add(btnView);
 
-                // --- 5. ASSEMBLE THE CARD ---
-                card.add(lblImg, java.awt.BorderLayout.CENTER);
-                card.add(pnlText, java.awt.BorderLayout.SOUTH);
+                card.add(pnlImage, java.awt.BorderLayout.NORTH);
+                card.add(pnlText, java.awt.BorderLayout.CENTER);
 
-                // --- 6. ADD CLICK EVENT ---
+                // --- 5. INTERACTIVITY ---
                 card.addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        lastScreen = "pnlRecipes";
                         openRecipeDetailsFromCard(recipeId); 
                     }
-                    public void mouseEntered(java.awt.event.MouseEvent evt) {
-                        card.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(164, 61, 23), 2, true));
-                    }
-                    public void mouseExited(java.awt.event.MouseEvent evt) {
-                        card.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 1, true)); 
-                    }
+                    public void mouseEntered(java.awt.event.MouseEvent evt) { card.setLocation(card.getX(), card.getY() - 4); }
+                    public void mouseExited(java.awt.event.MouseEvent evt) { card.setLocation(card.getX(), card.getY() + 4); }
                 });
 
-                // --- 7. DROP CARD INTO THE RECIPES GRID ---
                 pnlRecipeCards.add(card);
             }
 
-            // --- NEW FIX: Force Vertical Scrolling (OUTSIDE the while loop!) ---
-            pnlRecipeCards.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING, 20, 20));
+            // --- 6. SCROLL HACK ---
+            pnlRecipeCards.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING, 25, 25)); 
             int totalCards = pnlRecipeCards.getComponentCount();
-            int estimatedRows = (int) Math.ceil(totalCards / 6.0); 
-            pnlRecipeCards.setPreferredSize(new java.awt.Dimension(1400, (estimatedRows * 310) + 100));
+            int estimatedRows = (int) Math.ceil(totalCards / 5.0); 
+            pnlRecipeCards.setPreferredSize(new java.awt.Dimension(1400, (estimatedRows * 360) + 100));
 
             pnlRecipeCards.revalidate();
             pnlRecipeCards.repaint();
@@ -1205,7 +1314,6 @@ public class MainFrame extends javax.swing.JFrame {
             System.out.println("Error loading recipe cards: " + e.getMessage());
         }
     }
-    
     public void openRecipeDetailsFromCard(int id) {
         // Fetch it from the database using the ID!
         linaer_algo.refinder.model.Recipe recipe = null;
@@ -1298,5 +1406,161 @@ public class MainFrame extends javax.swing.JFrame {
             java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
             layout.show(pnlContent, "pnlRecipeDetails");
         }
+    }
+    
+    public void loadFavoritesCards() {
+        // 1. Clear the container
+       pnlFavoritesCards.removeAll(); 
+        
+        // 2. Fetch the favorites
+        java.util.List<linaer_algo.refinder.model.Recipe> favs = linaer_algo.refinder.database.RecipeDAO.getFavoriteRecipes();
+
+        // --- NEW: THE EMPTY STATE UX ---
+        if (favs.isEmpty()) {
+            javax.swing.JLabel emptyMsg = new javax.swing.JLabel("You haven't saved any favorite recipes yet! ❤️");
+            emptyMsg.setFont(new java.awt.Font("Segoe UI", java.awt.Font.ITALIC, 20));
+            emptyMsg.setForeground(new java.awt.Color(150, 150, 150)); // Light gray
+            emptyMsg.setBorder(javax.swing.BorderFactory.createEmptyBorder(50, 0, 0, 0)); // Push it down a bit
+           pnlFavoritesCards.add(emptyMsg);
+        } else {
+            // 3. Loop through and build the cards!
+            for (linaer_algo.refinder.model.Recipe recipe : favs) {
+                final int recipeId = recipe.getId(); 
+                String name = recipe.getName();
+                int time = recipe.getCookTime();
+                String photoPath = recipe.getPhotoPath();
+
+                // Load the image safely so we can manipulate it
+                java.awt.Image tempImg = null;
+                try {
+                    java.net.URL imgURL = getClass().getResource(photoPath);
+                    if (imgURL != null) {
+                        tempImg = new javax.swing.ImageIcon(imgURL).getImage();
+                    }
+                } catch (Exception e) {}
+                final java.awt.Image finalImg = tempImg;
+
+                // --- 1. THE MAIN CARD (Rounded Corners!) ---
+                javax.swing.JPanel card = new javax.swing.JPanel() {
+                    @Override
+                    protected void paintComponent(java.awt.Graphics g) {
+                        java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                        g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                        g2.setColor(java.awt.Color.WHITE); 
+                        g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 30, 30); 
+                        g2.setColor(new java.awt.Color(220, 220, 220)); 
+                        g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 30, 30);
+                        g2.dispose();
+                    }
+                };
+                card.setOpaque(false); 
+                card.setPreferredSize(new java.awt.Dimension(240, 310)); 
+                card.setLayout(new java.awt.BorderLayout());
+                card.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)); 
+
+                // --- 2. THE TOP IMAGE AREA (Clipped Corners & Floating Badge) ---
+                javax.swing.JPanel pnlImage = new javax.swing.JPanel() {
+                    @Override
+                    protected void paintComponent(java.awt.Graphics g) {
+                        java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                        g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                        
+                        java.awt.geom.Path2D.Float path = new java.awt.geom.Path2D.Float();
+                        path.moveTo(0, getHeight());
+                        path.lineTo(0, 15);
+                        path.quadTo(0, 0, 15, 0);
+                        path.lineTo(getWidth() - 15, 0);
+                        path.quadTo(getWidth(), 0, getWidth(), 15);
+                        path.lineTo(getWidth(), getHeight());
+                        path.closePath();
+                        g2.clip(path);
+
+                        if (finalImg != null) {
+                            g2.drawImage(finalImg, 0, 0, getWidth(), getHeight(), this);
+                        } else {
+                            g2.setColor(new java.awt.Color(240, 240, 240));
+                            g2.fillRect(0, 0, getWidth(), getHeight());
+                        }
+
+                        g2.setClip(null); 
+                        g2.setColor(new java.awt.Color(160, 58, 19, 220)); 
+                        g2.fillRoundRect(10, 10, 85, 28, 15, 15); 
+                        g2.setColor(java.awt.Color.WHITE);
+                        g2.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+                        g2.drawString("❤️ Saved", 22, 29);
+
+                        g2.dispose();
+                    }
+                };
+                pnlImage.setPreferredSize(new java.awt.Dimension(240, 150));
+                pnlImage.setOpaque(false);
+
+                // --- 3. THE BOTTOM TEXT AREA ---
+                javax.swing.JPanel pnlText = new javax.swing.JPanel();
+                pnlText.setOpaque(false);
+                pnlText.setLayout(new javax.swing.BoxLayout(pnlText, javax.swing.BoxLayout.Y_AXIS));
+                pnlText.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15)); 
+
+                javax.swing.JLabel lblTitle = new javax.swing.JLabel(name);
+                lblTitle.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 16));
+                lblTitle.setForeground(new java.awt.Color(40, 40, 40)); 
+
+                javax.swing.JLabel lblTime = new javax.swing.JLabel("🕒 " + time + " mins  •  " + recipe.getCuisine());
+                lblTime.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12));
+                lblTime.setForeground(new java.awt.Color(120, 120, 120)); 
+
+                // --- 4. THE PILL BUTTON ---
+                javax.swing.JLabel btnView = new javax.swing.JLabel("View Recipe", javax.swing.SwingConstants.CENTER) {
+                    @Override
+                    protected void paintComponent(java.awt.Graphics g) {
+                        java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                        g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                        g2.setColor(new java.awt.Color(160, 58, 19)); 
+                        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 25, 25); 
+                        super.paintComponent(g);
+                        g2.dispose();
+                    }
+                };
+                btnView.setForeground(java.awt.Color.WHITE);
+                btnView.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+                btnView.setOpaque(false);
+                btnView.setMaximumSize(new java.awt.Dimension(210, 35)); 
+
+                pnlText.add(lblTitle);
+                pnlText.add(javax.swing.Box.createVerticalStrut(5));
+                pnlText.add(lblTime);
+                pnlText.add(javax.swing.Box.createVerticalGlue()); 
+                pnlText.add(btnView);
+
+                // --- 5. ASSEMBLE CARD ---
+                card.add(pnlImage, java.awt.BorderLayout.NORTH);
+                card.add(pnlText, java.awt.BorderLayout.CENTER);
+
+                // --- 6. INTERACTIVE HOVER EFFECT ---
+                card.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        lastScreen = "pnlFavorites";
+                        openRecipeDetailsFromCard(recipeId); 
+                    }
+                    public void mouseEntered(java.awt.event.MouseEvent evt) {
+                        card.setLocation(card.getX(), card.getY() - 4); 
+                    }
+                    public void mouseExited(java.awt.event.MouseEvent evt) {
+                        card.setLocation(card.getX(), card.getY() + 4); 
+                    }
+                });
+
+               pnlFavoritesCards.add(card);
+            }
+        } // <--- Closes the else block!
+
+        // --- 7. SCROLL HACK ---
+       pnlFavoritesCards.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING, 25, 25)); 
+        int totalCards = favs.size();
+        int estimatedRows = (int) Math.ceil(totalCards / 5.0); 
+       pnlFavoritesCards.setPreferredSize(new java.awt.Dimension(1400, (estimatedRows * 360) + 100));
+
+       pnlFavoritesCards.revalidate();
+       pnlFavoritesCards.repaint();
     }
 }
