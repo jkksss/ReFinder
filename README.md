@@ -69,12 +69,15 @@ java -jar ReFinder-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 ### Run from Source (NetBeans)
 1. Clone the repository:
-   ```bash
+
+```bash
 git clone https://github.com/jkksss/ReFinder.git
 ```
+
 2. Open the project in Apache NetBeans.
-3. Right-click the project → `Clean and Build`.
-4. Run the project using `F6`.
+3. Select the project in the Projects view.
+4. Right-click the project and choose `Clean and Build`.
+5. Run the project with `F6`.
 
 ---
 
@@ -112,4 +115,4 @@ The application uses SQLite with the following primary tables:
 
 ## 💡 Tagline
 
-**ReFinder — Find recipes with what you already have.**
+ReFinder helps you discover recipes using only the ingredients already in your kitchen.
