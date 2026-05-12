@@ -28,9 +28,11 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
-        loadInventoryTable();
+        buildInventoryScreen();
         loadRecipeCards("");
         loadFavoritesCards();
+        
+        
         
         loadButtonIcon(btnDashboard, "/home.png", 25);
         loadButtonIcon(btnRecipes, "/cookbook.png", 25);
@@ -84,8 +86,6 @@ public class MainFrame extends javax.swing.JFrame {
         btnAutoMatch = new javax.swing.JButton();
         txtSearch = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
-        lblInventoryCount = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -112,19 +112,14 @@ public class MainFrame extends javax.swing.JFrame {
         pnlFavoritesCards = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         pnlLog = new javax.swing.JPanel();
+        pnlLogContainer = new javax.swing.JPanel();
         pnlRecipeDetails = new javax.swing.JPanel();
-        lblRecipeImage = new javax.swing.JLabel();
-        lblRecipeTitle = new javax.swing.JLabel();
-        lblRecipeCuisine = new javax.swing.JLabel();
-        lblRecipeTime = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtRecipeIngredients = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtRecipeInstructions = new javax.swing.JTextArea();
         btnCooked = new javax.swing.JButton();
-        lblMatchScore = new javax.swing.JLabel();
-        lblMissingItems = new javax.swing.JLabel();
         btnFavorite = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -259,15 +254,6 @@ public class MainFrame extends javax.swing.JFrame {
         btnSearch.setForeground(new java.awt.Color(255, 248, 222));
         btnSearch.setText("Search");
 
-        lblInventoryCount.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        lblInventoryCount.setForeground(new java.awt.Color(160, 58, 19));
-        lblInventoryCount.setText("Items in Inventory: ");
-
-        jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(160, 58, 19));
-        jLabel3.setText("Total  Recipes: 60");
-        jLabel3.setVerifyInputWhenFocusTarget(false);
-
         jSeparator2.setBackground(new java.awt.Color(160, 58, 19));
 
         jLabel2.setBackground(new java.awt.Color(160, 58, 19));
@@ -291,12 +277,6 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(pnlDashboardLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDashboardLayout.createSequentialGroup()
-                                    .addComponent(lblInventoryCount)
-                                    .addGap(1423, 1423, 1423)
-                                    .addComponent(jLabel3)))
                             .addComponent(lblSubtitle, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblGreeting)
                             .addGroup(pnlDashboardLayout.createSequentialGroup()
@@ -304,7 +284,8 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addGap(9, 9, 9)
                                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 1666, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlDashboardLayout.setVerticalGroup(
@@ -324,12 +305,8 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(lblInventoryCount, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(94, 94, 94))
         );
 
         pnlContent.add(pnlDashboard, "pnlDashboard");
@@ -573,35 +550,36 @@ public class MainFrame extends javax.swing.JFrame {
 
         pnlLog.setBackground(new java.awt.Color(255, 102, 255));
 
+        javax.swing.GroupLayout pnlLogContainerLayout = new javax.swing.GroupLayout(pnlLogContainer);
+        pnlLogContainer.setLayout(pnlLogContainerLayout);
+        pnlLogContainerLayout.setHorizontalGroup(
+            pnlLogContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1577, Short.MAX_VALUE)
+        );
+        pnlLogContainerLayout.setVerticalGroup(
+            pnlLogContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 876, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout pnlLogLayout = new javax.swing.GroupLayout(pnlLog);
         pnlLog.setLayout(pnlLogLayout);
         pnlLogLayout.setHorizontalGroup(
             pnlLogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1782, Short.MAX_VALUE)
+            .addGroup(pnlLogLayout.createSequentialGroup()
+                .addComponent(pnlLogContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 205, Short.MAX_VALUE))
         );
         pnlLogLayout.setVerticalGroup(
             pnlLogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1040, Short.MAX_VALUE)
+            .addGroup(pnlLogLayout.createSequentialGroup()
+                .addGap(91, 91, 91)
+                .addComponent(pnlLogContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         pnlContent.add(pnlLog, "pnlLog");
 
         pnlRecipeDetails.setBackground(new java.awt.Color(255, 248, 222));
-
-        lblRecipeImage.setText("jLabel4");
-        lblRecipeImage.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(160, 58, 19)));
-
-        lblRecipeTitle.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
-        lblRecipeTitle.setForeground(new java.awt.Color(160, 58, 19));
-        lblRecipeTitle.setText("jLabel4");
-
-        lblRecipeCuisine.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
-        lblRecipeCuisine.setForeground(new java.awt.Color(160, 58, 19));
-        lblRecipeCuisine.setText("jLabel4");
-
-        lblRecipeTime.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        lblRecipeTime.setForeground(new java.awt.Color(160, 58, 19));
-        lblRecipeTime.setText("jLabel5");
 
         btnBack.setBackground(new java.awt.Color(160, 58, 19));
         btnBack.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -633,12 +611,6 @@ public class MainFrame extends javax.swing.JFrame {
         btnCooked.setText("I COOKED THIS");
         btnCooked.addActionListener(this::btnCookedActionPerformed);
 
-        lblMatchScore.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        lblMatchScore.setText("jLabel4");
-
-        lblMissingItems.setFont(new java.awt.Font("Century Gothic", 1, 10)); // NOI18N
-        lblMissingItems.setText("jLabel5");
-
         btnFavorite.setBackground(new java.awt.Color(160, 58, 19));
         btnFavorite.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         btnFavorite.setText("Bookmark");
@@ -656,29 +628,15 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
                         .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addComponent(lblRecipeImage, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
-                                        .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblRecipeCuisine, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(lblRecipeTime, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(lblMatchScore, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(lblMissingItems, javax.swing.GroupLayout.PREFERRED_SIZE, 845, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE))
-                                    .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
-                                        .addComponent(lblRecipeTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnFavorite, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(2, 2, 2))))
+                                .addContainerGap(1388, Short.MAX_VALUE)
+                                .addComponent(btnFavorite, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(43, 43, 43))
                             .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
                                 .addGap(19, 19, 19)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 656, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 772, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(41, 41, 41)
+                                .addGap(41, 41, 41)))
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(163, Short.MAX_VALUE))
         );
@@ -687,22 +645,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
                 .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
-                        .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lblRecipeTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblRecipeCuisine, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblRecipeTime, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblMatchScore, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblMissingItems, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(lblRecipeImage, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
+                        .addGap(358, 358, 358)
                         .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane3)))
@@ -758,6 +701,11 @@ public class MainFrame extends javax.swing.JFrame {
         setActiveButton(btnDashboard); 
         java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
         layout.show(pnlContent, "pnlDashboard");    
+
+        // THE UX FIX: Auto-refresh the match math if they already have cards loaded!
+        if (pnlDashboardCards.getComponentCount() > 0) {
+            btnAutoMatch.doClick(); 
+        }
     }//GEN-LAST:event_btnDashboardActionPerformed
 
     private void btnInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryActionPerformed
@@ -770,8 +718,8 @@ public class MainFrame extends javax.swing.JFrame {
     private void btnLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogActionPerformed
         // TODO add your handling code here:
        setActiveButton(btnLog);
-        java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
-        layout.show(pnlContent, "pnlLog");
+        // CALL OUR NEW PURE CODE METHOD HERE!
+        openCookingLog();
     }//GEN-LAST:event_btnLogActionPerformed
 
     private void btnAutoMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoMatchActionPerformed
@@ -905,7 +853,7 @@ public class MainFrame extends javax.swing.JFrame {
             card.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     lastScreen = "pnlDashboard";
-                    openRecipeDetailsFromDashboard(finalId, score, finalMissing);
+                    openRecipeDetailsFromDashboard(finalId, score);
                 }
                 public void mouseEntered(java.awt.event.MouseEvent evt) { card.setLocation(card.getX(), card.getY() - 4); }
                 public void mouseExited(java.awt.event.MouseEvent evt) { card.setLocation(card.getX(), card.getY() + 4); }
@@ -924,34 +872,30 @@ public class MainFrame extends javax.swing.JFrame {
         pnlDashboardCards.repaint();
     }//GEN-LAST:event_btnAutoMatchActionPerformed
 
-    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
-        // Flip back to the Dashboard
-        java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
-        layout.show(pnlContent, "pnlDashboard"); // Adjust "pnlDashboard" if your card name is different
-    }//GEN-LAST:event_btnBackActionPerformed
-
     private void btnCookedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCookedActionPerformed
-       if (currentActiveRecipeId != -1) {
+     if (currentActiveRecipeId != -1) {
             // 1. Get the exact quantities this recipe needed
             java.util.List<linaer_algo.refinder.model.Ingredient> reqs = linaer_algo.refinder.database.RecipeDAO.getRecipeIngredients(currentActiveRecipeId);
             
-            // 2. Loop through and deduct them from the database
+            // 2. THE FIX: Loop through and deduct using YOUR awesome DAO, with .trim() safety!
             for(linaer_algo.refinder.model.Ingredient req : reqs) {
-                linaer_algo.refinder.database.IngredientDAO.deductIngredient(req.getName(), req.getQuantity());
+                // .trim() strips invisible spaces so "chicken " matches "chicken" perfectly!
+                linaer_algo.refinder.database.IngredientDAO.deductIngredient(req.getName().trim(), req.getQuantity());
             }
             
-            // 3. Add to Cooking Log (Temporary console log until we build the UI)
-            System.out.println("LOG: Successfully cooked recipe ID " + currentActiveRecipeId + " at " + java.time.LocalDateTime.now());
+            // 3. Save to the Cooking Log Database
+            String today = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("MMM dd, yyyy"));
+            linaer_algo.refinder.model.CookingLog newLog = new linaer_algo.refinder.model.CookingLog(0, currentActiveRecipeId, "", today, 1); 
+            linaer_algo.refinder.database.CookingLogDAO.addCookingLog(newLog);
             
             // 4. Show a success message to the user
-            javax.swing.JOptionPane.showMessageDialog(this, "Ingredients successfully deducted from your inventory! Added to Cooking Log! 🍳");
+            javax.swing.JOptionPane.showMessageDialog(this, "Ingredients successfully deducted from your inventory!\nAdded to Cooking Log! 🍳");
             
             // 5. Flip back to the dashboard automatically
             java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
             layout.show(pnlContent, "pnlDashboard");
             
-            // 6. Optional: Auto-refresh the dashboard table so the inventory updates!
+            // 6. Auto-refresh the dashboard table so the inventory updates!
             btnAutoMatch.doClick(); 
         }
     }//GEN-LAST:event_btnCookedActionPerformed
@@ -985,8 +929,7 @@ public class MainFrame extends javax.swing.JFrame {
             lblRecentAdd.setText("Last Added: " + name.substring(0, 1).toUpperCase() + name.substring(1));
 
             // 6. Refresh the table and the rest of the stats instantly!
-            loadInventoryTable(); 
-            
+            buildInventoryScreen();
             // Optional: Little success pop-up
             javax.swing.JOptionPane.showMessageDialog(this, "Added to Inventory! 🥦");
 
@@ -996,13 +939,20 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAddingActionPerformed
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        // Flip back to the Dashboard
+        java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
+        layout.show(pnlContent, "pnlDashboard"); // Adjust "pnlDashboard" if your card name is different
+    }//GEN-LAST:event_btnBackActionPerformed
+
     private void btnFavoriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoriteActionPerformed
         // TODO add your handling code here:
         if (currentActiveRecipeId != -1) {
-            
+
             // 1. Check if it is already favorited using YOUR custom method!
             boolean alreadySaved = linaer_algo.refinder.database.RecipeDAO.isFavorite(currentActiveRecipeId);
-            
+
             if (alreadySaved) {
                 // Let them know they already saved it
                 javax.swing.JOptionPane.showMessageDialog(this, "This recipe is already in your Favorites! ❤️", "Info", javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -1010,7 +960,7 @@ public class MainFrame extends javax.swing.JFrame {
                 // 2. Not saved yet? Add it using YOUR custom method!
                 linaer_algo.refinder.database.RecipeDAO.addToFavorites(currentActiveRecipeId);
                 javax.swing.JOptionPane.showMessageDialog(this, "Recipe successfully saved to your Favorites! ❤️");
-                
+
                 loadFavoritesCards();
             }
         }
@@ -1050,7 +1000,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbIngUnit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1066,15 +1015,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblGreeting;
-    private javax.swing.JLabel lblInventoryCount;
     private javax.swing.JLabel lblLowStock;
-    private javax.swing.JLabel lblMatchScore;
-    private javax.swing.JLabel lblMissingItems;
     private javax.swing.JLabel lblRecentAdd;
-    private javax.swing.JLabel lblRecipeCuisine;
-    private javax.swing.JLabel lblRecipeImage;
-    private javax.swing.JLabel lblRecipeTime;
-    private javax.swing.JLabel lblRecipeTitle;
     private javax.swing.JLabel lblSubtitle;
     private javax.swing.JLabel lblTotalItems;
     private javax.swing.JPanel pnlContent;
@@ -1084,6 +1026,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel pnlFavoritesCards;
     private javax.swing.JPanel pnlInventory;
     private javax.swing.JPanel pnlLog;
+    private javax.swing.JPanel pnlLogContainer;
     private javax.swing.JPanel pnlRecipeCards;
     private javax.swing.JPanel pnlRecipeDetails;
     private javax.swing.JPanel pnlRecipes;
@@ -1131,53 +1074,326 @@ public class MainFrame extends javax.swing.JFrame {
         
     }
     
-    public void loadInventoryTable() {
-        // 1. Get the table model and wipe it clean before loading fresh data
-        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tblInventory.getModel();
-        model.setRowCount(0); 
+   public void buildInventoryScreen() {
+        // 1. CLEAR AND SETUP MAIN CONTAINER
+        pnlInventory.removeAll();
+        pnlInventory.setLayout(new java.awt.BorderLayout(40, 20)); 
+        pnlInventory.setBackground(new java.awt.Color(253, 250, 240)); 
+        pnlInventory.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 50, 30, 50)); 
 
-        int totalItems = 0;
-        int lowStockCount = 0;
-
-        // 2. Fetch data from SQLite, sorted alphabetically!
-        String sql = "SELECT name, quantity, unit FROM ingredients ORDER BY name ASC";
+        // --- HEADER ---
+        javax.swing.JPanel pnlHeader = new javax.swing.JPanel(new java.awt.BorderLayout());
+        pnlHeader.setOpaque(false);
         
-        try (java.sql.Connection conn = linaer_algo.refinder.database.DatabaseConnection.getConnection();
-             java.sql.Statement stmt = conn.createStatement();
-             java.sql.ResultSet rs = stmt.executeQuery(sql)) {
+        javax.swing.JLabel lblTitle = new javax.swing.JLabel("My Inventory");
+        lblTitle.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 42)); 
+        lblTitle.setForeground(new java.awt.Color(160, 58, 19)); 
+        pnlHeader.add(lblTitle, java.awt.BorderLayout.WEST);
+        
+        pnlInventory.add(pnlHeader, java.awt.BorderLayout.NORTH);
 
-            while (rs.next()) {
-                String rawName = rs.getString("name");
-                double qty = rs.getDouble("quantity");
-                String unit = rs.getString("unit");
+        // --- LEFT COLUMN (The Table) ---
+        javax.swing.JPanel pnlLeft = new javax.swing.JPanel(new java.awt.BorderLayout(0, 0));
+        pnlLeft.setOpaque(false);
 
-                // Capitalize the first letter so it looks professional in the table
-                String capName = rawName.substring(0, 1).toUpperCase() + rawName.substring(1);
+        // Custom Table Model (ADDED HIDDEN ID COLUMN 0)
+        String[] columnNames = {"ID", "Ingredient Name", "Quantity", "Unit", "Status"};
+        javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(columnNames, 0) {
+            @Override public boolean isCellEditable(int row, int column) { return false; } 
+        };
 
-                // Add the row to the table!
-                model.addRow(new Object[]{capName, qty, unit});
+        // Fetch Data
+        java.util.List<linaer_algo.refinder.model.Ingredient> inv = linaer_algo.refinder.database.IngredientDAO.getAllIngredients();
+        int lowStockCount = 0;
+        for (linaer_algo.refinder.model.Ingredient i : inv) {
+            String status = "Good";
+            if (i.getQuantity() < 2.0) { status = "Low"; lowStockCount++; }
+            if (i.getQuantity() == 0) status = "Out";
+            
+            String qtyStr = String.valueOf(i.getQuantity());
+            if(qtyStr.endsWith(".0")) qtyStr = qtyStr.substring(0, qtyStr.length() - 2);
+            
+            model.addRow(new Object[]{
+                i.getId(), // Hidden ID!
+                "  " + i.getName().substring(0, 1).toUpperCase() + i.getName().substring(1), 
+                qtyStr, 
+                i.getUnit(), 
+                status
+            });
+        }
 
-                // 3. Do the Math for our Stats Board!
-                totalItems++;
-                if (qty < 2.0) {
-                    lowStockCount++;
+        javax.swing.JTable tblInventory = new javax.swing.JTable(model);
+        tblInventory.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 16));
+        tblInventory.setRowHeight(45); 
+        tblInventory.setShowGrid(false); 
+        tblInventory.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tblInventory.setSelectionBackground(new java.awt.Color(255, 235, 220)); 
+        tblInventory.setSelectionForeground(new java.awt.Color(160, 58, 19));
+
+        tblInventory.getTableHeader().setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 18));
+        tblInventory.getTableHeader().setBackground(java.awt.Color.WHITE);
+        tblInventory.getTableHeader().setForeground(new java.awt.Color(100, 100, 100));
+        tblInventory.getTableHeader().setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(220, 220, 220)));
+        tblInventory.getTableHeader().setPreferredSize(new java.awt.Dimension(0, 45));
+
+        // HIDE THE ID COLUMN
+        tblInventory.getColumnModel().getColumn(0).setMinWidth(0);
+        tblInventory.getColumnModel().getColumn(0).setMaxWidth(0);
+        tblInventory.getColumnModel().getColumn(0).setWidth(0);
+
+        // Custom Status Renderer (Shifted index because ID is column 0)
+        tblInventory.getColumnModel().getColumn(4).setCellRenderer(new javax.swing.table.DefaultTableCellRenderer() {
+            @Override
+            public java.awt.Component getTableCellRendererComponent(javax.swing.JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                javax.swing.JPanel pnlDot = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 15, 12));
+                pnlDot.setOpaque(true);
+                pnlDot.setBackground(isSelected ? table.getSelectionBackground() : (row % 2 == 0 ? java.awt.Color.WHITE : new java.awt.Color(250, 250, 250)));
+                
+                String status = (String) value;
+                java.awt.Color dotColor = new java.awt.Color(0, 160, 0); 
+                if ("Low".equals(status)) dotColor = new java.awt.Color(230, 160, 0); 
+                if ("Out".equals(status)) dotColor = new java.awt.Color(200, 0, 0); 
+                
+                final java.awt.Color finalColor = dotColor; 
+
+                javax.swing.JLabel lblDot = new javax.swing.JLabel(status) {
+                    @Override protected void paintComponent(java.awt.Graphics g) {
+                        java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                        g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                        g2.setColor(finalColor); 
+                        g2.fillOval(0, 6, 12, 12); 
+                        super.paintComponent(g);
+                        g2.dispose();
+                    }
+                };
+                lblDot.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 14));
+                lblDot.setForeground(finalColor); 
+                lblDot.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 20, 0, 0)); 
+                
+                pnlDot.add(lblDot);
+                return pnlDot;
+            }
+        });
+
+        tblInventory.setDefaultRenderer(Object.class, new javax.swing.table.DefaultTableCellRenderer() {
+            @Override
+            public java.awt.Component getTableCellRendererComponent(javax.swing.JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                java.awt.Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (!isSelected) c.setBackground(row % 2 == 0 ? java.awt.Color.WHITE : new java.awt.Color(250, 250, 250));
+                setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 15, 0, 0)); 
+                return c;
+            }
+        });
+
+        javax.swing.JScrollPane scrollTable = new javax.swing.JScrollPane(tblInventory);
+        scrollTable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 230, 230), 1, true));
+        scrollTable.getViewport().setBackground(java.awt.Color.WHITE);
+        pnlLeft.add(scrollTable, java.awt.BorderLayout.CENTER);
+
+        // --- RIGHT COLUMN (FIXED WIDTH) ---
+        javax.swing.JPanel pnlRight = new javax.swing.JPanel();
+        pnlRight.setLayout(new javax.swing.BoxLayout(pnlRight, javax.swing.BoxLayout.Y_AXIS));
+        pnlRight.setOpaque(false);
+        pnlRight.setPreferredSize(new java.awt.Dimension(380, 0)); 
+
+        // CARD 1: SUMMARY
+        javax.swing.JPanel pnlSummary = new javax.swing.JPanel();
+        pnlSummary.setLayout(new javax.swing.BoxLayout(pnlSummary, javax.swing.BoxLayout.Y_AXIS));
+        pnlSummary.setBackground(java.awt.Color.WHITE);
+        pnlSummary.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+            new javax.swing.border.LineBorder(new java.awt.Color(220, 220, 220), 1, true),
+            javax.swing.BorderFactory.createEmptyBorder(20, 25, 20, 25)
+        ));
+        pnlSummary.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+        
+        javax.swing.JLabel lblSumTitle = new javax.swing.JLabel("Overview");
+        lblSumTitle.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 22));
+        lblSumTitle.setForeground(new java.awt.Color(80, 30, 10));
+        
+        javax.swing.JLabel lblTotal = new javax.swing.JLabel("Total Items: " + inv.size());
+        lblTotal.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 18));
+        
+        javax.swing.JLabel lblLow = new javax.swing.JLabel("Low Stock: " + lowStockCount);
+        lblLow.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 18));
+        lblLow.setForeground(new java.awt.Color(200, 130, 0));
+        
+        pnlSummary.add(lblSumTitle);
+        pnlSummary.add(javax.swing.Box.createVerticalStrut(15));
+        pnlSummary.add(lblTotal);
+        pnlSummary.add(javax.swing.Box.createVerticalStrut(10));
+        pnlSummary.add(lblLow);
+        
+        pnlRight.add(pnlSummary);
+        pnlRight.add(javax.swing.Box.createVerticalStrut(30)); 
+
+        // CARD 2: MANAGE INGREDIENT FORM
+        javax.swing.JPanel pnlAdd = new javax.swing.JPanel();
+        pnlAdd.setLayout(new javax.swing.BoxLayout(pnlAdd, javax.swing.BoxLayout.Y_AXIS));
+        pnlAdd.setBackground(java.awt.Color.WHITE);
+        pnlAdd.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+            new javax.swing.border.LineBorder(new java.awt.Color(220, 220, 220), 1, true),
+            javax.swing.BorderFactory.createEmptyBorder(25, 25, 25, 25)
+        ));
+        pnlAdd.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+        
+        javax.swing.JLabel lblAddTitle = new javax.swing.JLabel("Manage Item");
+        lblAddTitle.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 22));
+        lblAddTitle.setForeground(new java.awt.Color(160, 58, 19));
+        
+        javax.swing.JLabel lblNameTitle = new javax.swing.JLabel("Ingredient Name");
+        lblNameTitle.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 14));
+        
+        javax.swing.JTextField txtName = new javax.swing.JTextField();
+        txtName.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 16));
+        txtName.setPreferredSize(new java.awt.Dimension(300, 35));
+        txtName.setMaximumSize(new java.awt.Dimension(300, 35)); 
+        
+        javax.swing.JPanel rowQtyUnit = new javax.swing.JPanel(new java.awt.GridLayout(1, 2, 15, 0));
+        rowQtyUnit.setOpaque(false);
+        rowQtyUnit.setPreferredSize(new java.awt.Dimension(300, 60));
+        rowQtyUnit.setMaximumSize(new java.awt.Dimension(300, 60)); 
+        
+        javax.swing.JPanel colQty = new javax.swing.JPanel();
+        colQty.setLayout(new javax.swing.BoxLayout(colQty, javax.swing.BoxLayout.Y_AXIS));
+        colQty.setOpaque(false);
+        javax.swing.JLabel lblQtyTitle = new javax.swing.JLabel("Quantity");
+        lblQtyTitle.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 14));
+        javax.swing.JTextField txtQty = new javax.swing.JTextField();
+        txtQty.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 16));
+        colQty.add(lblQtyTitle);
+        colQty.add(javax.swing.Box.createVerticalStrut(5));
+        colQty.add(txtQty);
+        
+        javax.swing.JPanel colUnit = new javax.swing.JPanel();
+        colUnit.setLayout(new javax.swing.BoxLayout(colUnit, javax.swing.BoxLayout.Y_AXIS));
+        colUnit.setOpaque(false);
+        javax.swing.JLabel lblUnitTitle = new javax.swing.JLabel("Unit");
+        lblUnitTitle.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 14));
+        String[] units = {"pcs", "g", "kg", "ml", "L", "cups", "tbsp", "tsp"};
+        javax.swing.JComboBox<String> cmbUnit = new javax.swing.JComboBox<>(units);
+        cmbUnit.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 16));
+        cmbUnit.setBackground(java.awt.Color.WHITE);
+        colUnit.add(lblUnitTitle);
+        colUnit.add(javax.swing.Box.createVerticalStrut(5));
+        colUnit.add(cmbUnit);
+        
+        rowQtyUnit.add(colQty);
+        rowQtyUnit.add(colUnit);
+
+        // BUTTONS
+        javax.swing.JButton btnSubmitAdd = new javax.swing.JButton("➕ Add Item") {
+            @Override protected void paintComponent(java.awt.Graphics g) {
+                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getText().contains("Update") ? new java.awt.Color(0, 102, 204) : new java.awt.Color(0, 153, 0)); 
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
+                super.paintComponent(g); g2.dispose();
+            }
+        };
+        btnSubmitAdd.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 16));
+        btnSubmitAdd.setForeground(java.awt.Color.WHITE);
+        btnSubmitAdd.setFocusPainted(false); btnSubmitAdd.setContentAreaFilled(false);
+        btnSubmitAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSubmitAdd.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+        btnSubmitAdd.setPreferredSize(new java.awt.Dimension(300, 45));
+        btnSubmitAdd.setMaximumSize(new java.awt.Dimension(300, 45)); 
+
+        javax.swing.JButton btnDelete = new javax.swing.JButton("🗑️ Delete Selected");
+        btnDelete.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 14));
+        btnDelete.setForeground(new java.awt.Color(200, 0, 0));
+        btnDelete.setFocusPainted(false); btnDelete.setContentAreaFilled(false);
+        btnDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDelete.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+        btnDelete.setVisible(false); // Hidden until they click a row!
+
+        // --- INTERACTIVITY: CLICK ROW TO EDIT ---
+        tblInventory.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting() && tblInventory.getSelectedRow() != -1) {
+                int row = tblInventory.getSelectedRow();
+                String rawName = tblInventory.getValueAt(row, 1).toString();
+                txtName.setText(rawName.replace("•", "").trim()); 
+                txtQty.setText(tblInventory.getValueAt(row, 2).toString());
+                cmbUnit.setSelectedItem(tblInventory.getValueAt(row, 3).toString());
+                
+                btnSubmitAdd.setText("💾 Update Item"); // Transforms the button!
+                btnDelete.setVisible(true); // Reveal the delete button
+            }
+        });
+
+        // --- SUBMIT / UPDATE LOGIC ---
+        btnSubmitAdd.addActionListener(evt -> {
+            String name = txtName.getText().trim().toLowerCase();
+            String qtyStr = txtQty.getText().trim();
+            String unit = cmbUnit.getSelectedItem().toString();
+            
+            if (name.isEmpty() || qtyStr.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(pnlInventory, "Please fill in both Name and Quantity!");
+                return;
+            }
+            try {
+                double qty = Double.parseDouble(qtyStr);
+                int selectedRow = tblInventory.getSelectedRow();
+                
+                try (java.sql.Connection conn = linaer_algo.refinder.database.DatabaseConnection.getConnection();
+                     java.sql.Statement stmt = conn.createStatement()) {
+                     
+                    if (selectedRow != -1) {
+                        // UPDATE TYPO/QTY!
+                        int id = (int) tblInventory.getValueAt(selectedRow, 0);
+                        stmt.executeUpdate("UPDATE ingredients SET name = '" + name + "', quantity = " + qty + ", unit = '" + unit + "' WHERE id = " + id);
+                    } else {
+                        // NEW ADD!
+                        java.sql.ResultSet rs = stmt.executeQuery("SELECT id, quantity FROM ingredients WHERE LOWER(name) = '" + name + "'");
+                        if (rs.next()) {
+                            double newQty = rs.getDouble("quantity") + qty;
+                            stmt.executeUpdate("UPDATE ingredients SET quantity = " + newQty + ", unit = '" + unit + "' WHERE id = " + rs.getInt("id"));
+                        } else {
+                            stmt.executeUpdate("INSERT INTO ingredients (name, quantity, unit) VALUES ('" + name + "', " + qty + ", '" + unit + "')");
+                        }
+                    }
+                    buildInventoryScreen(); 
+                } catch (Exception e) {}
+            } catch (NumberFormatException e) {
+                javax.swing.JOptionPane.showMessageDialog(pnlInventory, "Quantity must be a number!");
+            }
+        });
+
+        // --- DELETE LOGIC ---
+        btnDelete.addActionListener(evt -> {
+            int selectedRow = tblInventory.getSelectedRow();
+            if (selectedRow != -1) {
+                int id = (int) tblInventory.getValueAt(selectedRow, 0);
+                int confirm = javax.swing.JOptionPane.showConfirmDialog(pnlInventory, "Delete this item permanently?", "Confirm", javax.swing.JOptionPane.YES_NO_OPTION);
+                if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+                    try (java.sql.Connection conn = linaer_algo.refinder.database.DatabaseConnection.getConnection();
+                         java.sql.Statement stmt = conn.createStatement()) {
+                        stmt.executeUpdate("DELETE FROM ingredients WHERE id = " + id);
+                        buildInventoryScreen(); 
+                    } catch (Exception ex) {}
                 }
             }
+        });
 
-            // 4. Update the UI Labels
-            lblTotalItems.setText("Total Unique Ingredients: " + totalItems);
-            lblLowStock.setText("Low Stock Items (< 2 units): " + lowStockCount);
+        pnlAdd.add(lblAddTitle);
+        pnlAdd.add(javax.swing.Box.createVerticalStrut(20));
+        pnlAdd.add(lblNameTitle);
+        pnlAdd.add(javax.swing.Box.createVerticalStrut(5));
+        pnlAdd.add(txtName);
+        pnlAdd.add(javax.swing.Box.createVerticalStrut(15));
+        pnlAdd.add(rowQtyUnit);
+        pnlAdd.add(javax.swing.Box.createVerticalStrut(25));
+        pnlAdd.add(btnSubmitAdd);
+        pnlAdd.add(javax.swing.Box.createVerticalStrut(10));
+        pnlAdd.add(btnDelete);
 
-            // 5. Apply the Dynamic Red Warning Text!
-            if (lowStockCount > 0) {
-                lblLowStock.setForeground(java.awt.Color.RED);
-            } else {
-                lblLowStock.setForeground(new java.awt.Color(50, 50, 50)); // Dark gray
-            }
+        pnlRight.add(pnlAdd);
+        pnlRight.add(javax.swing.Box.createVerticalGlue()); 
 
-        } catch (Exception e) {
-            System.out.println("Error loading inventory: " + e.getMessage());
-        }
+        pnlInventory.add(pnlLeft, java.awt.BorderLayout.CENTER); 
+        pnlInventory.add(pnlRight, java.awt.BorderLayout.EAST); 
+
+        pnlInventory.revalidate();
+        pnlInventory.repaint();
     }
     
    public void loadRecipeCards(String searchQuery) {
@@ -1314,114 +1530,366 @@ public class MainFrame extends javax.swing.JFrame {
             System.out.println("Error loading recipe cards: " + e.getMessage());
         }
     }
-    public void openRecipeDetailsFromCard(int id) {
-        // Fetch it from the database using the ID!
+    
+  public void openRecipeDetailsFromCard(int id) {
+        buildRecipeDetailsScreen(id, false, 0.0);
+        java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
+        layout.show(pnlContent, "pnlRecipeDetails");
+    }
+
+    public void openRecipeDetailsFromDashboard(int id, double matchScore) {
+        buildRecipeDetailsScreen(id, true, matchScore);
+        java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
+        layout.show(pnlContent, "pnlRecipeDetails");
+    }
+
+    public void buildRecipeDetailsScreen(int recipeId, boolean fromDashboard, double matchScore) {
+        // 1. CLEAR AND SETUP MAIN CONTAINER
+        pnlRecipeDetails.removeAll();
+        pnlRecipeDetails.setLayout(new java.awt.BorderLayout(40, 20)); 
+        pnlRecipeDetails.setBackground(new java.awt.Color(253, 250, 240)); 
+        pnlRecipeDetails.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 50, 20, 50)); 
+
         linaer_algo.refinder.model.Recipe recipe = null;
         for(linaer_algo.refinder.model.Recipe r : linaer_algo.refinder.database.RecipeDAO.getAllRecipes()) {
-             if(r.getId() == id) { recipe = r; break; }
+            if(r.getId() == recipeId) { recipe = r; break; }
         }
-        
-        if (recipe != null) {
-            currentActiveRecipeId = recipe.getId(); 
-            
-            lblRecipeTitle.setText(recipe.getName());
-            lblRecipeCuisine.setText("Cuisine: " + recipe.getCuisine());
-            lblRecipeTime.setText("Cook Time: " + recipe.getCookTime() + " mins");
-            txtRecipeInstructions.setText(recipe.getInstructions());
-            lblMatchScore.setText(""); 
-            lblMissingItems.setText("Viewing from Recipe Directory"); 
-            
-            // Load Ingredients
-            java.util.List<linaer_algo.refinder.model.Ingredient> fullIngredients = linaer_algo.refinder.database.RecipeDAO.getRecipeIngredients(recipe.getId());
-            StringBuilder formattedList = new StringBuilder();
-            for (linaer_algo.refinder.model.Ingredient ing : fullIngredients) {
-                String capName = ing.getName().substring(0, 1).toUpperCase() + ing.getName().substring(1);
-                String qty = String.valueOf(ing.getQuantity());
-                if (qty.endsWith(".0")) qty = qty.substring(0, qty.length() - 2);
-                formattedList.append("- ").append(qty).append(" ").append(ing.getUnit()).append(" ").append(capName).append("\n");
-            }
-            txtRecipeIngredients.setText(formattedList.toString());
-            
-            // Load Photo
-            try {
-                java.net.URL imgURL = getClass().getResource(recipe.getPhotoPath());
-                if(imgURL != null) {
-                    javax.swing.ImageIcon icon = new javax.swing.ImageIcon(imgURL);
-                    java.awt.Image img = icon.getImage().getScaledInstance(lblRecipeImage.getWidth(), lblRecipeImage.getHeight(), java.awt.Image.SCALE_SMOOTH);
-                    lblRecipeImage.setIcon(new javax.swing.ImageIcon(img));
-                }
-            } catch (Exception e) {}
+        if (recipe == null) return;
+        currentActiveRecipeId = recipe.getId();
 
-            // Flip screen
-            java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
-            layout.show(pnlContent, "pnlRecipeDetails");
-        }
-    }
-    
-    public void openRecipeDetailsFromDashboard(int id, double matchScore, String missingItems) {
-        linaer_algo.refinder.model.Recipe recipe = linaer_algo.refinder.database.RecipeDAO.getRecipeByName(
-            linaer_algo.refinder.database.RecipeDAO.getAllRecipes().stream().filter(r -> r.getId() == id).findFirst().get().getName()
-        );
+        String cuisine = recipe.getCuisine() != null ? recipe.getCuisine() : "Mixed";
+
+        java.util.List<linaer_algo.refinder.model.Ingredient> reqs = linaer_algo.refinder.database.RecipeDAO.getRecipeIngredients(recipeId);
+        java.util.List<linaer_algo.refinder.model.Ingredient> inv = linaer_algo.refinder.database.IngredientDAO.getAllIngredients();
+        String fullMissingItems = "";
         
-        if (recipe != null) {
-            currentActiveRecipeId = recipe.getId(); 
-            
-            // Load text
-            lblRecipeTitle.setText(recipe.getName());
-            lblRecipeCuisine.setText("Cuisine: " + recipe.getCuisine());
-            lblRecipeTime.setText("Cook Time: " + recipe.getCookTime() + " mins");
-            txtRecipeInstructions.setText(recipe.getInstructions());
-            
-            // Load Algorithm Stats!
-            lblMatchScore.setText(String.format("Match Score: %.1f%%", matchScore));
-            if (matchScore >= 80.0) {
-                lblMatchScore.setForeground(new java.awt.Color(0, 153, 0));
+        // --- NEW: THE "CAN COOK" SAFETY LOCK ---
+        boolean canCook = false; 
+        
+        if (fromDashboard) {
+            java.util.List<String> missingList = linaer_algo.refinder.algorithm.RabinKarp.getMissingQuantityIngredients(reqs, inv);
+            if (missingList.isEmpty()) {
+                fullMissingItems = "Ready to cook! 🍳";
+                canCook = true; // 100% Match! Unleash the button!
             } else {
-                lblMatchScore.setForeground(java.awt.Color.RED);
-            }
-            lblMissingItems.setText("Missing: " + missingItems); 
-            
-            // Load Ingredients List
-            java.util.List<linaer_algo.refinder.model.Ingredient> fullIngredients = linaer_algo.refinder.database.RecipeDAO.getRecipeIngredients(recipe.getId());
-            StringBuilder formattedList = new StringBuilder();
-            for (linaer_algo.refinder.model.Ingredient ing : fullIngredients) {
-                String capName = ing.getName().substring(0, 1).toUpperCase() + ing.getName().substring(1);
-                String qty = String.valueOf(ing.getQuantity());
-                if (qty.endsWith(".0")) qty = qty.substring(0, qty.length() - 2);
-                formattedList.append("- ").append(qty).append(" ").append(ing.getUnit()).append(" ").append(capName).append("\n");
-            }
-            txtRecipeIngredients.setText(formattedList.toString());
-            
-            // Load Photo
-            try {
-                java.net.URL imgURL = getClass().getResource(recipe.getPhotoPath());
-                if(imgURL != null) {
-                    javax.swing.ImageIcon icon = new javax.swing.ImageIcon(imgURL);
-                    java.awt.Image img = icon.getImage().getScaledInstance(lblRecipeImage.getWidth(), lblRecipeImage.getHeight(), java.awt.Image.SCALE_SMOOTH);
-                    lblRecipeImage.setIcon(new javax.swing.ImageIcon(img));
+                StringBuilder sb = new StringBuilder();
+                for (String item : missingList) {
+                    sb.append("• ").append(item).append("\n");
                 }
-            } catch (Exception e) {}
-
-            // Flip screen
-            java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
-            layout.show(pnlContent, "pnlRecipeDetails");
+                fullMissingItems = sb.toString().trim();
+                canCook = false; // Missing ingredients! Lock it down.
+            }
         }
+
+        // --- HEADER ---
+        javax.swing.JPanel pnlHeader = new javax.swing.JPanel(new java.awt.BorderLayout());
+        pnlHeader.setOpaque(false);
+        
+        javax.swing.JPanel pnlTitleArea = new javax.swing.JPanel();
+        pnlTitleArea.setLayout(new javax.swing.BoxLayout(pnlTitleArea, javax.swing.BoxLayout.Y_AXIS));
+        pnlTitleArea.setOpaque(false);
+        
+        javax.swing.JLabel lblTitle = new javax.swing.JLabel(recipe.getName());
+        lblTitle.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 42)); 
+        lblTitle.setForeground(new java.awt.Color(160, 58, 19)); 
+        lblTitle.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
+        
+        javax.swing.JLabel lblSub = new javax.swing.JLabel("🕒 " + recipe.getCookTime() + " mins   •   " + cuisine);
+        lblSub.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 18)); 
+        lblSub.setForeground(new java.awt.Color(120, 120, 120));
+        lblSub.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
+        
+        pnlTitleArea.add(lblTitle);
+        pnlTitleArea.add(javax.swing.Box.createVerticalStrut(5));
+        pnlTitleArea.add(lblSub);
+
+        if (fromDashboard) {
+            final double fScore = matchScore;
+            javax.swing.JLabel lblBadge = new javax.swing.JLabel(String.format(" %.1f%% Match ", matchScore), javax.swing.SwingConstants.CENTER) {
+                @Override protected void paintComponent(java.awt.Graphics g) {
+                    java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                    g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                    if (fScore >= 100.0) g2.setColor(new java.awt.Color(230, 245, 230)); 
+                    else g2.setColor(new java.awt.Color(255, 230, 230)); 
+                    g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
+                    super.paintComponent(g);
+                    g2.dispose();
+                }
+            };
+            if (matchScore >= 100.0) lblBadge.setForeground(new java.awt.Color(0, 120, 0));
+            else lblBadge.setForeground(new java.awt.Color(180, 0, 0));
+            
+            lblBadge.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 16)); 
+            lblBadge.setBorder(javax.swing.BorderFactory.createEmptyBorder(6, 12, 6, 12));
+            
+            javax.swing.JPanel badgePanel = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 0, 10));
+            badgePanel.setOpaque(false);
+            badgePanel.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
+            badgePanel.add(lblBadge);
+            pnlTitleArea.add(badgePanel);
+        }
+        
+        pnlHeader.add(pnlTitleArea, java.awt.BorderLayout.WEST);
+        pnlRecipeDetails.add(pnlHeader, java.awt.BorderLayout.NORTH);
+
+        // --- BODY ---
+        javax.swing.JPanel pnlBody = new javax.swing.JPanel(new java.awt.GridLayout(1, 2, 40, 0)); 
+        pnlBody.setOpaque(false);
+
+        // --- LEFT COLUMN (Image & Instructions) ---
+        javax.swing.JPanel pnlLeft = new javax.swing.JPanel(new java.awt.BorderLayout(0, 15));
+        pnlLeft.setOpaque(false);
+        
+        java.awt.Image tempImg = null;
+        try {
+            java.net.URL imgURL = getClass().getResource(recipe.getPhotoPath());
+            if (imgURL != null) tempImg = new javax.swing.ImageIcon(imgURL).getImage();
+        } catch (Exception e) {}
+        final java.awt.Image finalImg = tempImg;
+
+        javax.swing.JPanel pnlImage = new javax.swing.JPanel() {
+            @Override protected void paintComponent(java.awt.Graphics g) {
+                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setClip(new java.awt.geom.RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), 30, 30));
+                if (finalImg != null) g2.drawImage(finalImg, 0, 0, getWidth(), getHeight(), this);
+                else { g2.setColor(new java.awt.Color(230, 230, 230)); g2.fillRect(0, 0, getWidth(), getHeight()); }
+                g2.dispose();
+            }
+        };
+        pnlImage.setPreferredSize(new java.awt.Dimension(400, 320));
+        
+        javax.swing.JPanel pnlInstCard = new javax.swing.JPanel(new java.awt.BorderLayout(0, 10));
+        pnlInstCard.setBackground(java.awt.Color.WHITE);
+        pnlInstCard.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+            new javax.swing.border.LineBorder(new java.awt.Color(220, 220, 220), 1, true),
+            javax.swing.BorderFactory.createEmptyBorder(15, 20, 15, 20)
+        ));
+        
+        javax.swing.JLabel lblInstTitle = new javax.swing.JLabel("Instructions");
+        lblInstTitle.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 20));
+        lblInstTitle.setForeground(new java.awt.Color(160, 58, 19));
+        pnlInstCard.add(lblInstTitle, java.awt.BorderLayout.NORTH);
+        
+        javax.swing.JTextArea txtInst = new javax.swing.JTextArea(recipe.getInstructions());
+        txtInst.setWrapStyleWord(true); txtInst.setLineWrap(true); txtInst.setEditable(false);
+        txtInst.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 18)); 
+        txtInst.setBackground(java.awt.Color.WHITE);
+        
+        javax.swing.JScrollPane scrollInst = new javax.swing.JScrollPane(txtInst);
+        scrollInst.setBorder(null); scrollInst.setOpaque(false);
+        scrollInst.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        pnlInstCard.add(scrollInst, java.awt.BorderLayout.CENTER);
+        
+        pnlLeft.add(pnlImage, java.awt.BorderLayout.NORTH);
+        pnlLeft.add(pnlInstCard, java.awt.BorderLayout.CENTER);
+        pnlBody.add(pnlLeft);
+
+        // --- RIGHT COLUMN (Missing Box & Ingredients) ---
+        javax.swing.JPanel pnlRight = new javax.swing.JPanel(new java.awt.BorderLayout(0, 15));
+        pnlRight.setOpaque(false);
+
+        if (fromDashboard && !canCook) { // Only show Missing Box if they can't cook it yet
+            javax.swing.JPanel pnlMissing = new javax.swing.JPanel(new java.awt.BorderLayout(0, 5)) {
+                @Override protected void paintComponent(java.awt.Graphics g) {
+                    java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                    g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                    g2.setColor(new java.awt.Color(255, 235, 235)); 
+                    g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
+                    g2.setColor(new java.awt.Color(220, 150, 150)); 
+                    g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
+                    g2.dispose();
+                }
+            };
+            pnlMissing.setOpaque(false);
+            pnlMissing.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 15, 10, 15)); 
+            
+            javax.swing.JLabel lblMissTitle = new javax.swing.JLabel("Missing Ingredients:");
+            lblMissTitle.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 16)); 
+            lblMissTitle.setForeground(new java.awt.Color(180, 0, 0));
+            
+            javax.swing.JTextArea txtMiss = new javax.swing.JTextArea(fullMissingItems);
+            txtMiss.setWrapStyleWord(true); txtMiss.setLineWrap(true); txtMiss.setEditable(false);
+            txtMiss.setOpaque(false); 
+            txtMiss.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 15)); 
+            txtMiss.setForeground(new java.awt.Color(150, 30, 30));
+            
+            pnlMissing.add(lblMissTitle, java.awt.BorderLayout.NORTH);
+            pnlMissing.add(txtMiss, java.awt.BorderLayout.CENTER);
+            
+            pnlRight.add(pnlMissing, java.awt.BorderLayout.NORTH);
+        }
+
+        // --- INGREDIENTS LIST ---
+        javax.swing.JPanel pnlIngCard = new javax.swing.JPanel(new java.awt.BorderLayout());
+        pnlIngCard.setBackground(java.awt.Color.WHITE);
+        pnlIngCard.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+            new javax.swing.border.LineBorder(new java.awt.Color(220, 220, 220), 1, true),
+            javax.swing.BorderFactory.createEmptyBorder(15, 20, 15, 20) 
+        ));
+        
+        javax.swing.JPanel ingHeader = new javax.swing.JPanel(new java.awt.BorderLayout());
+        ingHeader.setOpaque(false);
+        javax.swing.JLabel lblIngTitle = new javax.swing.JLabel("Ingredients Needed");
+        lblIngTitle.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 20));
+        lblIngTitle.setForeground(new java.awt.Color(160, 58, 19));
+        ingHeader.add(lblIngTitle, java.awt.BorderLayout.WEST);
+        
+        if (fromDashboard) {
+            javax.swing.JPanel headerStats = new javax.swing.JPanel(new java.awt.GridLayout(1, 3));
+            headerStats.setOpaque(false);
+            headerStats.setPreferredSize(new java.awt.Dimension(220, 20)); 
+            
+            javax.swing.JLabel l1 = new javax.swing.JLabel("You Have");
+            javax.swing.JLabel l2 = new javax.swing.JLabel("Needed");
+            javax.swing.JLabel l3 = new javax.swing.JLabel(""); 
+            
+            l1.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 12));
+            l2.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 12));
+            l1.setForeground(new java.awt.Color(150, 150, 150));
+            l2.setForeground(new java.awt.Color(150, 150, 150));
+            
+            headerStats.add(l1); headerStats.add(l2); headerStats.add(l3);
+            ingHeader.add(headerStats, java.awt.BorderLayout.EAST);
+        }
+        pnlIngCard.add(ingHeader, java.awt.BorderLayout.NORTH);
+        
+        javax.swing.JPanel pnlIngList = new javax.swing.JPanel();
+        pnlIngList.setLayout(new javax.swing.BoxLayout(pnlIngList, javax.swing.BoxLayout.Y_AXIS));
+        pnlIngList.setOpaque(false);
+        pnlIngList.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 0, 0)); 
+        
+        for (linaer_algo.refinder.model.Ingredient req : reqs) {
+            double ownedQty = 0;
+            for (linaer_algo.refinder.model.Ingredient i : inv) {
+                if (i.getName().equalsIgnoreCase(req.getName())) { ownedQty = i.getQuantity(); break; }
+            }
+            boolean hasIt = ownedQty >= req.getQuantity();
+            
+            javax.swing.JPanel row = new javax.swing.JPanel(new java.awt.BorderLayout());
+            row.setOpaque(false);
+            row.setBorder(javax.swing.BorderFactory.createEmptyBorder(6, 0, 6, 0)); 
+            
+            javax.swing.JLabel lblName = new javax.swing.JLabel("• " + req.getName().substring(0, 1).toUpperCase() + req.getName().substring(1));
+            lblName.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 15));
+            row.add(lblName, java.awt.BorderLayout.WEST);
+            
+            String reqStr = String.valueOf(req.getQuantity());
+            if(reqStr.endsWith(".0")) reqStr = reqStr.substring(0, reqStr.length() - 2);
+            String ownStr = String.valueOf(ownedQty);
+            if(ownStr.endsWith(".0")) ownStr = ownStr.substring(0, ownStr.length() - 2);
+            
+            if (fromDashboard) {
+                javax.swing.JPanel rowStats = new javax.swing.JPanel(new java.awt.GridLayout(1, 3));
+                rowStats.setOpaque(false);
+                rowStats.setPreferredSize(new java.awt.Dimension(220, 20)); 
+                
+                javax.swing.JLabel lblOwn = new javax.swing.JLabel(ownStr + " " + req.getUnit());
+                javax.swing.JLabel lblReq = new javax.swing.JLabel(reqStr + " " + req.getUnit());
+                javax.swing.JLabel lblMark = new javax.swing.JLabel(hasIt ? "✔" : "✘");
+                
+                lblOwn.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 14));
+                lblReq.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 14));
+                lblMark.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 14));
+                lblMark.setForeground(hasIt ? new java.awt.Color(0, 150, 0) : new java.awt.Color(200, 0, 0));
+                
+                rowStats.add(lblOwn); rowStats.add(lblReq); rowStats.add(lblMark);
+                row.add(rowStats, java.awt.BorderLayout.EAST);
+            } else {
+                javax.swing.JLabel lblReq = new javax.swing.JLabel(reqStr + " " + req.getUnit());
+                lblReq.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 14));
+                row.add(lblReq, java.awt.BorderLayout.EAST);
+            }
+            
+            pnlIngList.add(row);
+            
+            javax.swing.JPanel line = new javax.swing.JPanel();
+            line.setBackground(new java.awt.Color(240, 240, 240));
+            line.setPreferredSize(new java.awt.Dimension(100, 1));
+            line.setMaximumSize(new java.awt.Dimension(2000, 1));
+            pnlIngList.add(line);
+        }
+        
+        javax.swing.JScrollPane scrollIng = new javax.swing.JScrollPane(pnlIngList);
+        scrollIng.setBorder(null);
+        scrollIng.setOpaque(false);
+        scrollIng.getViewport().setOpaque(false);
+        scrollIng.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        pnlIngCard.add(scrollIng, java.awt.BorderLayout.CENTER);
+        
+        pnlRight.add(pnlIngCard, java.awt.BorderLayout.CENTER);
+        pnlBody.add(pnlRight);
+        
+        pnlRecipeDetails.add(pnlBody, java.awt.BorderLayout.CENTER);
+
+        // --- BOTTOM BUTTONS ---
+        javax.swing.JPanel pnlButtons = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 15, 0));
+        pnlButtons.setOpaque(false);
+        pnlButtons.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 0, 0, 0));
+
+        // --- NEW: STYLED BUTTON CAN GRAY OUT IF DISABLED! ---
+        class StyledBtn extends javax.swing.JButton {
+            java.awt.Color bg; java.awt.Color fg;
+            public StyledBtn(String text, java.awt.Color bg, java.awt.Color fg) {
+                super(text); this.bg = bg; this.fg = fg;
+                setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 15)); 
+                setForeground(fg); setFocusPainted(false); setContentAreaFilled(false);
+                setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 25, 10, 25));
+            }
+            @Override protected void paintComponent(java.awt.Graphics g) {
+                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                // Turn grey if not enabled!
+                g2.setColor(isEnabled() ? bg : new java.awt.Color(200, 200, 200)); 
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
+                super.paintComponent(g); g2.dispose();
+            }
+        }
+
+        StyledBtn btnBackUI = new StyledBtn("Back", new java.awt.Color(220, 220, 220), new java.awt.Color(100, 100, 100));
+        StyledBtn btnFavUI = new StyledBtn("Save to Favorites", new java.awt.Color(160, 58, 19), java.awt.Color.WHITE);
+        StyledBtn btnCookUI = new StyledBtn("I Cooked This", new java.awt.Color(0, 153, 0), java.awt.Color.WHITE);
+
+        btnBackUI.addActionListener(evt -> {
+            java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
+            layout.show(pnlContent, lastScreen);
+        });
+        btnFavUI.addActionListener(evt -> btnFavoriteActionPerformed(null));
+        btnCookUI.addActionListener(evt -> btnCookedActionPerformed(null));
+
+        pnlButtons.add(btnBackUI);
+        pnlButtons.add(btnFavUI);
+        
+        if (fromDashboard) {
+            // APPLY THE LOCK LOGIC!
+            btnCookUI.setEnabled(canCook);
+            if(!canCook) {
+                btnCookUI.setToolTipText("You are missing ingredients! Add them to your inventory first.");
+            }
+            pnlButtons.add(btnCookUI); 
+        }
+
+        pnlRecipeDetails.add(pnlButtons, java.awt.BorderLayout.SOUTH);
+
+        pnlRecipeDetails.revalidate();
+        pnlRecipeDetails.repaint();
     }
     
     public void loadFavoritesCards() {
         // 1. Clear the container
-       pnlFavoritesCards.removeAll(); 
+        pnlFavoritesCards.removeAll(); 
         
         // 2. Fetch the favorites
         java.util.List<linaer_algo.refinder.model.Recipe> favs = linaer_algo.refinder.database.RecipeDAO.getFavoriteRecipes();
 
-        // --- NEW: THE EMPTY STATE UX ---
+        // --- EMPTY STATE UX ---
         if (favs.isEmpty()) {
             javax.swing.JLabel emptyMsg = new javax.swing.JLabel("You haven't saved any favorite recipes yet! ❤️");
-            emptyMsg.setFont(new java.awt.Font("Segoe UI", java.awt.Font.ITALIC, 20));
-            emptyMsg.setForeground(new java.awt.Color(150, 150, 150)); // Light gray
-            emptyMsg.setBorder(javax.swing.BorderFactory.createEmptyBorder(50, 0, 0, 0)); // Push it down a bit
-           pnlFavoritesCards.add(emptyMsg);
+            emptyMsg.setFont(new java.awt.Font("Century Gothic", java.awt.Font.ITALIC, 20));
+            emptyMsg.setForeground(new java.awt.Color(150, 150, 150)); 
+            emptyMsg.setBorder(javax.swing.BorderFactory.createEmptyBorder(50, 0, 0, 0)); 
+            pnlFavoritesCards.add(emptyMsg);
         } else {
             // 3. Loop through and build the cards!
             for (linaer_algo.refinder.model.Recipe recipe : favs) {
@@ -1430,20 +1898,16 @@ public class MainFrame extends javax.swing.JFrame {
                 int time = recipe.getCookTime();
                 String photoPath = recipe.getPhotoPath();
 
-                // Load the image safely so we can manipulate it
                 java.awt.Image tempImg = null;
                 try {
                     java.net.URL imgURL = getClass().getResource(photoPath);
-                    if (imgURL != null) {
-                        tempImg = new javax.swing.ImageIcon(imgURL).getImage();
-                    }
+                    if (imgURL != null) tempImg = new javax.swing.ImageIcon(imgURL).getImage();
                 } catch (Exception e) {}
                 final java.awt.Image finalImg = tempImg;
 
-                // --- 1. THE MAIN CARD (Rounded Corners!) ---
+                // --- 1. THE MAIN CARD ---
                 javax.swing.JPanel card = new javax.swing.JPanel() {
-                    @Override
-                    protected void paintComponent(java.awt.Graphics g) {
+                    @Override protected void paintComponent(java.awt.Graphics g) {
                         java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
                         g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
                         g2.setColor(java.awt.Color.WHITE); 
@@ -1454,39 +1918,29 @@ public class MainFrame extends javax.swing.JFrame {
                     }
                 };
                 card.setOpaque(false); 
-                card.setPreferredSize(new java.awt.Dimension(240, 310)); 
+                card.setPreferredSize(new java.awt.Dimension(240, 320)); // Made slightly taller to fit buttons comfortably
                 card.setLayout(new java.awt.BorderLayout());
-                card.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)); 
 
-                // --- 2. THE TOP IMAGE AREA (Clipped Corners & Floating Badge) ---
+                // --- 2. THE TOP IMAGE AREA (Clickable!) ---
                 javax.swing.JPanel pnlImage = new javax.swing.JPanel() {
-                    @Override
-                    protected void paintComponent(java.awt.Graphics g) {
+                    @Override protected void paintComponent(java.awt.Graphics g) {
                         java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
                         g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
                         
                         java.awt.geom.Path2D.Float path = new java.awt.geom.Path2D.Float();
-                        path.moveTo(0, getHeight());
-                        path.lineTo(0, 15);
-                        path.quadTo(0, 0, 15, 0);
-                        path.lineTo(getWidth() - 15, 0);
-                        path.quadTo(getWidth(), 0, getWidth(), 15);
-                        path.lineTo(getWidth(), getHeight());
-                        path.closePath();
+                        path.moveTo(0, getHeight()); path.lineTo(0, 15); path.quadTo(0, 0, 15, 0);
+                        path.lineTo(getWidth() - 15, 0); path.quadTo(getWidth(), 0, getWidth(), 15);
+                        path.lineTo(getWidth(), getHeight()); path.closePath();
                         g2.clip(path);
 
-                        if (finalImg != null) {
-                            g2.drawImage(finalImg, 0, 0, getWidth(), getHeight(), this);
-                        } else {
-                            g2.setColor(new java.awt.Color(240, 240, 240));
-                            g2.fillRect(0, 0, getWidth(), getHeight());
-                        }
+                        if (finalImg != null) g2.drawImage(finalImg, 0, 0, getWidth(), getHeight(), this);
+                        else { g2.setColor(new java.awt.Color(240, 240, 240)); g2.fillRect(0, 0, getWidth(), getHeight()); }
 
                         g2.setClip(null); 
                         g2.setColor(new java.awt.Color(160, 58, 19, 220)); 
                         g2.fillRoundRect(10, 10, 85, 28, 15, 15); 
                         g2.setColor(java.awt.Color.WHITE);
-                        g2.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+                        g2.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 12));
                         g2.drawString("❤️ Saved", 22, 29);
 
                         g2.dispose();
@@ -1494,6 +1948,7 @@ public class MainFrame extends javax.swing.JFrame {
                 };
                 pnlImage.setPreferredSize(new java.awt.Dimension(240, 150));
                 pnlImage.setOpaque(false);
+                pnlImage.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)); 
 
                 // --- 3. THE BOTTOM TEXT AREA ---
                 javax.swing.JPanel pnlText = new javax.swing.JPanel();
@@ -1502,65 +1957,363 @@ public class MainFrame extends javax.swing.JFrame {
                 pnlText.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15)); 
 
                 javax.swing.JLabel lblTitle = new javax.swing.JLabel(name);
-                lblTitle.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 16));
+                lblTitle.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 16));
                 lblTitle.setForeground(new java.awt.Color(40, 40, 40)); 
 
                 javax.swing.JLabel lblTime = new javax.swing.JLabel("🕒 " + time + " mins  •  " + recipe.getCuisine());
-                lblTime.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12));
+                lblTime.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 12));
                 lblTime.setForeground(new java.awt.Color(120, 120, 120)); 
 
-                // --- 4. THE PILL BUTTON ---
-                javax.swing.JLabel btnView = new javax.swing.JLabel("View Recipe", javax.swing.SwingConstants.CENTER) {
-                    @Override
-                    protected void paintComponent(java.awt.Graphics g) {
+                // --- 4. THE DUAL BUTTON ROW ---
+                javax.swing.JPanel pnlButtons = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 0, 0));
+                pnlButtons.setOpaque(false);
+
+                // View Button
+                javax.swing.JLabel btnView = new javax.swing.JLabel("View", javax.swing.SwingConstants.CENTER) {
+                    @Override protected void paintComponent(java.awt.Graphics g) {
                         java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
                         g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
                         g2.setColor(new java.awt.Color(160, 58, 19)); 
-                        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 25, 25); 
-                        super.paintComponent(g);
-                        g2.dispose();
+                        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20); 
+                        super.paintComponent(g); g2.dispose();
                     }
                 };
                 btnView.setForeground(java.awt.Color.WHITE);
-                btnView.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
-                btnView.setOpaque(false);
-                btnView.setMaximumSize(new java.awt.Dimension(210, 35)); 
+                btnView.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 13));
+                btnView.setPreferredSize(new java.awt.Dimension(100, 32));
+                btnView.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)); 
+
+                // Spacing between buttons
+                pnlButtons.add(btnView);
+                pnlButtons.add(javax.swing.Box.createHorizontalStrut(10));
+
+                // Remove Button (Sleek Red Outline)
+                javax.swing.JLabel btnRemove = new javax.swing.JLabel("Remove", javax.swing.SwingConstants.CENTER) {
+                    @Override protected void paintComponent(java.awt.Graphics g) {
+                        java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                        g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                        g2.setColor(new java.awt.Color(255, 240, 240)); // Light red background
+                        g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20); 
+                        g2.setColor(new java.awt.Color(200, 50, 50)); // Red border
+                        g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20);
+                        super.paintComponent(g); g2.dispose();
+                    }
+                };
+                btnRemove.setForeground(new java.awt.Color(200, 50, 50));
+                btnRemove.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 13));
+                btnRemove.setPreferredSize(new java.awt.Dimension(90, 32));
+                btnRemove.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)); 
+
+                pnlButtons.add(btnRemove);
 
                 pnlText.add(lblTitle);
                 pnlText.add(javax.swing.Box.createVerticalStrut(5));
                 pnlText.add(lblTime);
                 pnlText.add(javax.swing.Box.createVerticalGlue()); 
-                pnlText.add(btnView);
+                pnlText.add(pnlButtons);
 
-                // --- 5. ASSEMBLE CARD ---
                 card.add(pnlImage, java.awt.BorderLayout.NORTH);
                 card.add(pnlText, java.awt.BorderLayout.CENTER);
 
-                // --- 6. INTERACTIVE HOVER EFFECT ---
+                // --- 5. SMART INTERACTIVITY WIRING ---
+                
+                // Hover effect on the whole card
                 card.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseEntered(java.awt.event.MouseEvent evt) { card.setLocation(card.getX(), card.getY() - 4); }
+                    public void mouseExited(java.awt.event.MouseEvent evt) { card.setLocation(card.getX(), card.getY() + 4); }
+                });
+
+                // Open Recipe (Wired to Image and View Button only!)
+                java.awt.event.MouseAdapter openRecipeEvent = new java.awt.event.MouseAdapter() {
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
                         lastScreen = "pnlFavorites";
                         openRecipeDetailsFromCard(recipeId); 
                     }
-                    public void mouseEntered(java.awt.event.MouseEvent evt) {
-                        card.setLocation(card.getX(), card.getY() - 4); 
-                    }
-                    public void mouseExited(java.awt.event.MouseEvent evt) {
-                        card.setLocation(card.getX(), card.getY() + 4); 
+                };
+                pnlImage.addMouseListener(openRecipeEvent);
+                btnView.addMouseListener(openRecipeEvent);
+
+                // Delete Favorite (Wired to Remove Button only!)
+                btnRemove.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        int confirm = javax.swing.JOptionPane.showConfirmDialog(pnlFavoritesCards, 
+                            "Remove this recipe from your cookbook?", "Confirm", javax.swing.JOptionPane.YES_NO_OPTION);
+                        if(confirm == javax.swing.JOptionPane.YES_OPTION) {
+                            linaer_algo.refinder.database.RecipeDAO.removeFromFavorites(recipeId);
+                            loadFavoritesCards(); // Instantly refresh the UI!
+                        }
                     }
                 });
 
-               pnlFavoritesCards.add(card);
+                pnlFavoritesCards.add(card);
             }
-        } // <--- Closes the else block!
+        } 
 
-        // --- 7. SCROLL HACK ---
-       pnlFavoritesCards.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING, 25, 25)); 
+        // --- 6. SCROLL HACK ---
+        pnlFavoritesCards.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING, 25, 25)); 
         int totalCards = favs.size();
         int estimatedRows = (int) Math.ceil(totalCards / 5.0); 
-       pnlFavoritesCards.setPreferredSize(new java.awt.Dimension(1400, (estimatedRows * 360) + 100));
+        pnlFavoritesCards.setPreferredSize(new java.awt.Dimension(1400, (estimatedRows * 360) + 100));
 
-       pnlFavoritesCards.revalidate();
-       pnlFavoritesCards.repaint();
+        pnlFavoritesCards.revalidate();
+        pnlFavoritesCards.repaint();
+    }
+    
+   // CALL THIS METHOD FROM YOUR SIDEBAR BUTTON!
+    public void openCookingLog() {
+        // 1. Get the brand new, pure-code screen
+        javax.swing.JPanel pureLogScreen = buildCookingLogScreen();
+        
+        // 2. Add it directly to your main CardLayout container! (Bypassing NetBeans)
+        pnlContent.add(pureLogScreen, "PURE_LOG_SCREEN");
+        
+        // 3. Force the CardLayout to show our new pure code screen
+        java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
+        layout.show(pnlContent, "PURE_LOG_SCREEN"); 
+        
+        // 4. Force a master refresh
+        pnlContent.revalidate();
+        pnlContent.repaint();
+    }
+
+   // Notice this returns a JPanel!
+    public javax.swing.JPanel buildCookingLogScreen() {
+        // Create a completely clean panel that NetBeans has NO control over
+        javax.swing.JPanel masterPanel = new javax.swing.JPanel(new java.awt.GridBagLayout());
+        masterPanel.setBackground(new java.awt.Color(253, 250, 240)); 
+        masterPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 50, 30, 50)); 
+        java.awt.GridBagConstraints gbc = new java.awt.GridBagConstraints();
+
+        // --- FETCH REAL DATA ---
+        java.util.List<linaer_algo.refinder.model.CookingLog> logs = linaer_algo.refinder.database.CookingLogDAO.getAllCookingLogs();
+        int totalCooked = logs.size();
+
+        String rank = "Novice 🥚";
+        if (totalCooked >= 5) rank = "Home Cook 👨‍🍳";
+        if (totalCooked >= 15) rank = "Sous Chef 🔪";
+        if (totalCooked >= 30) rank = "Master Chef 👑";
+
+        // --- HEADER ---
+        javax.swing.JPanel pnlHeader = new javax.swing.JPanel(new java.awt.BorderLayout());
+        pnlHeader.setOpaque(false);
+        
+        javax.swing.JLabel lblTitle = new javax.swing.JLabel("Cooking History");
+        lblTitle.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 42)); 
+        lblTitle.setForeground(new java.awt.Color(160, 58, 19)); 
+        
+        javax.swing.JLabel lblSub = new javax.swing.JLabel("Your culinary journey 🍳");
+        lblSub.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 18)); 
+        lblSub.setForeground(new java.awt.Color(120, 120, 120));
+        lblSub.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 15, 0, 0)); 
+        
+        javax.swing.JPanel titleRow = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 0, 0));
+        titleRow.setOpaque(false);
+        titleRow.add(lblTitle);
+        titleRow.add(lblSub);
+        
+        pnlHeader.add(titleRow, java.awt.BorderLayout.WEST);
+        
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridwidth = 2; 
+        gbc.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0; gbc.weighty = 0.0;
+        gbc.insets = new java.awt.Insets(0, 0, 20, 0); 
+        masterPanel.add(pnlHeader, gbc);
+
+        // --- LEFT COLUMN (Table) ---
+        javax.swing.JPanel pnlLeft = new javax.swing.JPanel(new java.awt.BorderLayout(0, 15));
+        pnlLeft.setOpaque(false);
+        pnlLeft.setMinimumSize(new java.awt.Dimension(0, 0)); 
+
+        String[] columnNames = {"ID", "Date Cooked", "Recipe Name", "Servings", "Status"};
+        javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(columnNames, 0) {
+            @Override public boolean isCellEditable(int row, int column) { return false; } 
+        };
+
+        for(linaer_algo.refinder.model.CookingLog log : logs) {
+            model.addRow(new Object[]{
+                log.getId(), 
+                log.getDateCooked(), 
+                "  " + log.getRecipeName(), 
+                log.getServings() + " pax",
+                "Completed"
+            });
+        }
+
+        javax.swing.JTable tblHistory = new javax.swing.JTable(model);
+        tblHistory.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 16));
+        tblHistory.setRowHeight(45); 
+        tblHistory.setShowGrid(false); 
+        tblHistory.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tblHistory.setSelectionBackground(new java.awt.Color(255, 235, 220)); 
+        tblHistory.setSelectionForeground(new java.awt.Color(160, 58, 19));
+
+        tblHistory.getTableHeader().setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 18));
+        tblHistory.getTableHeader().setBackground(java.awt.Color.WHITE);
+        tblHistory.getTableHeader().setForeground(new java.awt.Color(100, 100, 100));
+        tblHistory.getTableHeader().setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(220, 220, 220)));
+        tblHistory.getTableHeader().setPreferredSize(new java.awt.Dimension(0, 45));
+
+        tblHistory.getColumnModel().getColumn(0).setMinWidth(0);
+        tblHistory.getColumnModel().getColumn(0).setMaxWidth(0);
+        tblHistory.getColumnModel().getColumn(0).setWidth(0);
+
+        tblHistory.setDefaultRenderer(Object.class, new javax.swing.table.DefaultTableCellRenderer() {
+            @Override
+            public java.awt.Component getTableCellRendererComponent(javax.swing.JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                java.awt.Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (!isSelected) c.setBackground(row % 2 == 0 ? java.awt.Color.WHITE : new java.awt.Color(250, 250, 250));
+                
+                if (column == 4) { 
+                    setForeground(new java.awt.Color(0, 150, 0));
+                    setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 15));
+                    setText("✔ " + value.toString());
+                } else if (!isSelected) {
+                    setForeground(new java.awt.Color(60, 60, 60));
+                    setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 16));
+                }
+                
+                setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 15, 0, 0)); 
+                return c;
+            }
+        });
+
+        javax.swing.JScrollPane scrollTable = new javax.swing.JScrollPane(tblHistory);
+        scrollTable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 230, 230), 1, true));
+        scrollTable.getViewport().setBackground(java.awt.Color.WHITE);
+        pnlLeft.add(scrollTable, java.awt.BorderLayout.CENTER);
+
+        // --- RIGHT COLUMN (Cards) ---
+        javax.swing.JPanel pnlRightBox = new javax.swing.JPanel(new java.awt.BorderLayout());
+        pnlRightBox.setOpaque(false);
+        pnlRightBox.setPreferredSize(new java.awt.Dimension(380, 0)); 
+        pnlRightBox.setMinimumSize(new java.awt.Dimension(380, 0));
+        pnlRightBox.setMaximumSize(new java.awt.Dimension(380, Short.MAX_VALUE)); 
+
+        javax.swing.JPanel pnlRight = new javax.swing.JPanel();
+        pnlRight.setLayout(new javax.swing.BoxLayout(pnlRight, javax.swing.BoxLayout.Y_AXIS));
+        pnlRight.setOpaque(false);
+
+        // CARD 1: STATS CARD (LOCKED HEIGHT!)
+        javax.swing.JPanel pnlStats = new javax.swing.JPanel();
+        pnlStats.setLayout(new javax.swing.BoxLayout(pnlStats, javax.swing.BoxLayout.Y_AXIS));
+        pnlStats.setBackground(java.awt.Color.WHITE);
+        pnlStats.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+            new javax.swing.border.LineBorder(new java.awt.Color(220, 220, 220), 1, true),
+            javax.swing.BorderFactory.createEmptyBorder(25, 25, 25, 25)
+        ));
+        pnlStats.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
+        
+        // FIX: Prevent the card from getting incredibly tall
+        pnlStats.setMaximumSize(new java.awt.Dimension(380, 170)); 
+        pnlStats.setPreferredSize(new java.awt.Dimension(380, 170));
+
+        javax.swing.JLabel lblStatsTitle = new javax.swing.JLabel("Chef Stats");
+        lblStatsTitle.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 22));
+        lblStatsTitle.setForeground(new java.awt.Color(80, 30, 10));
+        
+        javax.swing.JLabel lblTotalCooked = new javax.swing.JLabel("Meals Cooked: " + totalCooked);
+        lblTotalCooked.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 18));
+        
+        javax.swing.JLabel lblRank = new javax.swing.JLabel("Rank: " + rank);
+        lblRank.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 18));
+        lblRank.setForeground(new java.awt.Color(160, 58, 19));
+        
+        pnlStats.add(lblStatsTitle);
+        pnlStats.add(javax.swing.Box.createVerticalStrut(20));
+        pnlStats.add(lblTotalCooked);
+        pnlStats.add(javax.swing.Box.createVerticalStrut(10));
+        pnlStats.add(lblRank);
+        
+        pnlRight.add(pnlStats);
+        pnlRight.add(javax.swing.Box.createVerticalStrut(25)); 
+
+        // CARD 2: DELETE CARD (LOCKED HEIGHT!)
+        javax.swing.JPanel pnlAction = new javax.swing.JPanel();
+        pnlAction.setLayout(new javax.swing.BoxLayout(pnlAction, javax.swing.BoxLayout.Y_AXIS));
+        pnlAction.setBackground(java.awt.Color.WHITE);
+        pnlAction.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+            new javax.swing.border.LineBorder(new java.awt.Color(220, 220, 220), 1, true),
+            javax.swing.BorderFactory.createEmptyBorder(25, 25, 25, 25)
+        ));
+        pnlAction.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
+
+        // FIX: Prevent the card from getting incredibly tall
+        pnlAction.setMaximumSize(new java.awt.Dimension(380, 200)); 
+        pnlAction.setPreferredSize(new java.awt.Dimension(380, 200));
+
+        javax.swing.JLabel lblActionTitle = new javax.swing.JLabel("Manage Log");
+        lblActionTitle.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 22));
+        lblActionTitle.setForeground(new java.awt.Color(160, 58, 19));
+
+        javax.swing.JLabel lblActionInfo = new javax.swing.JLabel("<html>Select a meal from the table<br>to remove it from history.</html>");
+        lblActionInfo.setFont(new java.awt.Font("Century Gothic", java.awt.Font.PLAIN, 15));
+        lblActionInfo.setForeground(new java.awt.Color(120, 120, 120));
+
+        javax.swing.JButton btnDelete = new javax.swing.JButton("🗑️ Delete Selected") {
+            @Override protected void paintComponent(java.awt.Graphics g) {
+                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(new java.awt.Color(204, 0, 0)); 
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
+                super.paintComponent(g); g2.dispose();
+            }
+        };
+        btnDelete.setFont(new java.awt.Font("Century Gothic", java.awt.Font.BOLD, 15));
+        btnDelete.setForeground(java.awt.Color.WHITE);
+        btnDelete.setFocusPainted(false); btnDelete.setContentAreaFilled(false);
+        btnDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDelete.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
+        btnDelete.setMaximumSize(new java.awt.Dimension(Short.MAX_VALUE, 45));
+
+        btnDelete.addActionListener(evt -> {
+            int selectedRow = tblHistory.getSelectedRow();
+            if (selectedRow == -1) {
+                javax.swing.JOptionPane.showMessageDialog(masterPanel, "Please select a log from the table first!");
+                return;
+            }
+            
+            int logId = (int) tblHistory.getValueAt(selectedRow, 0);
+            String recipeName = (String) tblHistory.getValueAt(selectedRow, 2);
+            
+            int confirm = javax.swing.JOptionPane.showConfirmDialog(masterPanel, 
+                "Remove" + recipeName + " from your history?", 
+                "Confirm Delete", javax.swing.JOptionPane.YES_NO_OPTION);
+                
+            if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+                linaer_algo.refinder.database.CookingLogDAO.deleteCookingLog(logId);
+                openCookingLog(); // Recall the main open method to refresh!
+            }
+        });
+
+        pnlAction.add(lblActionTitle);
+        pnlAction.add(javax.swing.Box.createVerticalStrut(10));
+        pnlAction.add(lblActionInfo);
+        pnlAction.add(javax.swing.Box.createVerticalStrut(20));
+        pnlAction.add(btnDelete);
+
+        pnlRight.add(pnlAction);
+        pnlRight.add(javax.swing.Box.createVerticalGlue()); // This is the hero! It eats the leftover space so the cards don't stretch.
+
+        pnlRightBox.add(pnlRight, java.awt.BorderLayout.CENTER);
+
+        // --- ASSEMBLE GRIDBAGLAYOUT ---
+        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        gbc.fill = java.awt.GridBagConstraints.BOTH;
+        gbc.weightx = 1.0; // The TABLE takes 100% of the extra stretch space!
+        gbc.weighty = 1.0;
+        gbc.insets = new java.awt.Insets(0, 0, 0, 40); 
+        masterPanel.add(pnlLeft, gbc);
+
+        gbc.gridx = 1; gbc.gridy = 1;
+        gbc.fill = java.awt.GridBagConstraints.BOTH;
+        gbc.weightx = 0.0; // The right column takes 0% of the stretch space! Locked!
+        gbc.weighty = 1.0;
+        gbc.insets = new java.awt.Insets(0, 0, 0, 0); 
+        masterPanel.add(pnlRightBox, gbc);
+
+        // RETURN THE PURE JAVA PANEL!
+        return masterPanel;
     }
 }
