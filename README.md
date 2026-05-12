@@ -1,146 +1,115 @@
-# 🍴 ReFinder — Recipe Finder System
-### Powered by the Rabin-Karp String Matching Algorithm
+# ReFinder
+
+## Recipe Finder System
+
+**ReFinder** is a Java desktop application that helps users reduce food waste by matching their current kitchen inventory with an existing recipe database.
+
+Built with the Rabin-Karp string matching algorithm, ReFinder calculates recipe match percentages, highlights missing ingredients, and supports 61 curated recipes across Filipino, Chinese, and Korean cuisine.
 
 ---
 
-## 📌 Project Overview
-ReFinder is a Java-based desktop application that helps users find recipes based on the ingredients they currently have in their inventory. Using the **Rabin-Karp algorithm**, the system efficiently searches and matches ingredients from the user's inventory against recipe databases, providing real-time match percentages and missing ingredient suggestions.
+## 🚀 Key Features
 
-This project was developed as a Final Project for **IT221 - Data Structures and Algorithms** at **Davao Del Norte State College, Institute of Computing**.
-
----
-
-## 🎯 Features
-- 🔍 **Smart Recipe Search** — Uses Rabin-Karp algorithm to match inventory ingredients against recipes
-- 📊 **Match Percentage** — Shows how many ingredients you have for each recipe
-- 🛒 **Missing Ingredients** — Tells you exactly what you're missing for a recipe
-- 🧺 **Inventory Management** — Add, update, and remove ingredients from your inventory
-- ⭐ **Favorites** — Bookmark recipes you love for quick access
-- 📋 **Cooking Log** — Track your cooking history with date and serving size
-- ⚠️ **Low Stock Warning** — Get notified when ingredients are running low
-- 🌏 **60 Pre-loaded Recipes** — 20 Filipino, 20 Chinese, and 20 Korean recipes
+- **Smart Recipe Search** - Uses Rabin-Karp text matching to compare inventory items with recipe ingredients.
+- **Match Percentage** - Shows how close you are to cooking each recipe.
+- **Missing Ingredients** - Displays the exact items needed to complete a recipe.
+- **Inventory Management** - Add, update, delete, and view ingredients with quantities.
+- **Favorites & Cookbook** - Bookmark recipes for quick access.
+- **Cooking Log** - Stores meal history with date, serving size, and automatic inventory updates.
+- **HD Visuals** - Recipe images are included and served from the SQLite backend.
 
 ---
 
-## 🛠️ Tech Stack
+## 🧰 Technology Stack
+
 | Component | Technology |
-|---|---|
+|-----------|------------|
 | Language | Java 21 (LTS) |
-| GUI Framework | Java Swing + FlatLaf 3.7.1 |
-| Database | SQLite 3.53.0 |
-| Build Tool | Apache Maven |
-| IDE | Apache NetBeans 28 |
+| UI | Java Swing + FlatLaf 3.7.1 |
+| Database | SQLite 3.53.0 (JDBC) |
+| Build | Apache Maven |
 | Algorithm | Rabin-Karp String Matching |
 
 ---
 
 ## 📁 Project Structure
-```
+
+```text
 ReFinder/
 ├── src/main/java/linaer_algo/refinder/
-│   ├── ReFinder.java                  ← Entry point
+│   ├── ReFinder.java                 ← App entry point & UI launcher
 │   ├── algorithm/
-│   │   └── RabinKarp.java             ← Core algorithm
+│   │   └── RabinKarp.java            ← Core matching logic
 │   ├── database/
-│   │   ├── DatabaseConnection.java    ← SQLite connection
-│   │   ├── DataSeeder.java            ← 60 pre-loaded recipes
-│   │   ├── IngredientDAO.java         ← Inventory DB operations
-│   │   ├── RecipeDAO.java             ← Recipe DB operations
-│   │   └── CookingLogDAO.java         ← History DB operations
+│   │   ├── DatabaseConnection.java   ← SQLite connection manager
+│   │   ├── DataSeeder.java           ← Recipe + image seeding logic
+│   │   └── ...                       ← DAOs for Ingredient, Recipe, CookingLog
 │   ├── model/
-│   │   ├── Ingredient.java            ← Ingredient model
-│   │   ├── Recipe.java                ← Recipe model
-│   │   └── CookingLog.java            ← Cooking log model
+│   │   └── ...                       ← Data models (Ingredient, Recipe, etc.)
 │   └── ui/
-│       └── MainFrame.java             ← Main GUI window
-├── photos/                            ← Recipe photos
-├── refinder.db                        ← SQLite database (auto-generated)
-├── pom.xml                            ← Maven dependencies
+│       └── MainFrame.java            ← Main graphical interface
+├── src/main/resources/photos/        ← HD recipe images
+├── refinder.db                       ← SQLite database file
+├── pom.xml                           ← Maven dependencies and build config
 └── README.md
 ```
 
 ---
 
-## ⚙️ How to Run
+## ▶️ How to Run
 
-### Prerequisites
-- Java 21 LTS installed
-- Apache NetBeans 28
-- Maven (included with NetBeans)
+### Run the Executable (Recommended)
+1. Place `refinder.db` in the same folder as the JAR.
+2. Open a terminal in that folder.
+3. Run:
 
-### Steps
-1. Clone the repository:
 ```bash
+java -jar ReFinder-1.0-SNAPSHOT-jar-with-dependencies.jar
+```
+
+### Run from Source (NetBeans)
+1. Clone the repository:
+   ```bash
 git clone https://github.com/jkksss/ReFinder.git
 ```
-2. Open the project in **Apache NetBeans**
-3. Right click the project → **Clean and Build**
-4. Press **F6** to run
-5. The database and all 60 recipes will be automatically generated on first run ✅
+2. Open the project in Apache NetBeans.
+3. Right-click the project → `Clean and Build`.
+4. Run the project using `F6`.
+
+---
+
+## 🧠 Algorithm: Rabin-Karp
+
+ReFinder uses the Rabin-Karp string matching algorithm to compare user inventory items against recipe ingredient lists.
+
+- **Rolling hash**: Converts text into hash values for fast matching.
+- **Collision handling**: Verifies matches character-by-character only when hash values match.
+- **Substring safety**: Prevents false matches such as `salt` matching `saltine`.
+- **Efficiency**: Average runtime complexity is `O(n + m)`, where `n` is the text length and `m` is the pattern length.
 
 ---
 
 ## 🗄️ Database Schema
-```
-ingredients         ← User's inventory
-recipes             ← All 60 pre-loaded recipes
-recipe_ingredients  ← Ingredients needed per recipe
-cooking_log         ← User's cooking history
-favorites           ← User's favorited recipes
-shopping_list       ← Missing ingredients list
-```
+
+The application uses SQLite with the following primary tables:
+
+- `ingredients` — Tracks current kitchen stock.
+- `recipes` — Stores recipe names, cook times, instructions, and photo paths.
+- `recipe_ingredients` — Links recipes to required ingredients.
+- `cooking_log` — Saves meal history and inventory deductions.
+- `favorites` — Stores user-bookmarked recipes.
 
 ---
 
-## 🧠 Algorithm — Rabin-Karp
-The Rabin-Karp algorithm is used to match ingredient names from the user's inventory against recipe ingredient lists.
+## 👤 Team
 
-### How It Works
-1. Converts ingredient strings into hash numbers using a rolling hash formula
-2. Slides a window across the text comparing hashes
-3. Verifies character-by-character when hashes match
-4. Uses space padding to prevent false matches (e.g. "salt" ≠ "saltine")
-5. Uses ASCII values to handle spaces in multi-word ingredients
-
-### Time Complexity
-| Case | Complexity |
-|---|---|
-| Average | O(n + m) |
-| Worst | O(nm) |
-
-Where `n` = length of text, `m` = length of pattern
+- **Joko Roman** — System Developer
+- **Institution**: Davao Del Norte State College
+- **Course**: IT221 - Data Structures and Algorithms
+- **Academic Year**: 2025-2026
 
 ---
 
-## 🍽️ Pre-loaded Recipes
+## 💡 Tagline
 
-### 🇵🇭 Filipino (20)
-Chicken Adobo, Sinigang na Baboy, Pancit Canton, Beef Caldereta, Chicken Tinola, Kare-Kare, Lechon Kawali, Bistek Tagalog, Pork Barbecue, Tortang Talong, Chicken Inasal, Bicol Express, Lumpiang Shanghai, Pork Sisig, Pinakbet, Leche Flan, Turon, Buko Pandan, Halo-Halo, Mango Float, Pancit Palabok, Beef Tapa
-
-### 🇨🇳 Chinese (20)
-Kung Pao Chicken, Mapo Tofu, Beef and Broccoli, Sweet and Sour Pork, Egg Fried Rice, Char Siu, Chow Mein, Hot and Sour Soup, Pork Dumplings, Scallion Pancakes, Wonton Soup, Dan Dan Noodles, Tomato Egg Stir-fry, Vegetable Spring Rolls, Hong Shao Rou, Steamed Fish, Congee, Egg Tarts, Tangyuan, Mango Sago
-
-### 🇰🇷 Korean (20)
-Beef Bulgogi, Bibimbap, Kimchi Jjigae, Tteokbokki, Japchae, Kimbap, Haemul Pajeon, Sundubu Jjigae, Galbi, Dakgalbi, Kimchi Fried Rice, Bossam, Doenjang Jjigae, Samgyeopsal, Gyeran-jjim, Naengmyeon, Jajangmyeon, Hotteok, Patbingsu, Yakgwa
-
----
-
-## 👥 Team
-| Role | Responsibility |
-|---|---|
-| System Developer | Java application, algorithm, database |
-| Manuscript Lead | IEEE paper writing |
-| Video Lead | Recording and editing |
-
-**Institution:** Davao Del Norte State College
-**Course:** IT221 - Data Structures and Algorithms
-**Academic Year:** 2025-2026
-
----
-
-## 📄 License
-This project was created for academic purposes only.
-
----
-
-*ReFinder — Find recipes with what you have!* 🍴
+**ReFinder — Find recipes with what you already have.**
