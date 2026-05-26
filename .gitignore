@@ -1,8 +1,18 @@
-target/
-*.db
+# Maven build output
+/target/
+
+# NetBeans specific
+.nb-gradle/
+build/
+nbproject/private/
+nbproject/incremental/
+
+# Temporary and log files
+*.log
 *.class
-.DS_Store
-nbactions.xml
-nb-configuration.xml
-*.iml
-.idea/ 
+
+# BlueJ/other IDE artifacts
+*.ctxt
+.settings/
+.vscode/
+.idea/

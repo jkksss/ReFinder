@@ -27,6 +27,10 @@ public class MainFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
     public MainFrame() {
+        
+        this.setLocationRelativeTo(null); 
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        
         initComponents();
         buildInventoryScreen();
         loadRecipeCards("");
@@ -43,12 +47,6 @@ public class MainFrame extends javax.swing.JFrame {
         setActiveButton(btnDashboard);
         
         
-        if (!linaer_algo.refinder.database.IngredientDAO.ingredientExists("chicken")) {
-            linaer_algo.refinder.database.IngredientDAO.addIngredient(new linaer_algo.refinder.model.Ingredient(0, "chicken", 1.0, "kg"));
-            linaer_algo.refinder.database.IngredientDAO.addIngredient(new linaer_algo.refinder.model.Ingredient(0, "garlic", 3.0, "cloves"));
-            linaer_algo.refinder.database.IngredientDAO.addIngredient(new linaer_algo.refinder.model.Ingredient(0, "soy sauce", 1.0, "bottle"));
-            System.out.println("Test ingredients added successfully!");
-        }
         
         // --- NEW: Style the Table Headers! ---
         javax.swing.table.JTableHeader header = tblInventory.getTableHeader();
@@ -124,9 +122,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 248, 222));
-        setPreferredSize(new java.awt.Dimension(1000, 700));
 
         jPanel2.setBackground(new java.awt.Color(255, 248, 222));
+        jPanel2.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBackground(new java.awt.Color(160, 58, 19));
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 4, new java.awt.Color(93, 52, 21)));
@@ -204,7 +202,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(btnDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 63, Short.MAX_VALUE)))
+                        .addGap(0, 52, Short.MAX_VALUE)))
                 .addContainerGap())
             .addComponent(jSeparator1)
         );
@@ -227,6 +225,8 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(btnLog, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        jPanel2.add(jPanel1, java.awt.BorderLayout.WEST);
 
         pnlContent.setLayout(new java.awt.CardLayout());
 
@@ -343,13 +343,13 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(pnlRecipesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1639, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addContainerGap(176, Short.MAX_VALUE))
         );
         pnlRecipesLayout.setVerticalGroup(
             pnlRecipesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRecipesLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 832, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(81, 81, 81))
@@ -496,7 +496,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(348, 348, 348)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(210, Short.MAX_VALUE))
+                .addContainerGap(249, Short.MAX_VALUE))
         );
         pnlInventoryLayout.setVerticalGroup(
             pnlInventoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -534,7 +534,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(pnlFavoritesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(scrlFavorites, javax.swing.GroupLayout.PREFERRED_SIZE, 1541, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(235, Short.MAX_VALUE))
+                .addContainerGap(274, Short.MAX_VALUE))
         );
         pnlFavoritesLayout.setVerticalGroup(
             pnlFavoritesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -543,7 +543,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scrlFavorites, javax.swing.GroupLayout.PREFERRED_SIZE, 749, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(191, Short.MAX_VALUE))
+                .addContainerGap(502, Short.MAX_VALUE))
         );
 
         pnlContent.add(pnlFavorites, "pnlFavorites");
@@ -567,14 +567,14 @@ public class MainFrame extends javax.swing.JFrame {
             pnlLogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlLogLayout.createSequentialGroup()
                 .addComponent(pnlLogContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 205, Short.MAX_VALUE))
+                .addGap(0, 244, Short.MAX_VALUE))
         );
         pnlLogLayout.setVerticalGroup(
             pnlLogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlLogLayout.createSequentialGroup()
                 .addGap(91, 91, 91)
                 .addComponent(pnlLogContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(384, Short.MAX_VALUE))
         );
 
         pnlContent.add(pnlLog, "pnlLog");
@@ -628,7 +628,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
                         .addGroup(pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
-                                .addContainerGap(1388, Short.MAX_VALUE)
+                                .addContainerGap(1407, Short.MAX_VALUE)
                                 .addComponent(btnFavorite, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(43, 43, 43))
                             .addGroup(pnlRecipeDetailsLayout.createSequentialGroup()
@@ -638,7 +638,7 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 772, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(41, 41, 41)))
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(163, Short.MAX_VALUE))
+                .addContainerGap(183, Short.MAX_VALUE))
         );
         pnlRecipeDetailsLayout.setVerticalGroup(
             pnlRecipeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -661,21 +661,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         pnlContent.add(pnlRecipeDetails, "pnlRecipeDetails");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlContent, javax.swing.GroupLayout.PREFERRED_SIZE, 1782, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1040, Short.MAX_VALUE)
-            .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        jPanel2.add(pnlContent, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
@@ -709,8 +695,13 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDashboardActionPerformed
 
     private void btnInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryActionPerformed
-        // TODO add your handling code here:
+       // Highlight the button
         setActiveButton(btnInventory);
+        
+        // THE FIX: Force the screen to fetch fresh numbers from the database!
+        buildInventoryScreen(); 
+        
+        // Show the screen
         java.awt.CardLayout layout = (java.awt.CardLayout) pnlContent.getLayout();
         layout.show(pnlContent, "pnlInventory");
     }//GEN-LAST:event_btnInventoryActionPerformed
@@ -874,13 +865,25 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnCookedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCookedActionPerformed
      if (currentActiveRecipeId != -1) {
-            // 1. Get the exact quantities this recipe needed
+            // 1. Get the required ingredients and the user's current inventory
             java.util.List<linaer_algo.refinder.model.Ingredient> reqs = linaer_algo.refinder.database.RecipeDAO.getRecipeIngredients(currentActiveRecipeId);
+            java.util.List<linaer_algo.refinder.model.Ingredient> inv = linaer_algo.refinder.database.IngredientDAO.getAllIngredients();
             
-            // 2. THE FIX: Loop through and deduct using YOUR awesome DAO, with .trim() safety!
+            // 2. Use our smart matching to deduct the correct items
             for(linaer_algo.refinder.model.Ingredient req : reqs) {
-                // .trim() strips invisible spaces so "chicken " matches "chicken" perfectly!
-                linaer_algo.refinder.database.IngredientDAO.deductIngredient(req.getName().trim(), req.getQuantity());
+                String reqName = req.getName().trim().toLowerCase();
+                
+                // Find the matching item in the user's inventory
+                for(linaer_algo.refinder.model.Ingredient myItem : inv) {
+                    String invName = myItem.getName().trim().toLowerCase();
+                    
+                    // Basic match check (You can upgrade this to use your RabinKarp logic if preferred!)
+                    if (invName.contains(reqName) || reqName.contains(invName)) {
+                        // We found the match! Tell the DAO to deduct from this EXACT inventory item
+                        linaer_algo.refinder.database.IngredientDAO.deductIngredient(myItem.getName(), req.getQuantity());
+                        break; // Stop looking for this requirement once found
+                    }
+                }
             }
             
             // 3. Save to the Cooking Log Database

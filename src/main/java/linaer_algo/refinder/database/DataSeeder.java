@@ -389,19 +389,20 @@ public class DataSeeder {
             new String[][]{{"pastry flour", "2", "cups"}, {"sesame oil", "3", "tbsp"}, {"honey", "0.5", "cup"}, {"rice syrup", "0.5", "cup"}, {"soju", "2", "tbsp"}, {"ginger juice", "1", "tbsp"}, {"cooking oil", "3", "cups"}});
     }
 
-    public static void main(String[] args) {
+   public static void main(String[] args) {
         System.out.println("Wiping old database records...");
         
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement()) {
              
-             // THE FIX: Delete from the child tables first so they don't block the wipe!
+             // THE FINAL CLEANUP: Added the ingredients table wipe!
              stmt.execute("DELETE FROM favorites");
              stmt.execute("DELETE FROM cooking_log");
              stmt.execute("DELETE FROM recipe_ingredients");
              stmt.execute("DELETE FROM recipes");
+             stmt.execute("DELETE FROM ingredients"); // <--- This wipes the inventory!
              
-             System.out.println("Old data wiped successfully!");
+             System.out.println("Old data wiped successfully (including inventory)!");
         } catch (Exception e) {
              System.out.println("Error wiping data: " + e.getMessage());
         }
